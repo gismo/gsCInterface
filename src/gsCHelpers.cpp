@@ -1,6 +1,6 @@
 
 #include <gsCore/gsGeometry.h>
-#include <gsCApi/gsCHelpers.h>
+#include <gsCInterface/gsCHelpers.h>
 
 namespace gismo
 {

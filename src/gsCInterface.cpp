@@ -3,14 +3,14 @@
 #include <gsNurbs/gsBSpline.h>
 #include <gsIO/gsFileData.h>
 #include <gsHSplines/gsTHBSpline.h>
-#include <gsCApi/gsCHelpers.h>
+#include <gsCInterface/gsCHelpers.h>
 #include <gsTensor/gsGridIterator.h>
 
 using namespace gismo;
 
 extern "C"
 {
-#include <gsCApi/gsCInterface.h>
+#include <gsCInterface/gsCInterface.h>
 }
 
 extern "C"
