@@ -10,9 +10,8 @@ project(gsCInterface)
 include(gsConfig)
 
 ## Collect files
-aux_header_directory     (${CMAKE_CURRENT_SOURCE_DIR}/src ${PROJECT_NAME}_H)
-aux_tmpl_header_directory(${CMAKE_CURRENT_SOURCE_DIR}/src ${PROJECT_NAME}_HPP)
-set(${PROJECT_NAME}_CPP src/gsCInterface.cpp;src/gsCHelpers.cpp)
+aux_header_directory(${CMAKE_CURRENT_SOURCE_DIR}/src ${PROJECT_NAME}_H)
+aux_cpp_directory   (${CMAKE_CURRENT_SOURCE_DIR}/src ${PROJECT_NAME}_CPP)
 
 if( (NOT GISMO_BUILD_LIB) )
   aux_instance_directory (${CMAKE_CURRENT_SOURCE_DIR} ${PROJECT_NAME}_INS)
@@ -24,7 +23,6 @@ endif()
 # Compile statically the extension
 add_library(${PROJECT_NAME} OBJECT
   ${${PROJECT_NAME}_H}
-  ${${PROJECT_NAME}_HPP}
   ${${PROJECT_NAME}_CPP} )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -42,3 +40,5 @@ execute_process( COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_CURRENT_SOUR
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/"
   DESTINATION "include/gismo/${PROJECT_NAME}"
   FILES_MATCHING PATTERN "*.h" )
+
+add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/basis_cexample.c)
