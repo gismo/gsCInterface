@@ -1,5 +1,5 @@
 #include <gismo.h>
-#include <gsCInterface/gsCio.h>
+#include <gsCInterface/gsCReadFile.h>
 
 GISMO_EXPORT void* gsCReadFile(char* filename)
 {

@@ -11,7 +11,7 @@
 #include <gsCInterface/gsCFunctionSet.h>
 #include <gsCInterface/gsCBasis.h>
 #include <gsCInterface/gsCGeometry.h>
-#include <gsCInterface/gsCio.h>
+#include <gsCInterface/gsCReadFile.h>
 
 //
 // Function Overloads
