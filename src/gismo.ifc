@@ -1,0 +1,60 @@
+!   @file Fgismo.ifc
+!
+!   @brief Provide access to G+Smo functions for use in Fortran programs
+!
+!   This file is part of the G+Smo library.
+!
+!   This Source Code Form is subject to the terms of the Mozilla Public
+!   License, v. 2.0. If a copy of the MPL was not distributed with this
+!   file, You can obtain one at http://mozilla.org/MPL/2.0/.
+!
+!   Author(s): E. Vollebregt
+! 
+
+!------------------------------------------------------------------------------------------------------------
+
+   interface
+
+      function gsReadFile(filename) bind(c)
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsReadFile
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(c_ptr)                  :: gsReadFile
+         character(len=1,kind=C_CHAR) :: filename(*)
+      end function gsReadFile
+
+      function domainDim(g) bind(c)
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: domainDim
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(c_ptr)                  :: domainDim
+	 type(c_ptr)                  :: g(*)
+      end function domainDim
+
+	subroutine eval_into(fs,u,result) bind(c)
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: eval_into
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(c_ptr)                  :: fs
+	 type(c_ptr)                  :: u
+	 type(c_ptr)                  :: result
+      end subroutine eval_into
+
+	subroutine deriv_into(fs,u,result) bind(c)
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: deriv_into
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(c_ptr)                  :: fs
+	 type(c_ptr)                  :: u
+	 type(c_ptr)                  :: result
+      end subroutine deriv_into
+
+   end interface

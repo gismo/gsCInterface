@@ -31,6 +31,11 @@
                          gsCVectorInt *: gsVectorInt_cols,     \
                          gsCMatrix *   : gsMatrix_cols)(X)
 
+#define data(X) _Generic((X),                                  \
+                         gsCVector *   : gsVector_data,        \
+                         gsCVectorInt *: gsVectorInt_data,     \
+                         gsCMatrix *   : gsMatrix_data)(X)
+
 #define transposeInPlace(X) _Generic((X),                               \
                                      gsCVector *   : gsVector_transposeInPlace, \
                                      gsCVectorInt *: gsVectorInt_transposeInPlace, \
@@ -40,5 +45,12 @@
                          gsCVector *   : gsVector_setZero,        \
                          gsCVectorInt *: gsVectorInt_setZero,     \
                          gsCMatrix *   : gsMatrix_setZero)(X)
+
+#define destroy(X) _Generic((X),                                        \
+                            gsCFunctionSet * : gsFunctionSet_delete,    \
+                            gsCKnotVector *  : gsKnotVector_delete,     \
+                            gsCVector *      : gsVector_delete,         \
+                            gsCVectorInt *   : gsVectorInt_delete,      \
+                            gsCMatrix *      : gsMatrix_delete)(X)
 
 #endif // CGISMO_H

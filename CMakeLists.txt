@@ -4,7 +4,7 @@
 ##
 ######################################################################
 
-project(gsCInterface)
+project(gsCInterface LANGUAGES C Fortran)
 
 # Apply G+Smo config
 include(gsConfig)
@@ -42,3 +42,5 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/"
   FILES_MATCHING PATTERN "*.h" )
 
 add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/basis_cexample.c)
+add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/geometry_cexample.c)
+add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/geometry_fexample.F90)

@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     print(kv);
 
     gsCBasis * b = gsBSplineBasis_create(kv);    
-    gsKnotVector_delete(kv);
+    destroy(kv);
     printf("\n\n");
     print(b);
     printf("\n");
@@ -42,17 +42,17 @@ int main(int argc, char* argv[])
     printf("Matrix with  %d rows and %d columns:\n", rows(result), cols(result) );
     print(result);
     printf("\n");
-    double * data = gsMatrix_data(result);
+    double * data = data(result);
     printf("First row of that matrix: %f , %f, %f, %f\n", data[0], data[3], data[6], data[9]);
 
     gsCGeometry * g = gsBSpline_create(b,result);
     print(g);
     printf("\n");
         
-    gsMatrix_delete(u);
-    gsMatrix_delete(result);
-    gsBasis_delete(b);
-    gsBSpline_delete(g);
+    destroy(u);
+    destroy(result);
+    destroy(b);
+    destroy(g);
     
     return 0;
 }

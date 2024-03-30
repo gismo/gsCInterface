@@ -1,7 +1,7 @@
 #include <gismo.h>
 #include <gsCInterface/gsCio.h>
 
-GISMO_EXPORT void* read(char* filename)
+GISMO_EXPORT void* gsCReadFile(char* filename)
 {
     gsInfo << "Loading file: " << filename << std::endl;
 
