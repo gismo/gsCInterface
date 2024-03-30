@@ -1,5 +1,6 @@
 
 #include <gsNurbs/gsKnotVector.h>
+#include <gsCInterface/gsCTypes.h>
 #include <gsCInterface/gsCKnotVector.h>
 
 GISMO_EXPORT gsCKnotVector * gsKnotVector_create(double* knots, int size)

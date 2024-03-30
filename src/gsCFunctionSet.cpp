@@ -1,43 +1,28 @@
 #include <gismo.h>
+#include <gsCInterface/gsCTypes.h>
+#include <gsCInterface/gsCMatrix.h>
 #include <gsCInterface/gsCFunctionSet.h>
 #include <gsCInterface/gsCMemory.h>
-
+#include <gsCInterface/gsMacros.h>
 
 GISMO_EXPORT void gsFunctionSet_print(gsCFunctionSet * fs)
-{
-    reinterpret_cast<gismo::gsFunctionSet<double>*>(fs)->print(gsInfo);
-}
+{ RICAST_G(fs)->print(gsInfo); }
 
-GISMO_EXPORT int domainDim(void* object)
-{
-    gismo::gsFunctionSet<double>* geom = static_cast< gismo::gsFunctionSet<>* >(object);
-    return geom->domainDim();
-}
+GISMO_EXPORT void gsFunctionSet_delete(gsCFunctionSet * ptr)
+{ delete RICAST_F(ptr); }
 
+GISMO_EXPORT int domainDim(gsCFunctionSet * fs)
+{ return RICAST_G(fs)->domainDim(); }
 
-GISMO_EXPORT int targetDim(void* object)
-{
-    gismo::gsFunctionSet<>* geom = static_cast< gismo::gsFunctionSet<>* >(object);
-    return geom->targetDim();
-}
+GISMO_EXPORT int targetDim(gsCFunctionSet * fs)
+{ return RICAST_G(fs)->targetDim(); }
 
-// gs_eval_geometry using new double[]
-GISMO_EXPORT void eval_into(void* object,
-                                        double* data,
-                                        int rows,
-                                        int cols,
-                                        double* out_data,
-                                        int len_data,
-                                        int* out_rows,
-                                        int* out_cols)
-{
-    gismo::gsFunctionSet<>* fun_ptr = static_cast< gismo::gsFunctionSet<>* >(object);
-    gismo::gsAsConstMatrix<> params(data, rows, cols);
-    gismo::gsMatrix<> result = fun_ptr->eval(params);
-    *out_rows = result.rows();
-    *out_cols = result.cols();
-    GISMO_ENSURE(len_data >= result.size(),
-                 "gs_eval_geometry_mem: len_data=" << len_data << " less than size="
-                 << result.size() << " (rows=" << result.rows() << ", cols=" << result.cols() );
-    copy_matrix_c_array(result, out_data, len_data);
-}
+GISMO_EXPORT void eval_into(gsCFunctionSet * fs,
+                            gsCMatrix * u,
+                            gsCMatrix * result)
+{ RICAST_F(fs)->eval_into(*RICAST_M(u), *RICAST_M(result) ); }
+
+GISMO_EXPORT void deriv_into(gsCFunctionSet * fs,
+                             gsCMatrix * u,
+                             gsCMatrix * result)
+{ RICAST_F(fs)->deriv_into(*RICAST_M(u), *RICAST_M(result) ); }

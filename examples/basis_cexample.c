@@ -23,16 +23,36 @@ int main(int argc, char* argv[])
     knots[3]=knots[4]=knots[5]=1;
 
     gsCKnotVector * kv = gsKnotVector_create(knots,6);
+    print(kv);
 
-    gsKnotVector_print(kv);
-
-    gsCBasis * b = gsBSplineBasis_create(kv);
-    
+    gsCBasis * b = gsBSplineBasis_create(kv);    
     gsKnotVector_delete(kv);
     printf("\n\n");
-    gsFunctionSet_print(b);
+    print(b);
     printf("\n");
-    gsBasis_delete(b);
 
+    double udata[4];
+    udata[0]=0.00;
+    udata[1]=0.33;
+    udata[2]=0.66;
+    udata[3]=1.00;
+    gsCMatrix * u = gsMatrix_create_rcd(1,4,udata);
+    gsCMatrix * result = gsMatrix_create();
+    eval_into(b, u, result);
+    printf("Matrix with  %d rows and %d columns:\n", rows(result), cols(result) );
+    print(result);
+    printf("\n");
+    double * data = gsMatrix_data(result);
+    printf("First row of that matrix: %f , %f, %f, %f\n", data[0], data[3], data[6], data[9]);
+
+    gsCGeometry * g = gsBSpline_create(b,result);
+    print(g);
+    printf("\n");
+        
+    gsMatrix_delete(u);
+    gsMatrix_delete(result);
+    gsBasis_delete(b);
+    gsBSpline_delete(g);
+    
     return 0;
 }
