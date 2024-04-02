@@ -25,11 +25,11 @@ program geometry_fexample
    if (use_thb) then
       write(*,'(2(a,f5.1),a,i3)') 'reading XML for THB-spline'
       some_file = 'optional/gsWRContact/examples/sw_crossing/sw_thb.xml' // C_NULL_CHAR
-      g = gsReadFile(some_file)
+      g = gsCReadFile(some_file)
    else
       write(*,'(2(a,f5.1),a,i3)') 'reading XML for tensor B-spline'
       some_file = 'optional/gsWRContact/examples/sw_crossing/sw_tp.xml' // C_NULL_CHAR
-      g = gsReadFile(some_file)
+      g = gsCReadFile(some_file)
    endif
    write(*,'(a,i3)') 'done, g.dim=', domainDim(g)
 
@@ -66,11 +66,10 @@ subroutine show_basic_usage( g )
    implicit none
 #  include "gsCInterface/gismo.ifc"
 !--subroutine arguments
-   type(c_ptr)                :: g
+   type(c_ptr)                :: g, uvm, xyzm, xyz1
 !--local variables
-   integer(C_INT)               :: nRows, nCols, out_rows, out_cols, mode, irow, icol, icoor, ipar
-   real(C_DOUBLE), dimension(:,:), allocatable :: uv
-   real(C_DOUBLE), dimension(:,:), allocatable :: xyz, dxyz
+   integer(C_INT)               :: nRows, nCols, out_rows, out_cols, irow, icol, icoor, ipar
+   real(C_DOUBLE), dimension(:,:), target, allocatable :: uv, xyz
    character(len=1), parameter  :: c_param(2) = (/ 'u', 'v' /)
    character(len=1), parameter  :: c_coor(3)  = (/ 'x', 'y', 'z' /)
 
@@ -88,15 +87,15 @@ subroutine show_basic_usage( g )
 
    ! evaluate positions (x,y,z) at given parameter values
 
-   mode  = 0
-   allocate(xyz(3,nCols))
-   call eval_into(G, uv, nRows, nCols, xyz, 3*nCols, out_rows, out_cols, mode)
-
-   write(*,'(3(a,i3))') 'Mode =',mode,': got #rows =', out_rows, ', #cols =', out_cols
+   uvm = gsMatrix_create_rcd(nRows, nCols, c_loc(uv(1,1)))
+   uvm = gsMatrix_create()
+   call eval_into(G, uvm, xyzm)
+   xyz1 = gsMatrix_data(xyzm)
+   call C_F_POINTER(xyz1,xyz)
+   write(*,'(3(a,i3))') 'Got #rows =', out_rows, ', #cols =', out_cols
    do irow = 1, out_rows
       write(*,'(3a,10f10.3)') '  ',c_coor(irow),': ', (xyz(irow,icol), icol=1,out_cols)
    enddo
-   deallocate(xyz)
    deallocate(uv)
 
 end subroutine show_basic_usage

@@ -15,24 +15,24 @@
 
    interface
 
-      function gsReadFile(filename) bind(c)
+      function gsCReadFile(filename) bind(c)
 #ifdef _WIN32
-         !dir$ attributes stdcall     :: gsReadFile
+         !dir$ attributes stdcall     :: gsCReadFile
 #endif
          use, intrinsic               :: iso_c_binding
          implicit none
-         type(c_ptr)                  :: gsReadFile
+         type(c_ptr)                  :: gsCReadFile
          character(len=1,kind=C_CHAR) :: filename(*)
-      end function gsReadFile
+      end function gsCReadFile
 
-      function domainDim(g) bind(c)
+     function domainDim(g) bind(c)
 #ifdef _WIN32
          !dir$ attributes stdcall     :: domainDim
 #endif
          use, intrinsic               :: iso_c_binding
          implicit none
-         type(c_ptr)                  :: domainDim
-	 type(c_ptr)                  :: g(*)
+         integer(c_int)              :: domainDim
+	 type(c_ptr)                  :: g
       end function domainDim
 
 	subroutine eval_into(fs,u,result) bind(c)
@@ -56,5 +56,44 @@
 	 type(c_ptr)                  :: u
 	 type(c_ptr)                  :: result
       end subroutine deriv_into
+
+      function gsMatrix_create() bind(c)
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsMatrix_create
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(c_ptr)                  :: gsMatrix_create
+      end function gsMatrix_create
+
+      function gsMatrix_data(m) bind(c)
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsMatrix_create
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(c_ptr)                  :: m
+         type(c_ptr)                  :: gsMatrix_data
+      end function gsMatrix_data
+
+      function gsMatrix_create_rcd(r,c,data) bind(c)
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsMatrix_create
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(c_ptr)                  :: gsMatrix_create_rcd
+         integer(c_int), value       :: r, c
+         type(c_ptr)                  :: data
+      end function gsMatrix_create_rcd
+
+      subroutine gsMatrix_delete(m) bind(c)
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsMatrix_delete
+#endif
+         use, intrinsic              :: iso_c_binding
+         implicit none
+	 type(c_ptr)                  :: m
+      end subroutine gsMatrix_delete
 
    end interface
