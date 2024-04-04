@@ -3,7 +3,6 @@
 #include <gsCInterface/gsMacros.h>
 #include <gsCInterface/gsCMatrix.h>
 
-
 GISMO_EXPORT gsCMatrix * gsMatrix_create(void)
 { return reinterpret_cast<gsCMatrix*>(new gismo::gsMatrix<double>()); }
 

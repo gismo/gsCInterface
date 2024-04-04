@@ -5,24 +5,32 @@
 #include <gsCInterface/gsCMemory.h>
 #include <gsCInterface/gsMacros.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 GISMO_EXPORT void gsFunctionSet_print(gsCFunctionSet * fs)
 { RICAST_G(fs)->print(gsInfo); }
 
 GISMO_EXPORT void gsFunctionSet_delete(gsCFunctionSet * ptr)
 { delete RICAST_F(ptr); }
 
-GISMO_EXPORT int domainDim(gsCFunctionSet * fs)
+GISMO_EXPORT int gsFunctionSet_domainDim(gsCFunctionSet * fs)
 { return RICAST_G(fs)->domainDim(); }
 
-GISMO_EXPORT int targetDim(gsCFunctionSet * fs)
+GISMO_EXPORT int gsFunctionSet_targetDim(gsCFunctionSet * fs)
 { return RICAST_G(fs)->targetDim(); }
 
-GISMO_EXPORT void eval_into(gsCFunctionSet * fs,
+GISMO_EXPORT void gsFunctionSet_eval_into(gsCFunctionSet * fs,
                             gsCMatrix * u,
                             gsCMatrix * result)
 { RICAST_F(fs)->eval_into(*RICAST_M(u), *RICAST_M(result) ); }
 
-GISMO_EXPORT void deriv_into(gsCFunctionSet * fs,
+GISMO_EXPORT void gsFunctionSet_deriv_into(gsCFunctionSet * fs,
                              gsCMatrix * u,
                              gsCMatrix * result)
 { RICAST_F(fs)->deriv_into(*RICAST_M(u), *RICAST_M(result) ); }
+#ifdef __cplusplus
+}
+#endif

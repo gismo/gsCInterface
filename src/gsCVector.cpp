@@ -1,7 +1,7 @@
 #include <gsCore/gsLinearAlgebra.h>
 #include <gsCInterface/gsCTypes.h>
-#include <gsCInterface/gsCVector.h>
 #include <gsCInterface/gsMacros.h>
+#include <gsCInterface/gsCVector.h>
 
 GISMO_EXPORT gsCVector * gsVector_create(void)
 { return reinterpret_cast<gsCVector*>(new gismo::gsVector<double>()); }

@@ -17,7 +17,7 @@ extern "C"
 //#define FIRST(A, ...) A
     GISMO_EXPORT void gsMatrix_delete(gsCMatrix * m);
     GISMO_EXPORT void gsMatrix_print(gsCMatrix * m);
-    GISMO_EXPORT double * gsMatrix_data(gsCMatrix * m);
+    GISMO_EXPORT double* gsMatrix_data(gsCMatrix * m);
 
     GISMO_EXPORT void gsMatrix_transposeInPlace(gsCMatrix * m);
     GISMO_EXPORT int gsMatrix_rows(gsCMatrix * m);

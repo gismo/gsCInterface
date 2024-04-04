@@ -5,8 +5,8 @@ extern "C"
 #endif
 
     GISMO_EXPORT gsCVector * gsVector_create(void);
-    GISMO_EXPORT gsCVector * gsVector_create_rc (int rows, int cols);
-    GISMO_EXPORT gsCVector * gsVector_create_rcd(int rows, int cols, double * data);
+    GISMO_EXPORT gsCVector * gsVector_create_r (int rows, int cols);
+    GISMO_EXPORT gsCVector * gsVector_create_rd(int rows, int cols, double * data);
     GISMO_EXPORT void gsVector_delete(gsCVector * m);
     GISMO_EXPORT void gsVector_print(gsCVector * m);
     GISMO_EXPORT double * gsVector_data(gsCVector * m);

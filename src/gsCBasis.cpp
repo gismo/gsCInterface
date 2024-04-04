@@ -2,8 +2,13 @@
 #include <gismo.h>
 #include <gsCInterface/gsCTypes.h>
 #include <gsCInterface/gsCKnotVector.h>
-#include <gsCInterface/gsCBasis.h>
 #include <gsCInterface/gsMacros.h>
+#include <gsCInterface/gsCBasis.h>
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 GISMO_EXPORT gsCBasis * gsBSplineBasis_create(gsCKnotVector * KV)
 {
@@ -65,15 +70,35 @@ GISMO_EXPORT gsCBasis* gsTHBSplineBasis4_create(gsCBasis* b)
 // Methods
 //
 
-GISMO_EXPORT gsCBasis * component(gsCBasis * b, int dir)
+GISMO_EXPORT void gsBasis_active_into(gsCBasis * b,
+                              gsCMatrix * u,
+                              gsCMatrixInt * result)
+{ RICAST_B(b)->active_into(*RICAST_M(u), *RICAST_Mi(result) ); }
+
+GISMO_EXPORT gsCBasis * gsBasis_component(gsCBasis * b, int dir)
 {
     gismo::gsBasis<double> * c = & RICAST_B(b)->component(dir);
     return reinterpret_cast<gsCBasis*>(c);
 }
 
-GISMO_EXPORT int degree(gsCBasis * b, int dir)
+GISMO_EXPORT int gsBasis_degree(gsCBasis * b, int dir)
 { return RICAST_B(b)->component(dir).degree(dir); }
 
-GISMO_EXPORT int numElements(gsCBasis * b)
+GISMO_EXPORT int gsBasis_numElements(gsCBasis * b)
 { return RICAST_B(b)->numElements(); }
 
+GISMO_EXPORT int gsBasis_size(gsCBasis * b)
+{ return RICAST_B(b)->size(); }
+
+GISMO_EXPORT void gsBasis_uniformRefine(gsCBasis * b, int numKnots, int mul, int dir)
+{ RICAST_B(b)->uniformRefine(numKnots, mul, dir); }
+
+GISMO_EXPORT void gsBasis_refineElements(gsCBasis * b, int * boxData, int boxSize)
+{
+    std::vector<int> boxes(boxData,boxData+boxSize);
+    RICAST_B(b)->refineElements(boxes);
+}
+
+#ifdef __cplusplus
+}
+#endif

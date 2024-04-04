@@ -7,7 +7,7 @@ extern "C"
 #   define gsGeometry_print gsFunctionSet_print
 #   define gsGeometry_delete gsFunctionSet_delete
 #   define gsBSpline_delete gsFunctionSet_delete
-    
+
     GISMO_EXPORT gsCGeometry* gsBSpline_create(gsCBasis* b, gsCMatrix * coef);
     GISMO_EXPORT gsCGeometry* gsTensorBSpline2_create(gsCBasis* b, gsCMatrix * coef);
     GISMO_EXPORT gsCGeometry* gsTensorBSpline3_create(gsCBasis* b, gsCMatrix * coef);
@@ -18,11 +18,35 @@ extern "C"
     GISMO_EXPORT gsCGeometry* gsTHBSpline3_create(gsCBasis* b, gsCMatrix * coef);
     GISMO_EXPORT gsCGeometry* gsTHBSpline4_create(gsCBasis* b, gsCMatrix * coef);
 
-    GISMO_EXPORT gsCBasis* basis(gsCGeometry * g);
+    GISMO_EXPORT gsCBasis* gsGeometry_basis(gsCGeometry * g);
     
-    GISMO_EXPORT void recoverPoints(gsCGeometry * g, gsCMatrix * uv, int k, double accuracy);
-    GISMO_EXPORT void recoverPointGrid(gsCGeometry * g, gsCVector * a, gsCVector * b,
-                                       gsCMatrix * xyz, gsCMatrix * uv, int c, double accuracy);
+    GISMO_EXPORT void gsGeometry_coefs_into(gsCGeometry * g, gsCMatrix * coef);
+
+
+    GISMO_EXPORT void gsGeometry_uniformRefine(gsCGeometry * b, int numKnots, int mul, int dir);
+    GISMO_EXPORT void gsGeometry_refineElements(gsCGeometry * b, int * boxData, int boxSize);
+
+    GISMO_EXPORT void gsGeometry_recoverPoints(gsCGeometry * g, gsCMatrix * uv, gsCMatrix * xyz,
+                                                int k, double accuracy);
+    GISMO_EXPORT void gsGeometry_recoverPointGrid(gsCGeometry * g, gsCVector * a, gsCVector * b,
+                                                    gsCVectorInt * sz, gsCMatrix * xyz,
+                                                    gsCMatrix * uv, int c, double accuracy);
+
+    GISMO_EXPORT void gsGeometry_invertPointGrid(gsCGeometry * g, gsCVector * a, gsCVector * b,
+                                       gsCVectorInt * sz,  gsCMatrix * result, double accuracy);
+    GISMO_EXPORT void gsGeometry_invertPoints(gsCGeometry * g, gsCMatrix * points, gsCMatrix * result,
+                                    double accuracy);
+
+    GISMO_EXPORT void gsGeometry_normal_into(gsCGeometry * fs,
+                                 gsCMatrix * u,
+                                 gsCMatrix * result);
+
+
+    GISMO_EXPORT double gsGeometry_closestPointTo(gsCGeometry * fs,
+                                       gsCMatrix * pt,
+                                       gsCMatrix * result,
+                                       double accuracy);
+
 
 #ifdef __cplusplus
 }
