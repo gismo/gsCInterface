@@ -4,7 +4,15 @@
 ##
 ######################################################################
 
-project(gsCInterface LANGUAGES C Fortran)
+project(gsCInterface LANGUAGES C)
+
+include(CheckLanguage)
+check_language(Fortran)
+if(CMAKE_Fortran_COMPILER)
+  enable_language(Fortran)
+else()
+  message(STATUS "No Fortran support")
+endif()
 
 # Apply G+Smo config
 include(gsConfig)
@@ -43,4 +51,7 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/"
 
 add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/basis_cexample.c)
 add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/geometry_cexample.c)
-add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/geometry_fexample.F90)
+
+if(CMAKE_Fortran_COMPILER)
+  add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/geometry_fexample.F90)
+endif()
