@@ -83,7 +83,11 @@ subroutine show_basic_usage( g )
    do irow = 1, out_rows
       write(*,'(3a,10f10.3)') '  ',c_coor(irow),': ', (xyz(irow,icol), icol=1,out_cols)
    enddo
+
+   call gsMatrix_delete(uvm)
+   call gsMatrix_delete(xyzm)
    deallocate(uv)
+   ! TODO: deallocate memory allocated by gsMatrix_data?  Or is xyz1 pointing inside xyzm?
 
 end subroutine show_basic_usage
 
