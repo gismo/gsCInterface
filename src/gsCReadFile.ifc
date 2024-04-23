@@ -1,0 +1,15 @@
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT void* gsCReadFile(char* filename);
+
+      function gsCReadFile(filename) bind(c,name='gsCReadFile')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsCReadFile
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(c_ptr)                  :: gsCReadFile
+         character(len=1,kind=C_CHAR) :: filename(*)
+      end function gsCReadFile
+
+!------------------------------------------------------------------------------------------------------------
