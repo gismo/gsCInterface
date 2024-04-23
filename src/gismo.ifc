@@ -13,9 +13,235 @@
 
 !------------------------------------------------------------------------------------------------------------
 
+! #include <gsCore/gsExport.h>
+
+!------------------------------------------------------------------------------------------------------------
+!  #include <gsCInterface/gsCTypes.h>
+!  Structs for holding G+Smo objects
+!------------------------------------------------------------------------------------------------------------
+
+!  type, bind(c) :: gsFMatrix
+!     type(C_PTR)                    :: ptr
+!  end type gsFMatrix
+
+!  type, bind(c) :: gsFMatrixInt
+!     type(C_PTR)                    :: ptr
+!  end type gsFMatrixInt
+
+!  type, bind(c) :: gsFVector
+!     type(C_PTR)                    :: ptr
+!  end type gsFVector
+
+!  type, bind(c) :: gsFVectorInt
+!     type(C_PTR)                    :: ptr
+!  end type gsFVectorInt
+
+!  type, bind(c) :: gsFFunctionSet
+!     type(C_PTR)                    :: ptr
+!  end type gsFFunctionSet
+
+!  type, bind(c) :: gsFMultiPatch
+!     type(C_PTR)                    :: ptr
+!  end type gsFMultiPatch
+
+!  type, bind(c) :: gsFBasis
+!     type(C_PTR)                    :: ptr
+!  end type gsFBasis
+
+!  type, bind(c) :: gsFGeometry
+!     type(C_PTR)                    :: ptr
+!  end type gsFGeometry
+
+!  type, bind(c) :: gsFGeometryTransform
+!     type(C_PTR)                    :: ptr
+!  end type gsFGeometryTransform
+
+!  type, bind(c) :: gsFKnotVector
+!     type(C_PTR)                    :: ptr
+!  end type gsFKnotVector
+
+!------------------------------------------------------------------------------------------------------------
+
    interface
 
-      function gsCReadFile(filename) bind(c)
+!------------------------------------------------------------------------------------------------------------
+!  #include <gsCInterface/gsCMatrix.h>
+!------------------------------------------------------------------------------------------------------------
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT gsCMatrix * gsMatrix_create(void);
+
+      function gsMatrix_create( ) bind(c,name='gsMatrix_create')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsMatrix_create
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR)                  :: gsMatrix_create
+      end function gsMatrix_create
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT gsCMatrix * gsMatrix_create_rc (int rows, int cols);
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT gsCMatrix * gsMatrix_create_rcd(int rows, int cols, double * data);
+
+      function gsMatrix_create_rcd(rows, cols, data ) bind(c,name='gsMatrix_create_rcd')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsMatrix_create_rcd
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR)                  :: gsMatrix_create_rcd
+         integer(C_INT),   value      :: rows, cols
+         real(C_DOUBLE)               :: data(*)
+      end function gsMatrix_create_rcd
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT void gsMatrix_delete(gsCMatrix * m);
+
+      subroutine gsMatrix_delete(m) bind(c,name='gsMatrix_delete')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsMatrix_delete
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR),      value      :: m
+      end subroutine gsMatrix_delete
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT void gsMatrix_print(gsCMatrix * m);
+
+      subroutine gsMatrix_print(m) bind(c,name='gsMatrix_print')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsMatrix_print
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR),      value      :: m
+      end subroutine gsMatrix_print
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT double* gsMatrix_data(gsCMatrix * m);
+
+      function gsMatrix_data(m) bind(c,name='gsMatrix_data')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsMatrix_data
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR)                  :: gsMatrix_data
+         type(C_PTR),      value      :: m
+      end function gsMatrix_data
+
+!     GISMO_EXPORT void gsMatrix_transposeInPlace(gsCMatrix * m);
+!     GISMO_EXPORT int gsMatrix_rows(gsCMatrix * m);
+!     GISMO_EXPORT int gsMatrix_cols(gsCMatrix * m);
+!     GISMO_EXPORT void gsMatrix_setZero(gsCMatrix * m);
+    
+!------------------------------------------------------------------------------------------------------------
+!  #include <gsCInterface/gsCMatrixInt.h>
+!------------------------------------------------------------------------------------------------------------
+
+!------------------------------------------------------------------------------------------------------------
+!  #include <gsCInterface/gsCVector.h>
+!------------------------------------------------------------------------------------------------------------
+
+!------------------------------------------------------------------------------------------------------------
+!  #include <gsCInterface/gsCVectorInt.h>
+!------------------------------------------------------------------------------------------------------------
+
+!------------------------------------------------------------------------------------------------------------
+!  #include <gsCInterface/gsCKnotVector.h>
+!------------------------------------------------------------------------------------------------------------
+
+!------------------------------------------------------------------------------------------------------------
+!  #include <gsCInterface/gsCFunctionSet.h>
+!------------------------------------------------------------------------------------------------------------
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT void gsFunctionSet_delete(gsCFunctionSet * ptr);
+
+      subroutine gsFunctionSet_delete( fs ) bind(c,name='gsFunctionSet_delete')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsFunctionSet_delete
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR),      value      :: fs
+      end subroutine gsFunctionSet_delete
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT void gsFunctionSet_print(gsCFunctionSet * fs);
+
+      subroutine gsFunctionSet_print(fs) bind(c,name='gsFunctionSet_print')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsFunctionSet_print
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR),      value      :: fs
+      end subroutine gsFunctionSet_print
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT int gsFunctionSet_domainDim(gsCFunctionSet * fs);
+
+      function gsFunctionSet_domainDim(fs) bind(c,name='gsFunctionSet_domainDim')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsFunctionSet_domainDim
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         integer                      :: gsFunctionSet_domainDim
+         type(C_PTR),    value        :: fs
+      end function gsFunctionSet_domainDim
+
+!     GISMO_EXPORT int gsFunctionSet_targetDim(gsCFunctionSet * fs);
+
+!     GISMO_EXPORT gsCBasis * gsFunctionSet_basis(gsCFunctionSet * fs, int i);
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT void gsFunctionSet_eval_into(gsCFunctionSet * fs,
+!                                               gsCMatrix * u,
+!                                               gsCMatrix * result);
+
+      subroutine gsFunctionSet_eval_into(fs, u, result) bind(c,name='gsFunctionSet_eval_into')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsFunctionSet_eval_into
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR),    value        :: fs
+         type(C_PTR),    value        :: u
+         type(C_PTR),    value        :: result
+      end subroutine gsFunctionSet_eval_into
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT void gsFunctionSet_deriv_into(gsCFunctionSet * fs,
+!                                                gsCMatrix * u,
+!                                                gsCMatrix * result);
+
+!     GISMO_EXPORT void gsFunctionSet_normal_into(gsCFunctionSet * fs,
+!                                                 gsCMatrix * u,
+!                                                 gsCMatrix * result);
+
+!------------------------------------------------------------------------------------------------------------
+!  #include <gsCInterface/gsCMultiPatch.h>
+!------------------------------------------------------------------------------------------------------------
+
+!------------------------------------------------------------------------------------------------------------
+!  #include <gsCInterface/gsCBasis.h>
+!------------------------------------------------------------------------------------------------------------
+
+!------------------------------------------------------------------------------------------------------------
+!  #include <gsCInterface/gsCGeometry.h>
+!------------------------------------------------------------------------------------------------------------
+
+!------------------------------------------------------------------------------------------------------------
+!  #include <gsCInterface/gsCReadFile.h>
+!------------------------------------------------------------------------------------------------------------
+
+      function gsCReadFile(filename) bind(c,name='gsCReadFile')
 #ifdef _WIN32
          !dir$ attributes stdcall     :: gsCReadFile
 #endif
@@ -25,75 +251,7 @@
          character(len=1,kind=C_CHAR) :: filename(*)
       end function gsCReadFile
 
-     function domainDim(g) bind(c)
-#ifdef _WIN32
-         !dir$ attributes stdcall     :: domainDim
-#endif
-         use, intrinsic               :: iso_c_binding
-         implicit none
-         integer(c_int)              :: domainDim
-	 type(c_ptr)                  :: g
-      end function domainDim
-
-	subroutine eval_into(fs,u,result) bind(c)
-#ifdef _WIN32
-         !dir$ attributes stdcall     :: eval_into
-#endif
-         use, intrinsic               :: iso_c_binding
-         implicit none
-         type(c_ptr)                  :: fs
-	 type(c_ptr)                  :: u
-	 type(c_ptr)                  :: result
-      end subroutine eval_into
-
-	subroutine deriv_into(fs,u,result) bind(c)
-#ifdef _WIN32
-         !dir$ attributes stdcall     :: deriv_into
-#endif
-         use, intrinsic               :: iso_c_binding
-         implicit none
-         type(c_ptr)                  :: fs
-	 type(c_ptr)                  :: u
-	 type(c_ptr)                  :: result
-      end subroutine deriv_into
-
-      function gsMatrix_create() bind(c)
-#ifdef _WIN32
-         !dir$ attributes stdcall     :: gsMatrix_create
-#endif
-         use, intrinsic               :: iso_c_binding
-         implicit none
-         type(c_ptr)                  :: gsMatrix_create
-      end function gsMatrix_create
-
-      function gsMatrix_data(m) bind(c)
-#ifdef _WIN32
-         !dir$ attributes stdcall     :: gsMatrix_create
-#endif
-         use, intrinsic               :: iso_c_binding
-         implicit none
-         type(c_ptr)                  :: m
-         type(c_ptr)                  :: gsMatrix_data
-      end function gsMatrix_data
-
-      function gsMatrix_create_rcd(r,c,data) bind(c)
-#ifdef _WIN32
-         !dir$ attributes stdcall     :: gsMatrix_create
-#endif
-         use, intrinsic               :: iso_c_binding
-         implicit none
-         type(c_ptr)                  :: gsMatrix_create_rcd
-         integer(c_int), value       :: r, c
-         type(c_ptr)                  :: data
-      end function gsMatrix_create_rcd
-
-      subroutine gsMatrix_delete(m) bind(c)
-#ifdef _WIN32
-         !dir$ attributes stdcall     :: gsMatrix_delete
-#endif
-         use, intrinsic              :: iso_c_binding
-         implicit none
-	 type(c_ptr)                  :: m
-      end subroutine gsMatrix_delete
+!  end <gsCInterface/gsCReadfile.h>
+!------------------------------------------------------------------------------------------------------------
 
    end interface
