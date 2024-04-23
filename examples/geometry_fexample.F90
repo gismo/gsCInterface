@@ -22,7 +22,7 @@ program geometry_fexample
    ! TODO: input option for xml-file?
 
    write(*,'(2(a,f5.1),a,i3)') 'reading XML for tensor B-spline'
-   some_file = 'optional/gsWRContact/examples/sw_crossing/sw_tp.xml' // C_NULL_CHAR
+   some_file = 'sw_tp.xml' // C_NULL_CHAR
    g = gsCReadFile(some_file)
 
    write(*,'(a,i3)') 'done, g.dim=', gsFunctionSet_domainDim(g)
