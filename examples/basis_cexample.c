@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
     udata[3]=1.00;
     gsCMatrix * u = gsMatrix_create_rcd(1,4,udata);
     gsCMatrix * result = gsMatrix_create();
-    eval_into(b, u, result);
+    gsFunctionSet_eval_into(b, u, result);
     printf("Matrix with  %d rows and %d columns:\n", rows(result), cols(result) );
     print(result);
     printf("\n");
