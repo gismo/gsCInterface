@@ -18,6 +18,11 @@ extern "C"
     GISMO_EXPORT gsCGeometry* gsTHBSpline3_create(gsCBasis* b, gsCMatrix * coef);
     GISMO_EXPORT gsCGeometry* gsTHBSpline4_create(gsCBasis* b, gsCMatrix * coef);
 
+    GISMO_EXPORT gsCGeometry* gsHBSpline1_create(gsCBasis* b, gsCMatrix * coef);
+    GISMO_EXPORT gsCGeometry* gsHBSpline2_create(gsCBasis* b, gsCMatrix * coef);
+    GISMO_EXPORT gsCGeometry* gsHBSpline3_create(gsCBasis* b, gsCMatrix * coef);
+    GISMO_EXPORT gsCGeometry* gsHBSpline4_create(gsCBasis* b, gsCMatrix * coef);
+
     GISMO_EXPORT gsCBasis* gsGeometry_basis(gsCGeometry * g);
     
     GISMO_EXPORT void gsGeometry_coefs_into(gsCGeometry * g, gsCMatrix * coef);

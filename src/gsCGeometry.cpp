@@ -68,6 +68,34 @@ GISMO_EXPORT gsCGeometry* gsTHBSpline4_create(gsCBasis* b, gsCMatrix * coefs)
     return RICAST_CG(new gismo::gsTHBSpline<4,double>(*basis_ptr,*m));
 }
 
+GISMO_EXPORT gsCGeometry* gsHBSpline1_create(gsCBasis* b, gsCMatrix * coefs)
+{
+    auto * basis_ptr = reinterpret_cast< gismo::gsHBSplineBasis<1,double>* >(b);
+    auto * m = RICAST_M(coefs);
+    return RICAST_CG(new gismo::gsHBSpline<1,double>(*basis_ptr,*m));
+}
+
+GISMO_EXPORT gsCGeometry* gsHBSpline2_create(gsCBasis* b, gsCMatrix * coefs)
+{
+    auto * basis_ptr = reinterpret_cast< gismo::gsHBSplineBasis<2,double>* >(b);
+    auto * m = RICAST_M(coefs);
+    return RICAST_CG(new gismo::gsHBSpline<2,double>(*basis_ptr,*m));
+}
+
+GISMO_EXPORT gsCGeometry* gsHBSpline3_create(gsCBasis* b, gsCMatrix * coefs)
+{
+    auto * basis_ptr = reinterpret_cast< gismo::gsHBSplineBasis<3,double>* >(b);
+    auto * m = RICAST_M(coefs);
+    return RICAST_CG(new gismo::gsHBSpline<3,double>(*basis_ptr,*m));
+}
+
+GISMO_EXPORT gsCGeometry* gsHBSpline4_create(gsCBasis* b, gsCMatrix * coefs)
+{
+    auto * basis_ptr = reinterpret_cast< gismo::gsHBSplineBasis<4,double>* >(b);
+    auto * m = RICAST_M(coefs);
+    return RICAST_CG(new gismo::gsHBSpline<4,double>(*basis_ptr,*m));
+}
+
 GISMO_EXPORT gsCBasis* gsGeometry_basis(gsCGeometry * g)
 { return RICAST_CB(&RICAST_G(g)->basis()); }
 

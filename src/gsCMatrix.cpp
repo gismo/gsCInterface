@@ -21,7 +21,7 @@ GISMO_EXPORT void gsMatrix_print(gsCMatrix * m)
 GISMO_EXPORT double * gsMatrix_data(gsCMatrix * m)
 { return RICAST_M(m)->data(); }
 
-GISMO_EXPORT void transposeInPlace(gsCMatrix * m)
+GISMO_EXPORT void gsMatrix_transposeInPlace(gsCMatrix * m)
 { return RICAST_M(m)->transposeInPlace(); }
 
 GISMO_EXPORT int gsMatrix_rows(gsCMatrix * m)

@@ -21,14 +21,14 @@ GISMO_EXPORT void gsVectorInt_print(gsCVectorInt * m)
 GISMO_EXPORT int * gsVectorInt_data(gsCVectorInt * m)
 { return RICAST_Vi(m)->data(); }
 
-GISMO_EXPORT void gsCVectorInt_transposeInPlace(gsCVectorInt * m)
+GISMO_EXPORT void gsVectorInt_transposeInPlace(gsCVectorInt * m)
 { return RICAST_Vi(m)->transposeInPlace(); }
 
-GISMO_EXPORT int gsCVectorInt_rows(gsCVectorInt * m)
+GISMO_EXPORT int gsVectorInt_rows(gsCVectorInt * m)
 { return RICAST_Vi(m)->rows(); }
 
-GISMO_EXPORT int gsCVectorInt_cols(gsCVectorInt * m)
+GISMO_EXPORT int gsVectorInt_cols(gsCVectorInt * m)
 { return RICAST_Vi(m)->cols(); }
 
-GISMO_EXPORT void gsCVectorInt_setZero(gsCVectorInt * m)
+GISMO_EXPORT void gsVectorInt_setZero(gsCVectorInt * m)
 { RICAST_Vi(m)->setZero(); }

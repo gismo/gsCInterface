@@ -9,7 +9,7 @@ extern "C"
     GISMO_EXPORT int gsFunctionSet_domainDim(gsCFunctionSet * fs);
     GISMO_EXPORT int gsFunctionSet_targetDim(gsCFunctionSet * fs);
 
-    GISMO_EXPORT gsCBasis * gsFunctionSet_basis(gsCFunctionSet * fs, int i);
+    GISMO_EXPORT gsCMatrix* gsFunctionSet_support(gsCFunctionSet * fs);
 
     GISMO_EXPORT void gsFunctionSet_eval_into(gsCFunctionSet * fs,
                                               gsCMatrix * u,
@@ -18,10 +18,6 @@ extern "C"
     GISMO_EXPORT void gsFunctionSet_deriv_into(gsCFunctionSet * fs,
                                                gsCMatrix * u,
                                                gsCMatrix * result);
-
-    GISMO_EXPORT void gsFunctionSet_normal_into(gsCFunctionSet * fs,
-                                                gsCMatrix * u,
-                                                gsCMatrix * result);
 
 #ifdef __cplusplus
 }
