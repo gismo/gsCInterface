@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
     // evaluate positions (x,y,z) at given parameter values
 
     gsCMatrix * out_p = gsMatrix_create();
-    eval_into(G, uvm, out_p);
+    gsFunctionSet_eval_into(G, uvm, out_p);
     double* out_data = data(out_p);
     int out_rows = rows(out_p), out_cols = cols(out_p);
     
@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
 
     // evaluate first derivatives d(x,y,z)/du and d(x,y,z)/dv at given parameter values
     gsCMatrix * out_d = gsMatrix_create();
-    deriv_into(G, uvm, out_d);
+    gsFunctionSet_deriv_into(G, uvm, out_d);
     out_data = data(out_d);
     out_rows = rows(out_d);
     out_cols = cols(out_d);

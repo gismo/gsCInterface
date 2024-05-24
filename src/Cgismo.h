@@ -41,10 +41,10 @@
                          gsCMatrix *   : gsMatrix_data,        \
                          gsCMatrixInt *: gsMatrixInt_data)(X)
 
-#define transposeInPlace(X) _Generic((X),                                            \
-                                     gsCVector *   : gsVector_transposeInPlace,      \
-                                     gsCVectorInt *: gsVectorInt_transposeInPlace,   \
-                                     gsCMatrix *   : gsMatrix_transposeInPlace,      \
+#define transposeInPlace(X) _Generic((X),                                          \
+                                     gsCVector *   : gsVector_transposeInPlace,    \
+                                     gsCVectorInt *: gsVectorInt_transposeInPlace, \
+                                     gsCMatrix *   : gsMatrix_transposeInPlace,    \
                                      gsCMatrixInt *: gsMatrixInt_transposeInPlace)(X)
 
 #define setZero(X) _Generic((X),                                  \
