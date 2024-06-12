@@ -13,21 +13,21 @@
 
 program geometry_fexample
    use, intrinsic  :: iso_c_binding
+   use Fgismo
    implicit none
-#  include "gsCInterface/gismo.ifc"
    character(len=80, kind=C_CHAR) :: some_file
-   type(c_ptr)        :: g
+   type(t_gsgeometry) :: g
    integer            :: nu,  nv
 
    ! TODO: input option for xml-file?
 
    write(*,'(2(a,f5.1),a,i3)') 'reading XML for tensor B-spline'
    some_file = 'sw_tp.xml' // C_NULL_CHAR
-   g = gsCReadFile(some_file)
+   call f_gsCReadFile(some_file, g)
 
-   write(*,'(a,i3)') 'done, g.dim=', gsFunctionSet_domainDim(g)
+   write(*,'(a,i3)') 'done, g.dim=', f_gsFunctionSet_domainDim(g)
 
-   call gsFunctionSet_print(g)
+   call f_gsFunctionSet_print(g)
 
    if (.true.) then
       call show_basic_usage( g )
@@ -37,7 +37,7 @@ program geometry_fexample
       call show_recover_points( g )
    endif
 
-   call gsFunctionSet_delete(g)
+   call f_gsfunctionset_delete(g)
    write(*,*) 'done.'
 
 end program geometry_fexample
@@ -49,9 +49,8 @@ subroutine show_basic_usage( g )
    use, intrinsic  :: iso_c_binding
    use Fgismo
    implicit none
-#  include "gsCInterface/gismo.ifc"
 !--subroutine arguments
-   type(c_ptr)                  :: g
+   type(t_gsgeometry)           :: g
 !--local variables
    integer(C_INT)               :: nRows, nCols, out_rows, out_cols, irow, icol, icoor, ipar
    type(t_gsmatrix)             :: uvm, xyzm
@@ -75,8 +74,7 @@ subroutine show_basic_usage( g )
 
    uvm  = f_gsmatrix_create_rcd(nRows, nCols, uv)
    xyzm = f_gsmatrix_create()
-   call gsFunctionSet_eval_into(G, uvm%c_mat, xyzm%c_mat)
-   call f_gsmatrix_update_data_ptr( xyzm )
+   call f_gsFunctionSet_eval_into(G, uvm, xyzm)
    ! call f_gsmatrix_print(xyzm)
 
    ! show output data
@@ -102,9 +100,8 @@ subroutine show_recover_points( g )
    use, intrinsic  :: iso_c_binding
    use Fgismo
    implicit none
-#  include "gsCInterface/gismo.ifc"
 !--subroutine arguments
-   type(c_ptr)                  :: g
+   type(t_gsgeometry)           :: g
 !--local variables
    integer(C_INT), parameter    :: XDIR = 0, YDIR = 1, ZDIR = 2
    integer(C_INT)               :: nCols, irow, icol, out_rows, out_cols
@@ -135,9 +132,7 @@ subroutine show_recover_points( g )
    uvm  = f_gsmatrix_create()
 
    eps = 1d-6
-   call gsGeometry_recoverPoints(G, uvm%c_mat, xyzm%c_mat, ZDIR, eps)
-   call f_gsmatrix_update_data_ptr( uvm )
-   call f_gsmatrix_update_data_ptr( xyzm )
+   call f_gsGeometry_recoverPoints(G, uvm, xyzm, ZDIR, eps)
 
    ! print output data
 
@@ -162,4 +157,3 @@ subroutine show_recover_points( g )
 end subroutine show_recover_points
 
 !-----------------------------------------------------------------------------------------------------------
-
