@@ -47,15 +47,15 @@ end program geometry_fexample
 subroutine show_basic_usage( g )
 !--purpose: evaluate positions (x,y,z) and derivatives d[xyz]/d[uv] at some arbitrary (u,v) \in [0,1)^2
    use, intrinsic  :: iso_c_binding
+   use Fgismo
    implicit none
 #  include "gsCInterface/gismo.ifc"
 !--subroutine arguments
    type(c_ptr)                  :: g
 !--local variables
    integer(C_INT)               :: nRows, nCols, out_rows, out_cols, irow, icol, icoor, ipar
-   type(C_PTR)                  :: uvm, xyzm, xyz_p
+   type(t_gsmatrix)             :: uvm, xyzm
    real(C_DOUBLE), dimension(:,:), allocatable :: uv
-   real(C_DOUBLE), dimension(:,:), pointer     :: xyz
    character(len=1), parameter  :: c_param(2) = (/ 'u', 'v' /)
    character(len=1), parameter  :: c_coor(3)  = (/ 'x', 'y', 'z' /)
 
@@ -73,27 +73,25 @@ subroutine show_basic_usage( g )
 
    ! evaluate positions (x,y,z) at given parameter values
 
-   uvm  = gsMatrix_create_rcd(nRows, nCols, uv)
-   xyzm = gsMatrix_create()
-   call gsFunctionSet_eval_into(G, uvm, xyzm)
-   ! call gsMatrix_print(xyzm)
+   uvm  = f_gsmatrix_create_rcd(nRows, nCols, uv)
+   xyzm = f_gsmatrix_create()
+   call gsFunctionSet_eval_into(G, uvm%c_mat, xyzm%c_mat)
+   call f_gsmatrix_update_data_ptr( xyzm )
+   ! call f_gsmatrix_print(xyzm)
 
-   ! get pointer to matrix data
+   ! show output data
 
-   out_rows = gsMatrix_rows(xyzm)
-   out_cols = gsMatrix_cols(xyzm)
-   xyz_p    = gsMatrix_data(xyzm)
-   call C_F_POINTER(xyz_p, xyz, (/ out_rows, out_cols /))
+   out_rows = f_gsmatrix_rows(xyzm)
+   out_cols = f_gsmatrix_cols(xyzm)
 
    write(*,'(3(a,i3))') 'Got #rows =', out_rows, ', #cols =', out_cols
    do irow = 1, out_rows
-      write(*,'(3a,10f10.3)') '  ',c_coor(irow),': ', (xyz(irow,icol), icol=1,out_cols)
+      write(*,'(3a,10f10.3)') '  ',c_coor(irow),': ', (xyzm%data(irow,icol), icol=1,out_cols)
    enddo
 
-   call gsMatrix_delete(uvm)
-   call gsMatrix_delete(xyzm)
-   ! write(*,*) 'deallocate uv'
-   ! deallocate(uv)
+   call f_gsmatrix_delete(uvm)
+   call f_gsmatrix_delete(xyzm)
+   deallocate(uv)
 
 end subroutine show_basic_usage
 
@@ -102,6 +100,7 @@ end subroutine show_basic_usage
 subroutine show_recover_points( g )
 !--purpose: for some positions (x,y), determine z on the surface and corresponding (u,v)
    use, intrinsic  :: iso_c_binding
+   use Fgismo
    implicit none
 #  include "gsCInterface/gismo.ifc"
 !--subroutine arguments
@@ -111,8 +110,7 @@ subroutine show_recover_points( g )
    integer(C_INT)               :: nCols, irow, icol, out_rows, out_cols
    real(C_DOUBLE)               :: eps
    real(C_DOUBLE), dimension(:,:), allocatable :: xyz
-   real(C_DOUBLE), dimension(:,:), pointer     :: uv
-   type(C_PTR)                  :: uvm, xyzm, uv_p
+   type(t_gsmatrix)             :: uvm, xyzm
    character(len=1), parameter  :: c_param(2) = (/ 'u', 'v' /)
    character(len=1), parameter  :: c_coor(3)  = (/ 'x', 'y', 'z' /)
 
@@ -133,32 +131,32 @@ subroutine show_recover_points( g )
 
    ! evaluate positions (x,y,z) at given parameter values
 
-   xyzm = gsMatrix_create_rcd(3, ncols, xyz)
-   uvm  = gsMatrix_create()
+   xyzm = f_gsmatrix_create_rcd(3, ncols, xyz)
+   uvm  = f_gsmatrix_create()
 
    eps = 1d-6
-   call gsGeometry_recoverPoints(G, uvm, xyzm, ZDIR, eps)
+   call gsGeometry_recoverPoints(G, uvm%c_mat, xyzm%c_mat, ZDIR, eps)
+   call f_gsmatrix_update_data_ptr( uvm )
+   call f_gsmatrix_update_data_ptr( xyzm )
 
-   ! get pointer to matrix data
+   ! print output data
 
-   out_rows = gsMatrix_rows(uvm)
-   out_cols = gsMatrix_cols(uvm)
-   uv_p     = gsMatrix_data(uvm)
-   call C_F_POINTER(uv_p, uv, (/ out_rows, out_cols /))
+   out_rows = f_gsmatrix_rows(uvm)
+   out_cols = f_gsmatrix_cols(uvm)
 
    write(*,'(a)') 'Output (u,v) =' 
    do irow = 1, 2
-      write(*,'(3a,10f10.3)') '  ',c_param(irow),': ', (uv(irow,icol), icol=1, nCols)
+      write(*,'(3a,10f10.3)') '  ',c_param(irow),': ', (uvm%data(irow,icol), icol=1, nCols)
    enddo
    write(*,'(a)') 'Output (x,y,z) =' 
    do irow = 1, 3
-      write(*,'(3a,10f10.3)') '  ',c_coor(irow),': ', (xyz(irow,icol), icol=1, nCols)
+      write(*,'(3a,10f10.3)') '  ',c_coor(irow),': ', (xyzm%data(irow,icol), icol=1, nCols)
    enddo
 
    ! clean up input data, matrices used
 
-   call gsMatrix_delete(xyzm)
-   call gsMatrix_delete(uvm)
+   call f_gsmatrix_delete(xyzm)
+   call f_gsmatrix_delete(uvm)
    deallocate(xyz)
 
 end subroutine show_recover_points
