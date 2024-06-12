@@ -29,6 +29,18 @@
 !     GISMO_EXPORT gsCGeometry* gsTHBSpline4_create(gsCBasis* b, gsCMatrix * coef);
 
 !------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT gsCGeometry* gsHBSpline1_create(gsCBasis* b, gsCMatrix * coef);
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT gsCGeometry* gsHBSpline2_create(gsCBasis* b, gsCMatrix * coef);
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT gsCGeometry* gsHBSpline3_create(gsCBasis* b, gsCMatrix * coef);
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT gsCGeometry* gsHBSpline4_create(gsCBasis* b, gsCMatrix * coef);
+
+!------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT gsCBasis* gsGeometry_basis(gsCGeometry * g);
 
 !------------------------------------------------------------------------------------------------------------
