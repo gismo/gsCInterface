@@ -1,9 +1,4 @@
 
-
-#ifdef __cplusplus
-}
-#endif
-
 !------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT void gsFunctionSet_delete(gsCFunctionSet * ptr);
 
@@ -45,7 +40,7 @@
 !     GISMO_EXPORT int gsFunctionSet_targetDim(gsCFunctionSet * fs);
 
 !------------------------------------------------------------------------------------------------------------
-!     GISMO_EXPORT gsCMatrix* gsFunctionSet_support(gsCFunctionSet * fs);
+!     GISMO_EXPORT gsCBasis * gsFunctionSet_basis(gsCFunctionSet * fs, int i);
 
 !------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT void gsFunctionSet_eval_into(gsCFunctionSet * fs,
@@ -67,5 +62,10 @@
 !     GISMO_EXPORT void gsFunctionSet_deriv_into(gsCFunctionSet * fs,
 !                                                gsCMatrix * u,
 !                                                gsCMatrix * result);
+
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT void gsFunctionSet_normal_into(gsCFunctionSet * fs,
+!                                                 gsCMatrix * u,
+!                                                 gsCMatrix * result);
 
 !------------------------------------------------------------------------------------------------------------

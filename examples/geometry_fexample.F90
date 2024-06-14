@@ -13,21 +13,21 @@
 
 program geometry_fexample
    use, intrinsic  :: iso_c_binding
-   use Fgismo
    implicit none
+#  include "gsCInterface/gismo.ifc"
    character(len=80, kind=C_CHAR) :: some_file
-   type(t_gsgeometry) :: g
+   type(c_ptr)        :: g
    integer            :: nu,  nv
 
    ! TODO: input option for xml-file?
 
    write(*,'(2(a,f5.1),a,i3)') 'reading XML for tensor B-spline'
    some_file = 'sw_tp.xml' // C_NULL_CHAR
-   call f_gsCReadFile(some_file, g)
+   g = gsCReadFile(some_file)
 
-   write(*,'(a,i3)') 'done, g.dim=', f_gsFunctionSet_domainDim(g)
+   write(*,'(a,i3)') 'done, g.dim=', gsFunctionSet_domainDim(g)
 
-   call f_gsFunctionSet_print(g)
+   call gsFunctionSet_print(g)
 
    if (.true.) then
       call show_basic_usage( g )
@@ -37,7 +37,7 @@ program geometry_fexample
       call show_recover_points( g )
    endif
 
-   call f_gsfunctionset_delete(g)
+   call gsFunctionSet_delete(g)
    write(*,*) 'done.'
 
 end program geometry_fexample
@@ -47,14 +47,15 @@ end program geometry_fexample
 subroutine show_basic_usage( g )
 !--purpose: evaluate positions (x,y,z) and derivatives d[xyz]/d[uv] at some arbitrary (u,v) \in [0,1)^2
    use, intrinsic  :: iso_c_binding
-   use Fgismo
    implicit none
+#  include "gsCInterface/gismo.ifc"
 !--subroutine arguments
-   type(t_gsgeometry)           :: g
+   type(c_ptr)                  :: g
 !--local variables
    integer(C_INT)               :: nRows, nCols, out_rows, out_cols, irow, icol, icoor, ipar
-   type(t_gsmatrix)             :: uvm, xyzm
+   type(C_PTR)                  :: uvm, xyzm, xyz_p
    real(C_DOUBLE), dimension(:,:), allocatable :: uv
+   real(C_DOUBLE), dimension(:,:), pointer     :: xyz
    character(len=1), parameter  :: c_param(2) = (/ 'u', 'v' /)
    character(len=1), parameter  :: c_coor(3)  = (/ 'x', 'y', 'z' /)
 
@@ -72,24 +73,27 @@ subroutine show_basic_usage( g )
 
    ! evaluate positions (x,y,z) at given parameter values
 
-   uvm  = f_gsmatrix_create_rcd(nRows, nCols, uv)
-   xyzm = f_gsmatrix_create()
-   call f_gsFunctionSet_eval_into(G, uvm, xyzm)
-   ! call f_gsmatrix_print(xyzm)
+   uvm  = gsMatrix_create_rcd(nRows, nCols, uv)
+   xyzm = gsMatrix_create()
+   call gsFunctionSet_eval_into(G, uvm, xyzm)
+   ! call gsMatrix_print(xyzm)
 
-   ! show output data
+   ! get pointer to matrix data
 
-   out_rows = f_gsmatrix_rows(xyzm)
-   out_cols = f_gsmatrix_cols(xyzm)
+   out_rows = gsMatrix_rows(xyzm)
+   out_cols = gsMatrix_cols(xyzm)
+   xyz_p    = gsMatrix_data(xyzm)
+   call C_F_POINTER(xyz_p, xyz, (/ out_rows, out_cols /))
 
    write(*,'(3(a,i3))') 'Got #rows =', out_rows, ', #cols =', out_cols
    do irow = 1, out_rows
-      write(*,'(3a,10f10.3)') '  ',c_coor(irow),': ', (xyzm%data(irow,icol), icol=1,out_cols)
+      write(*,'(3a,10f10.3)') '  ',c_coor(irow),': ', (xyz(irow,icol), icol=1,out_cols)
    enddo
 
-   call f_gsmatrix_delete(uvm)
-   call f_gsmatrix_delete(xyzm)
-   deallocate(uv)
+   call gsMatrix_delete(uvm)
+   call gsMatrix_delete(xyzm)
+   ! write(*,*) 'deallocate uv'
+   ! deallocate(uv)
 
 end subroutine show_basic_usage
 
@@ -98,16 +102,17 @@ end subroutine show_basic_usage
 subroutine show_recover_points( g )
 !--purpose: for some positions (x,y), determine z on the surface and corresponding (u,v)
    use, intrinsic  :: iso_c_binding
-   use Fgismo
    implicit none
+#  include "gsCInterface/gismo.ifc"
 !--subroutine arguments
-   type(t_gsgeometry)           :: g
+   type(c_ptr)                  :: g
 !--local variables
    integer(C_INT), parameter    :: XDIR = 0, YDIR = 1, ZDIR = 2
    integer(C_INT)               :: nCols, irow, icol, out_rows, out_cols
    real(C_DOUBLE)               :: eps
    real(C_DOUBLE), dimension(:,:), allocatable :: xyz
-   type(t_gsmatrix)             :: uvm, xyzm
+   real(C_DOUBLE), dimension(:,:), pointer     :: uv
+   type(C_PTR)                  :: uvm, xyzm, uv_p
    character(len=1), parameter  :: c_param(2) = (/ 'u', 'v' /)
    character(len=1), parameter  :: c_coor(3)  = (/ 'x', 'y', 'z' /)
 
@@ -128,32 +133,35 @@ subroutine show_recover_points( g )
 
    ! evaluate positions (x,y,z) at given parameter values
 
-   xyzm = f_gsmatrix_create_rcd(3, ncols, xyz)
-   uvm  = f_gsmatrix_create()
+   xyzm = gsMatrix_create_rcd(3, ncols, xyz)
+   uvm  = gsMatrix_create()
 
    eps = 1d-6
-   call f_gsGeometry_recoverPoints(G, uvm, xyzm, ZDIR, eps)
+   call gsGeometry_recoverPoints(G, uvm, xyzm, ZDIR, eps)
 
-   ! print output data
+   ! get pointer to matrix data
 
-   out_rows = f_gsmatrix_rows(uvm)
-   out_cols = f_gsmatrix_cols(uvm)
+   out_rows = gsMatrix_rows(uvm)
+   out_cols = gsMatrix_cols(uvm)
+   uv_p     = gsMatrix_data(uvm)
+   call C_F_POINTER(uv_p, uv, (/ out_rows, out_cols /))
 
    write(*,'(a)') 'Output (u,v) =' 
    do irow = 1, 2
-      write(*,'(3a,10f10.3)') '  ',c_param(irow),': ', (uvm%data(irow,icol), icol=1, nCols)
+      write(*,'(3a,10f10.3)') '  ',c_param(irow),': ', (uv(irow,icol), icol=1, nCols)
    enddo
    write(*,'(a)') 'Output (x,y,z) =' 
    do irow = 1, 3
-      write(*,'(3a,10f10.3)') '  ',c_coor(irow),': ', (xyzm%data(irow,icol), icol=1, nCols)
+      write(*,'(3a,10f10.3)') '  ',c_coor(irow),': ', (xyz(irow,icol), icol=1, nCols)
    enddo
 
    ! clean up input data, matrices used
 
-   call f_gsmatrix_delete(xyzm)
-   call f_gsmatrix_delete(uvm)
+   call gsMatrix_delete(xyzm)
+   call gsMatrix_delete(uvm)
    deallocate(xyz)
 
 end subroutine show_recover_points
 
 !-----------------------------------------------------------------------------------------------------------
+

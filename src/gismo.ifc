@@ -64,15 +64,15 @@
 
    interface
 
-#     include <gsCInterface/gsCMatrix.ifc>
-#     include <gsCInterface/gsCMatrixInt.ifc>
-#     include <gsCInterface/gsCVector.ifc>
-#     include <gsCInterface/gsCVectorInt.ifc>
-#     include <gsCInterface/gsCKnotVector.ifc>
-#     include <gsCInterface/gsCFunctionSet.ifc>
-#     include <gsCInterface/gsCMultiPatch.ifc>
-#     include <gsCInterface/gsCBasis.ifc>
-#     include <gsCInterface/gsCGeometry.ifc>
-#     include <gsCInterface/gsCReadFile.ifc>
+#include <gsCInterface/gsCMatrix.ifc>
+#include <gsCInterface/gsCMatrixInt.ifc>
+#include <gsCInterface/gsCVector.ifc>
+#include <gsCInterface/gsCVectorInt.ifc>
+#include <gsCInterface/gsCKnotVector.ifc>
+#include <gsCInterface/gsCFunctionSet.ifc>
+#include <gsCInterface/gsCMultiPatch.ifc>
+#include <gsCInterface/gsCBasis.ifc>
+#include <gsCInterface/gsCGeometry.ifc>
+#include <gsCInterface/gsCReadFile.ifc>
 
    end interface

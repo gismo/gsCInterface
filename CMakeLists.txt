@@ -31,8 +31,7 @@ endif()
 # Compile statically the extension
 add_library(${PROJECT_NAME} OBJECT
   ${${PROJECT_NAME}_H}
-  ${${PROJECT_NAME}_CPP}
-  src/Fgismo.F90 )
+  ${${PROJECT_NAME}_CPP} )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
   COMPILE_DEFINITIONS gismo_EXPORTS
