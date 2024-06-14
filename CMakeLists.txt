@@ -56,3 +56,12 @@ add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/geometry_cexample.c)
 if(CMAKE_Fortran_COMPILER)
   add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/geometry_fexample.F90)
 endif()
+
+add_custom_target(C_plugins)
+if(GISMO_PLUGIN_JULIA)
+  add_subdirectory(plugins/Julia)
+endif(GISMO_PLUGIN_JULIA)
+
+if(GISMO_PLUGIN_MATLAB)
+  add_subdirectory(plugins/MATLAB)
+endif(GISMO_PLUGIN_MATLAB)
