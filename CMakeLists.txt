@@ -19,8 +19,11 @@ endif()
 # Apply G+Smo config
 include(gsConfig)
 
-set(CMAKE_Fortran_FLAGS ${CMAKE_Fortran_FLAGS} "/names:lowercase")
-#set(CMAKE_Fortran_FLAGS ${CMAKE_Fortran_FLAGS} "-names lowercase")
+if ( CMAKE_SYSTEM_NAME MATCHES "Linux" )
+   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -names lowercase")
+elseif ( CMAKE_SYSTEM_NAME MATCHES "Windows" )
+   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /names:lowercase")
+endif()
 
 ## Collect files
 aux_header_directory(${CMAKE_CURRENT_SOURCE_DIR}/src ${PROJECT_NAME}_H)
