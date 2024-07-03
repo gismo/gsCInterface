@@ -96,7 +96,7 @@
 #endif
          use, intrinsic               :: iso_c_binding
          implicit none
-         integer                      :: gsMatrix_rows
+         integer(C_INT)               :: gsMatrix_rows
          type(C_PTR),      value      :: m
       end function gsMatrix_rows
 
@@ -109,7 +109,7 @@
 #endif
          use, intrinsic               :: iso_c_binding
          implicit none
-         integer                      :: gsMatrix_cols
+         integer(C_INT)               :: gsMatrix_cols
          type(C_PTR),      value      :: m
       end function gsMatrix_cols
 

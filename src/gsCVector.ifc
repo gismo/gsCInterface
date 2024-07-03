@@ -1,14 +1,128 @@
 
 !------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT gsCVector * gsVector_create(void);
+
+      function gsVector_create( ) bind(c,name='gsVector_create')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsVector_create
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR)                  :: gsVector_create
+      end function gsVector_create
+
+!------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT gsCVector * gsVector_create_r (int rows);
+
+      function gsVector_create_r(rows) bind(c,name='gsVector_create_r')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsVector_create_r
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR)                  :: gsVector_create_r
+         integer(C_INT),   value      :: rows
+      end function gsVector_create_r
+
+!------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT gsCVector * gsVector_create_rd(int rows, double * data);
+
+      function gsVector_create_rd(rows, data) bind(c,name='gsVector_create_rd')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsVector_create_rd
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR)                  :: gsVector_create_rd
+         integer(C_INT),   value      :: rows
+         real(C_DOUBLE)               :: data(*)
+      end function gsVector_create_rd
+
+!------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT void gsVector_delete(gsCVector * m);
+
+      subroutine gsVector_delete(m) bind(c,name='gsVector_delete')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsVector_delete
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR),      value      :: m
+      end subroutine gsVector_delete
+
+!------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT void gsVector_print(gsCVector * m);
+
+      subroutine gsVector_print(m) bind(c,name='gsVector_print')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsVector_print
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR),      value      :: m
+      end subroutine gsVector_print
+
+!------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT double * gsVector_data(gsCVector * m);
 
+      function gsVector_data(m) bind(c,name='gsVector_data')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsVector_data
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR)                  :: gsVector_data
+         type(C_PTR),      value      :: m
+      end function gsVector_data
+
+!------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT void gsVector_transposeInPlace(gsCVector * m);
+
+      subroutine gsVector_transposeInPlace(m) bind(c,name='gsVector_transposeInPlace')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsVector_transposeInPlace
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR),      value      :: m
+      end subroutine gsVector_transposeInPlace
+
+!------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT int gsVector_rows(gsCVector * m);
+
+      function gsVector_rows(m) bind(c,name='gsVector_rows')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsVector_rows
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         integer(C_INT)               :: gsVector_rows
+         type(C_PTR),      value      :: m
+      end function gsVector_rows
+
+!------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT int gsVector_cols(gsCVector * m);
+
+      function gsVector_cols(m) bind(c,name='gsVector_cols')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsVector_cols
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         integer(C_INT)               :: gsVector_cols
+         type(C_PTR),      value      :: m
+      end function gsVector_cols
+
+!------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT void gsVector_setZero(gsCVector * m);
+
+      subroutine gsVector_setZero(m) bind(c,name='gsVector_setZero')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsVector_setZero
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR),      value      :: m
+      end subroutine gsVector_setZero
+
 !------------------------------------------------------------------------------------------------------------
