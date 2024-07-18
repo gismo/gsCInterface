@@ -13,6 +13,11 @@ extern "C"
     GISMO_EXPORT gsCGeometry* gsTensorBSpline3_create(gsCBasis* b, gsCMatrix * coef);
     GISMO_EXPORT gsCGeometry* gsTensorBSpline4_create(gsCBasis* b, gsCMatrix * coef);
 
+    GISMO_EXPORT gsCGeometry* gsNurbs_create(gsCBasis* b, gsCMatrix * coef);
+    GISMO_EXPORT gsCGeometry* gsTensorNurbs2_create(gsCBasis* b, gsCMatrix * coef);
+    GISMO_EXPORT gsCGeometry* gsTensorNurbs3_create(gsCBasis* b, gsCMatrix * coef);
+    GISMO_EXPORT gsCGeometry* gsTensorNurbs4_create(gsCBasis* b, gsCMatrix * coef);
+
     GISMO_EXPORT gsCGeometry* gsTHBSpline1_create(gsCBasis* b, gsCMatrix * coef);
     GISMO_EXPORT gsCGeometry* gsTHBSpline2_create(gsCBasis* b, gsCMatrix * coef);
     GISMO_EXPORT gsCGeometry* gsTHBSpline3_create(gsCBasis* b, gsCMatrix * coef);

@@ -1,4 +1,9 @@
 include("../Gismo/src/Gismo.jl")
+using .Gismo
+
+
+
+
 
 m = Gismo.EigenMatrix(3,3)
 Gismo.setZero(m)

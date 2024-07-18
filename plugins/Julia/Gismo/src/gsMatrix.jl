@@ -8,6 +8,17 @@
 #    return unsafe_wrap(Array{Float64}, gsMatrix_data(m), (gsMatrix_rows(m), gsMatrix_cols(m)))
 #end
 
+"""
+    EigenMatrix()
+
+Creates an empty matrix.
+
+# Example
+
+```jldoctest
+m = EigenMatrix()
+```
+"""
 mutable struct EigenMatrix
     ptr::Ptr{gsCMatrix}
 
@@ -36,6 +47,22 @@ mutable struct EigenMatrix
     end
 end
 
+"""
+    rows(object::EigenMatrix)
+    
+Returns the number of rows in the matrix.
+
+# Arguments
+- `object::EigenMatrix`: the matrix
+
+# Examples
+```jldoctest myEigenMatrix
+julia> m = EigenMatrix(3,3)
+julia> print(rows(m))
+# output
+3
+```
+"""
 function rows(object::EigenMatrix)::Int64
     return ccall((:gsMatrix_rows,libgismo),Cint,(Ptr{gsCMatrix},),object.ptr)
 end

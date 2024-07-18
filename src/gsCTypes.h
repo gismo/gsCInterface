@@ -19,6 +19,7 @@ extern "C"
     typedef struct gsCFunctionSet gsCFunctionSet;
 
     typedef struct gsCFunctionSet gsCMultiPatch;
+    typedef struct gsCFunctionSet gsCMultiBasis;
     typedef struct gsCFunctionSet gsCBasis;
     typedef struct gsCFunctionSet gsCGeometry;
     typedef struct gsCFunctionSet gsCGeometryTransform;

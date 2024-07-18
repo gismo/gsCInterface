@@ -1,7 +1,3 @@
-########################################################################
-# gsBasis
-########################################################################
-
 export
     Basis,
     domainDim,
@@ -24,7 +20,9 @@ export
     addPatch,
     patch
 
-
+########################################################################
+# gsBasis
+########################################################################
 """
 Makes a Gismo Basis
 """
@@ -168,9 +166,11 @@ Refines a basis
 ...
 """
 function refineElements(obj::Basis,boxes::Vector{Cint})::Nothing
-    @assert mod(size(boxes,1),2*domainDim(basis)+1)==0 "Boxes should have size 2*domainDim+1"
+    @assert mod(length(boxes),2*domainDim(obj)+1)==0 "Boxes should have size 2*domainDim+1"
+    print(boxes)
+    print(length(boxes))
     ccall((:gsBasis_refineElements,libgismo),Ptr{gsCBasis},
-            (Ptr{gsCBasis},Ptr{Cint},Cint),obj.ptr,refinement,length(refinement))
+            (Ptr{gsCBasis},Vector{Cint},Cint),obj.ptr,boxes,length(boxes))
 end
 
 """
@@ -463,3 +463,39 @@ end
 ########################################################################
 # gsMultiBasis
 ########################################################################
+
+"""
+Makes a Gismo MultiBasis
+"""
+mutable struct MultiBasis
+    ptr::Ptr{gsCMultiBasis}
+
+    # function MultiBasis(filename::String)
+    #     g = new(ccall((:gsCReadFile,libgismo),Ptr{gsCMultiBasis},(Cstring,),filename) )
+    #     finalizer(destroy, g)
+    #     return g
+    # end
+
+    function MultiBasis()
+        m = new(ccall((:gsMultiBasis_create,libgismo),Ptr{gsCMultiBasis},(),) )
+        finalizer(destroy, m)
+        return m
+    end
+
+    function destroy(m::MultiBasis)
+        ccall((:gsMultiBasis_delete,libgismo),Cvoid,(Ptr{gsCFunctionSet},),m.ptr)
+    end
+end
+
+"""
+Returns the basus of a MultiBasis
+...
+# Arguments
+- `obj::MultiBasis`: a Gismo MultiBasis
+- `i::Int`: the index of the basis
+...
+"""
+function basis(obj::MultiBasis,i::Int)::Basis
+    b = ccall((:gsMultiBasis_basis,libgismo),Ptr{gsCBasis},(Ptr{gsCFunctionSet},Cint),obj.ptr,i)
+    return Basis(b,false)
+end

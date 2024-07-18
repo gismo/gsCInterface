@@ -3,6 +3,24 @@
 # gsTHBSplineBasis
 ########################################################################
 
+"""
+    THBSplineBasis(basis::Basis)
+...
+# Arguments
+- `basis::Basis`: a basis object
+...
+
+# Examples
+```jldoctest
+a = 1
+b = 2
+a + b
+
+# output
+
+3
+```
+"""
 function THBSplineBasis(basis::Basis)::Basis
     if (domainDim(basis)==1)
         b = ccall((:gsTHBSplineBasis1_create,libgismo),Ptr{gsCBasis},(Ptr{gsCBasis},),basis.ptr)

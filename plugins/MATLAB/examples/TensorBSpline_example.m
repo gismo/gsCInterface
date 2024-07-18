@@ -3,12 +3,18 @@ clear all;
 close all;
 clc;
 
-addpath(genpath('../src/'));
-addpath(genpath('../../../optional/gsCInterface/'));
+addpath(genpath('src/'));
+addpath(genpath('../../optional/gsCInterface/'));
 
 KV = gsKnotVector([0,0,0,1,1,1]);
 TBB = gsTensorBSplineBasis(KV,KV);
+
+disp(TBB.size());
+
 TBB.uniformRefine();
+
+disp(TBB.size());
+
 
 coefs = rand(TBB.size(),3);
 TB = gsTensorBSpline(TBB,coefs);

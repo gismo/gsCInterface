@@ -1,6 +1,6 @@
-% @file gsTHBSpline.m
+% @file gsNurbsBasis.m
 %
-%    @brief Matlab wrapper for gsBSplineBasis class
+%    @brief Matlab wrapper for gsNurbsBasis class
 %
 %    This file is part of the G+Smo library.
 %
@@ -10,24 +10,24 @@
 %
 %    Author(s): H.M. Verhelst
 
-classdef gsBSplineBasis < gsBasis
+classdef gsNurbsBasis < gsBasis
 
     methods(Access = public)
 
         % Constructor - Create a new C++ class instance 
-        function this = gsBSplineBasis(varargin)
-            % gsBSplineBasis - construct a gsBSplineBasis object
+        function this = gsNurbsBasis(varargin)
+            % gsNurbsBasis - construct a gsNurbsBasis object
             %
             % Usage:
-            %   bsb = gsBSplineBasis( kv1 )
+            %   bsb = gsNurbsBasis( kv1 )
             %
             % Input:
             %   kv1 - the knot vector
             %
             % Output:
-            %  bsb - the gsBSplineBasis object
+            %  bsb - the gsNurbsBasis object
             %
-            if (~nargin==1 || nargout>1)
+            if (~nargin==2 || nargout>1)
                 error('Invalid number of input and/or output arguments.')
             end
             
@@ -36,11 +36,11 @@ classdef gsBSplineBasis < gsBasis
             elseif (nargin==1)
                 if ( isa(varargin{1},'double') )
                     error('Not implemented');
-                    % this.objectHandle = calllib('libgismo','gsBSplineBasis2_create',varargin{:});
+                    % this.objectHandle = calllib('libgismo','gsNurbsBasis2_create',varargin{:});
 
-                    % this.objectHandle = mex_gsBSplineBasis('constructor', class(varargin{1}), varargin{:});
+                    % this.objectHandle = mex_gsNurbsBasis('constructor', class(varargin{1}), varargin{:});
                 elseif ( isa(varargin{1},'gsKnotVector') )
-                    this.objectHandle = calllib('libgismo','gsBSplineBasis_create',varargin{1}.ptr());
+                    this.objectHandle = calllib('libgismo','gsNurbsBasis_create',varargin{1}.ptr());
                 else
                     error('Input argument no. 1 should be of type ''double''.')
                 end
@@ -77,7 +77,7 @@ classdef gsBSplineBasis < gsBasis
                     ~(mod(varargin{1},1)==0) || varargin{1}<1 || varargin{1}>this.dim())
                 error('Input argument no. 1 must be a strictly positive integer smaller than %d.', this.dim())
             end
-            [varargout{1:nargout}] = calllib('libgismo','gsBSplineBasis_knots',this.objectHandle,varargin{1});
+            [varargout{1:nargout}] = calllib('libgismo','gsNurbsBasis_knots',this.objectHandle,varargin{1});
         end
     end
 end

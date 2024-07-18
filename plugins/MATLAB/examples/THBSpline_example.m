@@ -11,13 +11,13 @@ TBB = gsTensorBSplineBasis(KV,KV);
 TBB.uniformRefine();
 THB = gsTHBSplineBasis(TBB);
 
-% THB.refine([0,0.5;0.0,0.5]);
-THB.refineElements([1,0,0,2,2]); % equivalent
+THB.refine([0,0.5;0.0,0.5]);
+%THB.refineElements([1,0,0,2,2]); % equivalent
 
 disp(THB)
 
-coefs = rand(TBB.size(),3);
-TB = gsTensorBSpline(TBB,coefs);
+coefs = rand(THB.size(),3);
+TB = gsTHBSpline(TBB,coefs);
 
 points1D = linspace(0,1,100);
 [xi,eta] = meshgrid(points1D,points1D);

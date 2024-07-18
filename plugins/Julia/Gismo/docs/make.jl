@@ -3,10 +3,16 @@ using Documenter, Example
 push!(LOAD_PATH, "../src/")
 using Gismo
 
+DocMeta.setdocmeta!(Gismo,
+                    :DocTestSetup,
+                    :(using Gismo;),
+                    recursive = true)
+
 # List of subsection pages
 SUBSECTION_PAGES = [
-    "gsCore/index.md",
-    "gsNurbs/index.md"
+    "gsCore.md",
+    "gsNurbs.md",
+    "gsHSplines.md"
 ]
 
 makedocs(

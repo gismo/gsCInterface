@@ -40,6 +40,35 @@ GISMO_EXPORT gsCGeometry* gsTensorBSpline4_create(gsCBasis* b, gsCMatrix * coefs
     return RICAST_CG(new gismo::gsTensorBSpline<4,double>(*basis_ptr,*m));
 }
 
+GISMO_EXPORT gsCGeometry* gsNurbs_create(gsCBasis* b, gsCMatrix * coefs)
+{
+    auto * basis_ptr = reinterpret_cast< gismo::gsNurbsBasis<double>* >(b);
+    auto * m = RICAST_M(coefs);
+    return RICAST_CG(new gismo::gsNurbs<double>(*basis_ptr,*m));
+}
+
+GISMO_EXPORT gsCGeometry* gsTensorNurbs2_create(gsCBasis* b, gsCMatrix * coefs)
+{
+    gismo::gsTensorNurbsBasis<2,double>* basis_ptr = reinterpret_cast< gismo::gsTensorNurbsBasis<2,double>* >(b);
+    auto * m = RICAST_M(coefs);
+    return RICAST_CG(new gismo::gsTensorNurbs<2,double>(*basis_ptr,*m));
+}
+
+GISMO_EXPORT gsCGeometry* gsTensorNurbs3_create(gsCBasis* b, gsCMatrix * coefs)
+{
+    gismo::gsTensorNurbsBasis<3,double>* basis_ptr = reinterpret_cast< gismo::gsTensorNurbsBasis<3,double>* >(b);
+    auto * m = RICAST_M(coefs);
+    return RICAST_CG(new gismo::gsTensorNurbs<3,double>(*basis_ptr,*m));
+}
+
+GISMO_EXPORT gsCGeometry* gsTensorNurbs4_create(gsCBasis* b, gsCMatrix * coefs)
+{
+    auto * basis_ptr = reinterpret_cast< gismo::gsTensorNurbsBasis<4,double>* >(b);
+    auto * m = RICAST_M(coefs);
+    return RICAST_CG(new gismo::gsTensorNurbs<4,double>(*basis_ptr,*m));
+}
+
+
 GISMO_EXPORT gsCGeometry* gsTHBSpline1_create(gsCBasis* b, gsCMatrix * coefs)
 {
     auto * basis_ptr = reinterpret_cast< gismo::gsTHBSplineBasis<1,double>* >(b);
