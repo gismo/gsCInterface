@@ -91,6 +91,24 @@ int main(int argc, char* argv[])
         if (irow==2) { printf("\n"); }
     }
 
+
+    gsCMatrix * tMat = gsMatrix_create();
+    gsCVector * tVec = gsVector_create();
+    gsCGeometryTransform * tr = gsGeometryTransform_create(G, tMat, tVec);
+    destroy(tr);
+    destroy(tMat);
+    destroy(tVec);   
+
+    gsCGeometry * isoparam = gsTensorBSpline2_slice(G, 0, 0.5);
+    print(isoparam);
+    destroy(isoparam);
+
+        
+    // tb.slice(dir, param, result);
+    //equidistant sampling. arc length curve (+surface..)
+    //
+    
+    
     destroy(uvm);
     destroy(out_d);
     destroy(G);

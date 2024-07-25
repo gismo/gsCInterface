@@ -25,7 +25,7 @@ GISMO_EXPORT gsCGeometry* gsTensorBSpline2_create(gsCBasis* b, gsCMatrix * coefs
     auto * m = RICAST_M(coefs);
     return RICAST_CG(new gismo::gsTensorBSpline<2,double>(*basis_ptr,*m));
 }
-
+    
 GISMO_EXPORT gsCGeometry* gsTensorBSpline3_create(gsCBasis* b, gsCMatrix * coefs)
 {
     gismo::gsTensorBSplineBasis<3,double>* basis_ptr = reinterpret_cast< gismo::gsTensorBSplineBasis<3,double>* >(b);
@@ -96,6 +96,16 @@ GISMO_EXPORT gsCGeometry* gsHBSpline4_create(gsCBasis* b, gsCMatrix * coefs)
     return RICAST_CG(new gismo::gsHBSpline<4,double>(*basis_ptr,*m));
 }
 
+GISMO_EXPORT gsCGeometry* gsTensorBSpline2_slice(gsCGeometry * g, int direction, double parameter)
+{
+    auto * g_ptr = reinterpret_cast< gismo::gsTensorBSpline<2,double>* >(g);
+    typedef typename gsTensorBSpline<2,double>::BoundaryGeometryType GeometryBdr;
+    GeometryBdr * bdr = new GeometryBdr();
+    g_ptr->slice(direction, parameter, *bdr);
+    return RICAST_CG(bdr);
+}
+
+    
 GISMO_EXPORT gsCBasis* gsGeometry_basis(gsCGeometry * g)
 { return RICAST_CB(&RICAST_G(g)->basis()); }
 
