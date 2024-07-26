@@ -1,0 +1,19 @@
+
+!   define gsGeometryTransofrm_print gsFunctionSet_print
+!   define gsGeometryTransofrm_delete gsFunctionSet_delete
+    
+!------------------------------------------------------------------------------------------------------------
+!     GISMO_EXPORT gsCGeometryTransform* gsGeometryTransform_create(gsCBasis * b, gsCMatrix * m,
+!                                                                   gsCVector * v);
+
+      function gsGeometryTransform_create(b, m, v) bind(c,name='gsGeometryTransform_create')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsGeometryTransform_create
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR)                  :: gsGeometryTransform_create
+         type(C_PTR),      value      :: b, m, v
+      end function gsGeometryTransform_create
+
+!------------------------------------------------------------------------------------------------------------

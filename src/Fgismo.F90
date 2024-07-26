@@ -11,6 +11,7 @@ module Fgismo
    public  t_gsmatrix
    public  t_gsfunctionset
    public  t_gsgeometry
+   public  t_gsgeometrytransform
 
    ! functions from gsCVector.ifc:
    public  f_gsvector_create
@@ -48,6 +49,7 @@ module Fgismo
    public  f_gsfunctionset_print
    public  f_gsfunctionset_domaindim
    public  f_gsfunctionset_eval_into
+   public  f_gsfunctionset_deriv_into
 
    ! functions from gsCReadFile.ifc:
    public  f_gscreadfile
@@ -58,6 +60,16 @@ module Fgismo
    public  f_gsgeometry_recoverpoints
    public  f_gsgeometry_recoverpointgrid
    public  f_gsgeometry_eval_into
+   public  f_gsgeometry_deriv_into
+
+   ! functions from gsCGeometryTransform.ifc:
+   public  f_gsgeometrytransform_create
+   public  f_gsgeometrytransform_delete
+   public  f_gsgeometrytransform_print
+   public  f_gsgeometrytransform_recoverpoints
+   public  f_gsgeometrytransform_recoverpointgrid
+   public  f_gsgeometrytransform_eval_into
+   public  f_gsgeometrytransform_deriv_into
 
 !------------------------------------------------------------------------------------------------------------
 
@@ -100,6 +112,34 @@ module Fgismo
    end interface
    interface f_gsgeometry_eval_into
       module procedure f_gsfunctionset_eval_into
+   end interface
+   interface f_gsgeometry_deriv_into
+      module procedure f_gsfunctionset_deriv_into
+   end interface
+
+!------------------------------------------------------------------------------------------------------------
+
+   type, extends(t_gsgeometry) :: t_gsgeometrytransform         ! C/C++ gsGeometryTransform object
+   end type t_gsgeometrytransform
+
+   ! define delete, print, eval_into --> geometry_delete, print, eval_into
+   interface f_gsgeometrytransform_delete
+      module procedure f_gsfunctionset_delete
+   end interface
+   interface f_gsgeometrytransform_print
+      module procedure f_gsfunctionset_print
+   end interface
+   interface f_gsgeometrytransform_eval_into
+      module procedure f_gsfunctionset_eval_into
+   end interface
+   interface f_gsgeometrytransform_deriv_into
+      module procedure f_gsfunctionset_deriv_into
+   end interface
+   interface f_gsgeometrytransform_recoverpoints
+      module procedure f_gsgeometry_recoverpoints
+   end interface
+   interface f_gsgeometrytransform_recoverpointgrid
+      module procedure f_gsgeometry_recoverpointgrid
    end interface
 
 !------------------------------------------------------------------------------------------------------------
@@ -534,7 +574,7 @@ subroutine f_gsmatrix_delete(f_mat)
 end subroutine f_gsmatrix_delete
 
 !------------------------------------------------------------------------------------------------------------
-! wrap functions of gsFunctionSet.ifc:
+! wrap functions of gsCFunctionSet.ifc:
 !------------------------------------------------------------------------------------------------------------
 
 subroutine f_gsfunctionset_delete(f_fs)
@@ -598,11 +638,19 @@ subroutine f_gsfunctionset_eval_into(f_fs, f_uv, f_result)
 end subroutine f_gsfunctionset_eval_into
 
 !------------------------------------------------------------------------------------------------------------
-!     GISMO_EXPORT void gsFunctionSet_deriv_into(gsCFunctionSet * fs,
-!                                                gsCMatrix * u,
-!                                                gsCMatrix * result);
 
-!------------------------------------------------------------------------------------------------------------
+subroutine f_gsfunctionset_deriv_into(f_fs, f_uv, f_result)
+!--purpose: evaluate derivatives for gsfunctionset object at parameter values uv into result matrix
+#ifdef _WIN32
+!dec$ attributes dllexport :: f_gsfunctionset_deriv_into
+#endif
+!--subroutine arguments:
+   class(t_gsfunctionset) :: f_fs
+   type(t_gsmatrix)       :: f_uv, f_result
+
+   call gsfunctionset_deriv_into(f_fs%c_fs, f_uv%c_mat, f_result%c_mat )
+   call f_gsmatrix_update_data_ptr( f_result )
+end subroutine f_gsfunctionset_deriv_into
 
 !------------------------------------------------------------------------------------------------------------
 ! wrap functions of gsCReadFile.ifc:
@@ -672,6 +720,27 @@ subroutine f_gsgeometry_recoverpointgrid(f_geom, xlow, xhig, npnt, f_xyz, f_uv, 
    call f_gsvectorint_delete( f_sz )
 
 end subroutine f_gsgeometry_recoverpointgrid
+
+!------------------------------------------------------------------------------------------------------------
+! wrap functions of gsCGeometryTransform.ifc:
+!------------------------------------------------------------------------------------------------------------
+
+function f_gsgeometrytransform_create(f_geom, f_mat, f_vec) result(f_trnsf)
+!--purpose: create gsgeometrytransform object from geometry + rot.matrix + transl.vector
+#ifdef _WIN32
+!dec$ attributes dllexport :: f_gsgeometrytransform_create
+#endif
+   implicit none
+!--function result:
+   type(t_gsgeometry) :: f_trnsf
+!--function arguments:
+   type(t_gsgeometry) :: f_geom
+   type(t_gsmatrix)   :: f_mat
+   type(t_gsvector)   :: f_vec
+
+   f_trnsf%c_fs = gsGeometryTransform_create(f_geom%c_fs, f_mat%c_mat, f_vec%c_vec)
+
+end function f_gsgeometrytransform_create
 
 !------------------------------------------------------------------------------------------------------------
 
