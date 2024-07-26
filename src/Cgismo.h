@@ -13,6 +13,7 @@
 #include <gsCInterface/gsCMultiPatch.h>
 #include <gsCInterface/gsCBasis.h>
 #include <gsCInterface/gsCGeometry.h>
+#include <gsCInterface/gsCGeometryTransform.h>
 #include <gsCInterface/gsCReadFile.h>
 
 //
