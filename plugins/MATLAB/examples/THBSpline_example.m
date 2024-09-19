@@ -17,7 +17,7 @@ THB.refine([0,0.5;0.0,0.5]);
 disp(THB)
 
 coefs = rand(THB.size(),3);
-TB = gsTHBSpline(TBB,coefs);
+TB = gsTHBSpline(THB,coefs);
 
 points1D = linspace(0,1,100);
 [xi,eta] = meshgrid(points1D,points1D);
