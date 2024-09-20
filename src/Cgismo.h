@@ -4,16 +4,30 @@
 #include <gsCore/gsExport.h>
 #include <gsCInterface/gsCTypes.h>
 
+// gsMatrix
 #include <gsCInterface/gsCMatrix.h>
 #include <gsCInterface/gsCMatrixInt.h>
 #include <gsCInterface/gsCVector.h>
 #include <gsCInterface/gsCVectorInt.h>
+
+// gsNurbs
 #include <gsCInterface/gsCKnotVector.h>
+
+// gsCore
 #include <gsCInterface/gsCFunctionSet.h>
 #include <gsCInterface/gsCMultiPatch.h>
+#include <gsCInterface/gsCMultiBasis.h>
 #include <gsCInterface/gsCBasis.h>
 #include <gsCInterface/gsCGeometry.h>
 #include <gsCInterface/gsCReadFile.h>
+#include <gsCInterface/gsCFunctionExpr.h>
+
+// gsPde
+#include <gsCInterface/gsCBoundaryConditions.h>
+
+#ifdef gsModule_ENABLED
+#include <gsModule/gsCClass.h>
+#endif
 
 //
 // Function Overloads
@@ -21,6 +35,8 @@
 #define print(X) _Generic((X),                                   \
                           gsCKnotVector *: gsKnotVector_print,   \
                           gsCFunctionSet *: gsFunctionSet_print, \
+                          gsCMultiPatch *: gsMultiPatch_print, \
+                          gsCMultiBasis *: gsMultiBasis_print, \
                           gsCMatrix *: gsMatrix_print)(X)
 
 #define rows(X) _Generic((X),                                  \
@@ -55,6 +71,8 @@
 
 #define destroy(X) _Generic((X),                                        \
                             gsCFunctionSet * : gsFunctionSet_delete,    \
+                            gsCMultiPatch * : gsMultiPatch_delete,    \
+                            gsCMultiBasis * : gsMultiBasis_delete,    \
                             gsCKnotVector *  : gsKnotVector_delete,     \
                             gsCVector *      : gsVector_delete,         \
                             gsCVectorInt *   : gsVectorInt_delete,      \
