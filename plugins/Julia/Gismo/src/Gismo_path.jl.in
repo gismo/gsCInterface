@@ -1,2 +1,0 @@
-library_path = "@CMAKE_BINARY_DIR@/lib"
-libgismo = "@CMAKE_BINARY_DIR@/lib/libgismo"
