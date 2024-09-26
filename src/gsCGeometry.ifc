@@ -1,8 +1,14 @@
 
 !------------------------------------------------------------------------------------------------------------
-!     #define gsGeometry_print gsFunctionSet_print
-!     #define gsGeometry_delete gsFunctionSet_delete
 !     #define gsBSpline_delete gsFunctionSet_delete
+
+!------------------------------------------------------------------------------------------------------------
+!     #define gsGeometry_print gsFunctionSet_print
+!     ---> GISMO_EXPORT void gsFunctionSet_print(gsCFunctionSet * ptr);
+
+!------------------------------------------------------------------------------------------------------------
+!     #define gsGeometry_delete gsFunctionSet_delete
+!     ---> GISMO_EXPORT void gsFunctionSet_delete(gsCFunctionSet * ptr);
 
 !------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT gsCGeometry* gsBSpline_create(gsCBasis* b, gsCMatrix * coef);
@@ -59,6 +65,18 @@
 !     GISMO_EXPORT void gsGeometry_recoverPointGrid(gsCGeometry * g, gsCVector * a, gsCVector * b,
 !                                                     gsCVectorInt * sz, gsCMatrix * xyz,
 !                                                     gsCMatrix * uv, int c, double accuracy);
+
+      subroutine gsGeometry_recoverPointGrid(g, a, b, sz, xyz, uv, c, accuracy) &
+         bind(c,name='gsGeometry_recoverPointGrid')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsGeometry_recoverPointGrid
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR),      value      :: g, a, b, sz, xyz, uv
+         integer(C_INT),   value      :: c
+         real(C_DOUBLE),   value      :: accuracy
+      end subroutine gsGeometry_recoverPointGrid
 
 !------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT void gsGeometry_invertPointGrid(gsCGeometry * g, gsCVector * a, gsCVector * b,

@@ -9,10 +9,10 @@
 !     GISMO_EXPORT gsCBasis* gsTensorBSplineBasis3_create(gsCKnotVector* KV1, gsCKnotVector* KV2, gsCKnotVector* KV3);
 !     GISMO_EXPORT gsCBasis* gsTensorBSplineBasis4_create(gsCKnotVector* KV1, gsCKnotVector* KV2, gsCKnotVector* KV3, gsCKnotVector* KV4);
 
-!     GISMO_EXPORT gsCBasis* THBSplineBasis1_create(gsCBasis* basis);
-!     GISMO_EXPORT gsCBasis* THBSplineBasis2_create(gsCBasis* basis);
-!     GISMO_EXPORT gsCBasis* THBSplineBasis3_create(gsCBasis* basis);
-!     GISMO_EXPORT gsCBasis* THBSplineBasis4_create(gsCBasis* basis);
+!     GISMO_EXPORT gsCBasis* gsTHBSplineBasis1_create(gsCBasis* basis);
+!     GISMO_EXPORT gsCBasis* gsTHBSplineBasis2_create(gsCBasis* basis);
+!     GISMO_EXPORT gsCBasis* gsTHBSplineBasis3_create(gsCBasis* basis);
+!     GISMO_EXPORT gsCBasis* gsTHBSplineBasis4_create(gsCBasis* basis);
 
 !     GISMO_EXPORT void gsBasis_active_into(gsCBasis * b, gsCMatrix * u, gsCMatrixInt * result);
 

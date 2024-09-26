@@ -19,6 +19,7 @@
 #include <gsCInterface/gsCMultiBasis.h>
 #include <gsCInterface/gsCBasis.h>
 #include <gsCInterface/gsCGeometry.h>
+#include <gsCInterface/gsCGeometryTransform.h>
 #include <gsCInterface/gsCReadFile.h>
 #include <gsCInterface/gsCFunctionExpr.h>
 

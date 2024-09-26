@@ -53,30 +53,32 @@ subroutine show_basic_usage( g )
    type(c_ptr)                  :: g
 !--local variables
    integer(C_INT)               :: nRows, nCols, out_rows, out_cols, irow, icol, icoor, ipar
-   type(C_PTR)                  :: uvm, xyzm, xyz_p
+   type(t_gsmatrix)             :: uvm, xyzm, dxyzm
    real(C_DOUBLE), dimension(:,:), allocatable :: uv
-   real(C_DOUBLE), dimension(:,:), pointer     :: xyz
-   character(len=1), parameter  :: c_param(2) = (/ 'u', 'v' /)
-   character(len=1), parameter  :: c_coor(3)  = (/ 'x', 'y', 'z' /)
+   character(len=1), parameter  :: c_param(2)  = (/ 'u', 'v' /)
+   character(len=1), parameter  :: c_coor(3)   = (/ 'x', 'y', 'z' /)
+   character(len=5), parameter  :: c_deriv(6)  = (/ 'dx/du', 'dx/dv', 'dy/du', 'dy/dv', 'dz/du', 'dz/dv' /)
 
    nRows = 2
    nCols = 7
    allocate(uv(nrows,ncols))
-   uv(1, 1:nCols) = (/ 0.0, 0.1, 0.5, 0.5, 0.5, 0.5, 1.0 /)
-   uv(2, 1:nCols) = (/ 0.0, 0.0, 0.0, 0.2, 0.5, 0.9, 1.0 /)
+   uv(1, 1:nCols) = (/ 0.0, 0.1, 0.501, 0.500, 0.500, 0.5, 1.0 /)
+   uv(2, 1:nCols) = (/ 0.0, 0.0, 0.200, 0.200, 0.201, 0.9, 1.0 /)
 
    write(*,*) '------------------------------ show_basic_usage ------------------------------'
    write(*,'(2(a,i3))') 'Input #rows =', nRows, ', #cols =', nCols
    do irow = 1, nRows
-      write(*,'(3a,10f10.3)') '  ',c_param(irow),': ', (uv(irow,icol), icol=1,nCols)
+      write(*,'(3a,10f10.3)') '      ',c_param(irow),': ', (uv(irow,icol), icol=1,nCols)
    enddo
 
    ! evaluate positions (x,y,z) at given parameter values
 
-   uvm  = gsMatrix_create_rcd(nRows, nCols, uv)
-   xyzm = gsMatrix_create()
-   call gsFunctionSet_eval_into(G, uvm, xyzm)
-   ! call gsMatrix_print(xyzm)
+   uvm   = f_gsmatrix_create_rcd(nRows, nCols, uv)
+   xyzm  = f_gsmatrix_create()
+   dxyzm = f_gsmatrix_create()
+   call f_gsFunctionSet_eval_into(G, uvm, xyzm)
+   call f_gsFunctionSet_deriv_into(G, uvm, dxyzm)
+   ! call f_gsmatrix_print(xyzm)
 
    ! get pointer to matrix data
 
@@ -85,15 +87,25 @@ subroutine show_basic_usage( g )
    xyz_p    = gsMatrix_data(xyzm)
    call C_F_POINTER(xyz_p, xyz, (/ out_rows, out_cols /))
 
-   write(*,'(3(a,i3))') 'Got #rows =', out_rows, ', #cols =', out_cols
+   write(*,'(3(a,i3))') 'Values: #rows =', out_rows, ', #cols =', out_cols
    do irow = 1, out_rows
-      write(*,'(3a,10f10.3)') '  ',c_coor(irow),': ', (xyz(irow,icol), icol=1,out_cols)
+      write(*,'(3a,10f10.3)') '      ',c_coor(irow),': ', (xyzm%data(irow,icol), icol=1,out_cols)
    enddo
 
-   call gsMatrix_delete(uvm)
-   call gsMatrix_delete(xyzm)
-   ! write(*,*) 'deallocate uv'
-   ! deallocate(uv)
+   ! show derivatives data
+
+   out_rows = f_gsmatrix_rows(dxyzm)
+   out_cols = f_gsmatrix_cols(dxyzm)
+
+   write(*,'(3(a,i3))') 'Derivatives: #rows =', out_rows, ', #cols =', out_cols
+   do irow = 1, out_rows
+      write(*,'(3a,10f10.3)') '  ',c_deriv(irow),': ', (dxyzm%data(irow,icol), icol=1,out_cols)
+   enddo
+
+   call f_gsmatrix_delete(uvm)
+   call f_gsmatrix_delete(xyzm)
+   call f_gsmatrix_delete(dxyzm)
+   deallocate(uv)
 
 end subroutine show_basic_usage
 

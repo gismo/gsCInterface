@@ -63,6 +63,17 @@
 !                                                gsCMatrix * u,
 !                                                gsCMatrix * result);
 
+      subroutine gsFunctionSet_deriv_into(fs, u, result) bind(c,name='gsFunctionSet_deriv_into')
+#ifdef _WIN32
+         !dir$ attributes stdcall     :: gsFunctionSet_deriv_into
+#endif
+         use, intrinsic               :: iso_c_binding
+         implicit none
+         type(C_PTR),    value        :: fs
+         type(C_PTR),    value        :: u
+         type(C_PTR),    value        :: result
+      end subroutine gsFunctionSet_deriv_into
+
 !------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT void gsFunctionSet_normal_into(gsCFunctionSet * fs,
 !                                                 gsCMatrix * u,

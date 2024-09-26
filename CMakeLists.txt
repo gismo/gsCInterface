@@ -4,18 +4,26 @@
 ##
 ######################################################################
 
-project(gsCInterface LANGUAGES C)
+project(gsCInterface LANGUAGES CXX)
 
 include(CheckLanguage)
 check_language(Fortran)
 if(CMAKE_Fortran_COMPILER)
   enable_language(Fortran)
+  include(FortranCInterface)
+  FortranCInterface_VERIFY(CXX)
 else()
   message(STATUS "No Fortran support")
 endif()
 
 # Apply G+Smo config
 include(gsConfig)
+
+if ( CMAKE_SYSTEM_NAME MATCHES "Linux" )
+   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -names lowercase")
+elseif ( CMAKE_SYSTEM_NAME MATCHES "Windows" )
+   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /names:lowercase")
+endif()
 
 ## Collect files
 aux_header_directory(${CMAKE_CURRENT_SOURCE_DIR}/src ${PROJECT_NAME}_H)
@@ -36,7 +44,7 @@ add_library(${PROJECT_NAME} OBJECT
 set_target_properties(${PROJECT_NAME} PROPERTIES
   COMPILE_DEFINITIONS gismo_EXPORTS
   POSITION_INDEPENDENT_CODE ON
-  LINKER_LANGUAGE C
+  #LINKER_LANGUAGE C
   FOLDER "G+Smo modules" )
 
 set(gismo_MODULES ${gismo_MODULES} $<TARGET_OBJECTS:${PROJECT_NAME}>

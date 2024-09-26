@@ -41,8 +41,8 @@ int main(int argc, char* argv[])
     printf("Input #rows = %d, #cols = %d\n", rows(uvm), cols(uvm) );
     for (int irow=0; irow<rows(uvm); irow++)
     {
-        if (irow==0) { printf("  u: "); }
-        if (irow==1) { printf("  v: "); }
+        if (irow==0) { printf("      u: "); }
+        if (irow==1) { printf("      v: "); }
         for (int icol=0; icol<cols(uvm); icol++)
             printf(" %9.3f", uv[icol*nRows + irow]);
         printf("\n");
@@ -59,9 +59,9 @@ int main(int argc, char* argv[])
     
     printf("Positions : got #rows = %d, #cols = %d\n", out_rows, out_cols);
     for (int irow=0; irow<out_rows; irow++) {
-        if (irow==0) { printf("  x: "); }
-        if (irow==1) { printf("  y: "); }
-        if (irow==2) { printf("  z: "); }
+        if (irow==0) { printf("      x: "); }
+        if (irow==1) { printf("      y: "); }
+        if (irow==2) { printf("      z: "); }
         for (int icol=0; icol<out_cols; icol++) {
             printf(" %9.3f", out_data[icol*out_rows + irow]);
         }
@@ -79,18 +79,36 @@ int main(int argc, char* argv[])
     printf("Derivatives : got #rows = %d, #cols = %d\n", out_rows, out_cols);
     for (int irow=0; irow<out_rows; irow++) {
         if (irow==0) { printf("  dx/du: "); }
-        if (irow==1) { printf("  dy/du: "); }
-        if (irow==2) { printf("  dz/du: "); }
-        if (irow==3) { printf("  dx/dv: "); }
-        if (irow==4) { printf("  dy/dv: "); }
+        if (irow==1) { printf("  dx/dv: "); }
+        if (irow==2) { printf("  dy/du: "); }
+        if (irow==3) { printf("  dy/dv: "); }
+        if (irow==4) { printf("  dz/du: "); }
         if (irow==5) { printf("  dz/dv: "); }
         for (int icol=0; icol<out_cols; icol++) {
             printf(" %9.3f", out_data[icol*out_rows + irow]);
         }
         printf("\n");
-        if (irow==2) { printf("\n"); }
+        if (irow==1 | irow==3) { printf("\n"); }
     }
 
+
+    gsCMatrix * tMat = gsMatrix_create();
+    gsCVector * tVec = gsVector_create();
+    gsCGeometryTransform * tr = gsGeometryTransform_create(G, tMat, tVec);
+    destroy(tr);
+    destroy(tMat);
+    destroy(tVec);   
+
+    gsCGeometry * isoparam = gsTensorBSpline2_slice(G, 0, 0.5);
+    print(isoparam);
+    destroy(isoparam);
+
+        
+    // tb.slice(dir, param, result);
+    //equidistant sampling. arc length curve (+surface..)
+    //
+    
+    
     destroy(uvm);
     destroy(out_d);
     destroy(G);
