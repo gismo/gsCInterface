@@ -15,20 +15,28 @@ extern "C"
     struct gsCVectorInt;
     typedef struct gsCVectorInt gsCVectorInt;
 
+    struct gsCSparseMatrix;
+    typedef struct gsCSparseMatrix gsCSparseMatrix;
+
     struct gsCFunctionSet; // Opaque type that we use as a handle
     typedef struct gsCFunctionSet gsCFunctionSet;
 
     typedef struct gsCFunctionSet gsCMultiPatch;
+    typedef struct gsCFunctionSet gsCMultiBasis;
     typedef struct gsCFunctionSet gsCBasis;
     typedef struct gsCFunctionSet gsCGeometry;
     typedef struct gsCFunctionSet gsCGeometryTransform;
+    typedef struct gsCFunctionSet gsCFunctionExpr;
 
     struct gsCKnotVector;
     typedef struct gsCKnotVector gsCKnotVector;
 
-    //struct gsCGridIteratorCube; 
+    struct gsCBoundaryConditions;
+    typedef struct gsCBoundaryConditions gsCBoundaryConditions;
+
+    //struct gsCGridIteratorCube;
     //typedef struct gsCGridIteratorCube gsCGridIteratorCube;
-    
+
 #ifdef __cplusplus
 }
 #endif

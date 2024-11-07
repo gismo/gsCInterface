@@ -42,6 +42,35 @@ GISMO_EXPORT gsCBasis* gsTensorBSplineBasis4_create(gsCKnotVector* KV1, gsCKnotV
     return RICAST_CB(new gismo::gsTensorBSplineBasis<4,double>(*KV1_ptr,*KV2_ptr,*KV3_ptr,*KV4_ptr));
 }
 
+GISMO_EXPORT gsCBasis * gsNurbsBasis_create(gsCBasis * b, gsCMatrix * weights)
+{
+    auto * basis_ptr = reinterpret_cast< gismo::gsBSplineBasis<double>* >(b);
+    auto * w = RICAST_M(weights);
+    return RICAST_CB(new gismo::gsNurbsBasis<double>(basis_ptr,*w));
+}
+
+GISMO_EXPORT gsCBasis* gsTensorNurbsBasis2_create(gsCBasis* b, gsCMatrix * weights)
+{ 
+    auto * basis_ptr = reinterpret_cast< gismo::gsTensorBSplineBasis<2,double>* >(b);
+    auto * w = RICAST_M(weights);
+    return RICAST_CB(new  gismo::gsTensorNurbsBasis<2,double>(basis_ptr,*w));
+}
+
+GISMO_EXPORT gsCBasis* gsTensorNurbsBasis3_create(gsCBasis* b, gsCMatrix * weights)
+{
+    auto * basis_ptr = reinterpret_cast< gismo::gsTensorBSplineBasis<3,double>* >(b);
+    auto * w = RICAST_M(weights);
+    return RICAST_CB(new  gismo::gsTensorNurbsBasis<3,double>(basis_ptr,*w));
+}
+
+GISMO_EXPORT gsCBasis* gsTensorNurbsBasis4_create(gsCBasis* b, gsCMatrix * weights)
+{
+    auto * basis_ptr = reinterpret_cast< gismo::gsTensorBSplineBasis<4,double>* >(b);
+    auto * w = RICAST_M(weights);
+    return RICAST_CB(new  gismo::gsTensorNurbsBasis<4,double>(basis_ptr,*w));
+}
+
+
 GISMO_EXPORT gsCBasis* gsTHBSplineBasis1_create(gsCBasis* b)
 {
     auto * basis_ptr = reinterpret_cast< gismo::gsTensorBSplineBasis<1,double>* >(b);

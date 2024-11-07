@@ -4,13 +4,13 @@
 #include <gsCInterface/gsCMatrix.h>
 
 GISMO_EXPORT gsCMatrix * gsMatrix_create(void)
-{ return reinterpret_cast<gsCMatrix*>(new gismo::gsMatrix<double>()); }
+{ return RICAST_CM(new gismo::gsMatrix<double>()); }
 
 GISMO_EXPORT gsCMatrix * gsMatrix_create_rc(int rows, int cols)
-{ return reinterpret_cast<gsCMatrix*>(new gismo::gsMatrix<double>(rows,cols)); }
+{ return RICAST_CM(new gismo::gsMatrix<double>(rows,cols)); }
 
 GISMO_EXPORT gsCMatrix * gsMatrix_create_rcd(int rows, int cols, double * data)
-{ return reinterpret_cast<gsCMatrix*>(new gismo::gsMatrix<double>(gismo::gsAsMatrix<double>(data,rows,cols))); }
+{ return RICAST_CM(new gismo::gsMatrix<double>(gismo::gsAsMatrix<double>(data,rows,cols))); }
 
 GISMO_EXPORT void gsMatrix_delete(gsCMatrix * m)
 { delete RICAST_M(m); }

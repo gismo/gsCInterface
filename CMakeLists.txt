@@ -64,3 +64,5 @@ add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/geometry_cexample.c)
 if(CMAKE_Fortran_COMPILER AND NOT NOFORTRAN)
   add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/geometry_fexample.F90)
 endif()
+
+add_custom_target(C_plugins)
