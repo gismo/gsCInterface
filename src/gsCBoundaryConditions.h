@@ -3,6 +3,9 @@
 extern "C"
 {
 #endif
+
+    #include<stdbool.h>
+
     GISMO_EXPORT gsCBoundaryConditions * gsBoundaryConditions_create();
 
     GISMO_EXPORT void gsBoundaryConditions_addCondition(gsCBoundaryConditions * bc,

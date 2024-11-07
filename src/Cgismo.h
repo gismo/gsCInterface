@@ -28,7 +28,11 @@
 #include <gsCInterface/gsCBoundaryConditions.h>
 
 #ifdef gsModule_ENABLED
-#include <gsModule/gsCClass.h>
+#include <gsModule/C/gsCClass.h>
+#endif
+#ifdef gsKLShell_ENABLED
+#include <gsKLShell/C/gsCMaterialMatrix.h>
+#include <gsKLShell/C/gsCThinShellAssembler.h>
 #endif
 
 //
@@ -37,9 +41,6 @@
 #define print(X) _Generic((X),                                   \
                           gsCKnotVector *: gsKnotVector_print,   \
                           gsCFunctionSet *: gsFunctionSet_print, \
-                          gsCMultiPatch *: gsMultiPatch_print, \
-                          gsCMultiBasis *: gsMultiBasis_print, \
-                          gsCFunctionExpr *: gsFunctionExpr_print, \
                           gsCBoundaryConditions *: gsBoundaryConditions_print, \
                           gsCMatrix *: gsMatrix_print)(X)
 
@@ -77,7 +78,6 @@
                             gsCFunctionSet * : gsFunctionSet_delete,    \
                             gsCMultiPatch * : gsMultiPatch_delete,    \
                             gsCMultiBasis * : gsMultiBasis_delete,    \
-                            gsCFunctionExpr * : gsFunctionExpr_delete,    \
                             gsCBoundaryConditions *  : gsBoundaryConditions_delete,     \
                             gsCKnotVector *  : gsKnotVector_delete,     \
                             gsCVector *      : gsVector_delete,         \
