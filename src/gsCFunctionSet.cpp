@@ -23,7 +23,7 @@ GISMO_EXPORT int gsFunctionSet_targetDim(gsCFunctionSet * fs)
 { return RICAST_G(fs)->targetDim(); }
 
 GISMO_EXPORT gsCMatrix* gsFunctionSet_support(gsCFunctionSet * fs)
-{ return reinterpret_cast<gsCMatrix*>( new gismo::gsMatrix<double>(RICAST_F(fs)->support()) ); }
+{ return RICAST_CM( new gismo::gsMatrix<double>(RICAST_F(fs)->support()) ); }
 
 GISMO_EXPORT void gsFunctionSet_eval_into(gsCFunctionSet * fs,
                             gsCMatrix * u,

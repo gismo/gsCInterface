@@ -16,6 +16,13 @@ GISMO_EXPORT gsCMultiBasis * gsMultiBasis_create(gsCMultiPatch * mp)
     return RICAST_CMP(new gismo::gsMultiBasis<double>(*mp_ptr));
 }
 
+GISMO_EXPORT void gsMultiBasis_addBasis(gsCMultiBasis* mb, gsCBasis* basis)
+{
+    auto * mb_ptr = RICAST_MB(mb);
+    auto * basis_ptr = RICAST_B(basis);
+    mb_ptr->addBasis(basis_ptr);
+}
+
 GISMO_EXPORT gsCBasis * gsMultiBasis_basis(gsCMultiBasis * mb, int i)
 {
     auto * mb_ptr = RICAST_MB(mb);

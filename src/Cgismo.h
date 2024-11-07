@@ -9,6 +9,7 @@
 #include <gsCInterface/gsCMatrixInt.h>
 #include <gsCInterface/gsCVector.h>
 #include <gsCInterface/gsCVectorInt.h>
+#include <gsCInterface/gsCSparseMatrix.h>
 
 // gsNurbs
 #include <gsCInterface/gsCKnotVector.h>
@@ -38,6 +39,8 @@
                           gsCFunctionSet *: gsFunctionSet_print, \
                           gsCMultiPatch *: gsMultiPatch_print, \
                           gsCMultiBasis *: gsMultiBasis_print, \
+                          gsCFunctionExpr *: gsFunctionExpr_print, \
+                          gsCBoundaryConditions *: gsBoundaryConditions_print, \
                           gsCMatrix *: gsMatrix_print)(X)
 
 #define rows(X) _Generic((X),                                  \
@@ -74,6 +77,8 @@
                             gsCFunctionSet * : gsFunctionSet_delete,    \
                             gsCMultiPatch * : gsMultiPatch_delete,    \
                             gsCMultiBasis * : gsMultiBasis_delete,    \
+                            gsCFunctionExpr * : gsFunctionExpr_delete,    \
+                            gsCBoundaryConditions *  : gsBoundaryConditions_delete,     \
                             gsCKnotVector *  : gsKnotVector_delete,     \
                             gsCVector *      : gsVector_delete,         \
                             gsCVectorInt *   : gsVectorInt_delete,      \

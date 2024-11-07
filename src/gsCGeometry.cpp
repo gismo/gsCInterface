@@ -25,7 +25,7 @@ GISMO_EXPORT gsCGeometry* gsTensorBSpline2_create(gsCBasis* b, gsCMatrix * coefs
     auto * m = RICAST_M(coefs);
     return RICAST_CG(new gismo::gsTensorBSpline<2,double>(*basis_ptr,*m));
 }
-    
+
 GISMO_EXPORT gsCGeometry* gsTensorBSpline3_create(gsCBasis* b, gsCMatrix * coefs)
 {
     gismo::gsTensorBSplineBasis<3,double>* basis_ptr = reinterpret_cast< gismo::gsTensorBSplineBasis<3,double>* >(b);
@@ -134,7 +134,7 @@ GISMO_EXPORT gsCGeometry* gsTensorBSpline2_slice(gsCGeometry * g, int direction,
     return RICAST_CG(bdr);
 }
 
-    
+
 GISMO_EXPORT gsCBasis* gsGeometry_basis(gsCGeometry * g)
 { return RICAST_CB(&RICAST_G(g)->basis()); }
 
@@ -151,6 +151,9 @@ GISMO_EXPORT void gsGeometry_refineElements(gsCGeometry * g, int * boxData, int 
     std::vector<int> boxes(boxData,boxData+boxSize);
     RICAST_G(g)->refineElements(boxes);
 }
+
+GISMO_EXPORT void gsGeometry_degreeElevate(gsCGeometry * g, int i, int dir)
+{ RICAST_G(g)->degreeElevate(i, dir); }
 
 GISMO_EXPORT void gsGeometry_recoverPoints(gsCGeometry * g, gsCMatrix * uv, gsCMatrix * xyz,
                                             int k, double accuracy)
