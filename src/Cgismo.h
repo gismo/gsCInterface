@@ -27,13 +27,7 @@
 // gsPde
 #include <gsCInterface/gsCBoundaryConditions.h>
 
-#ifdef gsModule_ENABLED
-#include <gsModule/C/gsCClass.h>
-#endif
-#ifdef gsKLShell_ENABLED
-#include <gsKLShell/C/gsCMaterialMatrix.h>
-#include <gsKLShell/C/gsCThinShellAssembler.h>
-#endif
+
 
 //
 // Function Overloads
@@ -76,8 +70,6 @@
 
 #define destroy(X) _Generic((X),                                        \
                             gsCFunctionSet * : gsFunctionSet_delete,    \
-                            gsCMultiPatch * : gsMultiPatch_delete,    \
-                            gsCMultiBasis * : gsMultiBasis_delete,    \
                             gsCBoundaryConditions *  : gsBoundaryConditions_delete,     \
                             gsCKnotVector *  : gsKnotVector_delete,     \
                             gsCVector *      : gsVector_delete,         \
