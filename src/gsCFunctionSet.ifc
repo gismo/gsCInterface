@@ -1,4 +1,9 @@
 
+
+#ifdef __cplusplus
+}
+#endif
+
 !------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT void gsFunctionSet_delete(gsCFunctionSet * ptr);
 
@@ -40,7 +45,7 @@
 !     GISMO_EXPORT int gsFunctionSet_targetDim(gsCFunctionSet * fs);
 
 !------------------------------------------------------------------------------------------------------------
-!     GISMO_EXPORT gsCBasis * gsFunctionSet_basis(gsCFunctionSet * fs, int i);
+!     GISMO_EXPORT gsCMatrix* gsFunctionSet_support(gsCFunctionSet * fs);
 
 !------------------------------------------------------------------------------------------------------------
 !     GISMO_EXPORT void gsFunctionSet_eval_into(gsCFunctionSet * fs,
@@ -73,10 +78,5 @@
          type(C_PTR),    value        :: u
          type(C_PTR),    value        :: result
       end subroutine gsFunctionSet_deriv_into
-
-!------------------------------------------------------------------------------------------------------------
-!     GISMO_EXPORT void gsFunctionSet_normal_into(gsCFunctionSet * fs,
-!                                                 gsCMatrix * u,
-!                                                 gsCMatrix * result);
 
 !------------------------------------------------------------------------------------------------------------

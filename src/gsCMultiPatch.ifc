@@ -13,8 +13,4 @@
 !     GISMO_EXPORT void gsFunctionSet_deriv_into(gsCFunctionSet * fs,
 !                                                gsCMatrix * u,
 !                                                gsCMatrix * result);
-
-!     GISMO_EXPORT void gsFunctionSet_normal_into(gsCFunctionSet * fs,
-!                                                 gsCMatrix * u,
-!                                                 gsCMatrix * result);
 !------------------------------------------------------------------------------------------------------------

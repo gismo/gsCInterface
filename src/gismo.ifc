@@ -73,7 +73,6 @@
 #     include <gsCInterface/gsCMultiPatch.ifc>
 #     include <gsCInterface/gsCBasis.ifc>
 #     include <gsCInterface/gsCGeometry.ifc>
-#     include <gsCInterface/gsCGeometryTransform.ifc>
 #     include <gsCInterface/gsCReadFile.ifc>
 
    end interface
