@@ -27,7 +27,7 @@
 // gsPde
 #include <gsCInterface/gsCBoundaryConditions.h>
 
-
+@gsOptional_includes@
 
 //
 // Function Overloads
@@ -70,6 +70,8 @@
 
 #define destroy(X) _Generic((X),                                        \
                             gsCFunctionSet * : gsFunctionSet_delete,    \
+                            gsCMultiPatch * : gsMultiPatch_delete,    \
+                            gsCMultiBasis * : gsMultiBasis_delete,    \
                             gsCBoundaryConditions *  : gsBoundaryConditions_delete,     \
                             gsCKnotVector *  : gsKnotVector_delete,     \
                             gsCVector *      : gsVector_delete,         \
