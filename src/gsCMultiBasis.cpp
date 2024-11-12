@@ -29,12 +29,6 @@ GISMO_EXPORT gsCBasis * gsMultiBasis_basis(gsCMultiBasis * mb, int i)
     return RICAST_CB(&mb_ptr->basis(i));
 }
 
-GISMO_EXPORT void gsMultiBasis_delete(gsCMultiBasis * mb)
-{
-    auto * mb_ptr = RICAST_MB(mb);
-    mb_ptr->clear();
-}
-
 #ifdef __cplusplus
 }
 #endif

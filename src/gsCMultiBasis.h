@@ -9,8 +9,6 @@ extern "C"
 
     GISMO_EXPORT gsCBasis * gsMultiBasis_basis(gsCMultiBasis * mp, int i);
 
-    GISMO_EXPORT void gsMultiBasis_delete(gsCMultiBasis * mb);
-
 #ifdef __cplusplus
 }
 #endif

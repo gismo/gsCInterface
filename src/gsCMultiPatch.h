@@ -13,8 +13,6 @@ extern "C"
 
     GISMO_EXPORT void gsMultiPatch_computeTopology(gsCMultiPatch * mp);
 
-    GISMO_EXPORT void gsMultiPatch_delete(gsCMultiPatch * mp);
-
 #ifdef __cplusplus
 }
 #endif

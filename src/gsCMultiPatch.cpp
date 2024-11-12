@@ -40,12 +40,6 @@ GISMO_EXPORT void gsMultiPatch_computeTopology(gsCMultiPatch * mp)
     mp_ptr->computeTopology();
 }
 
-GISMO_EXPORT void gsMultiPatch_delete(gsCMultiPatch * mp)
-{
-    auto * mp_ptr = RICAST_MP(mp);
-    mp_ptr->clear();
-}
-
 #ifdef __cplusplus
 }
 #endif
