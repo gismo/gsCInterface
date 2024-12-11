@@ -18,10 +18,10 @@ GISMO_EXPORT void gsKnotVector_print(gsCKnotVector * kv)
     reinterpret_cast<gismo::gsKnotVector<double>*>(kv)->print(gsInfo);
 }
 
-// GISMO_EXPORT double* gsKnotVector_data(gsCKnotVector * kv)
-// {
-//     return reinterpret_cast<gismo::gsKnotVector<double>*>(kv)->get().data();
-// }
+GISMO_EXPORT double* gsKnotVector_data(gsCKnotVector * kv)
+{
+    return const_cast<double *>(reinterpret_cast<gismo::gsKnotVector<double>*>(kv)->get().data());
+}
 
 GISMO_EXPORT int gsKnotVector_size(gsCKnotVector * kv)
 {

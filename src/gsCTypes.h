@@ -34,6 +34,15 @@ extern "C"
     struct gsCBoundaryConditions;
     typedef struct gsCBoundaryConditions gsCBoundaryConditions;
 
+    struct gsCQuadRule;
+    typedef struct gsCQuadRule gsCQuadRule;
+
+    struct gsCOptionList;
+    typedef struct gsCOptionList gsCOptionList;
+
+    struct gsCFitting;
+    typedef struct gsCFitting gsCFitting;
+
     //struct gsCGridIteratorCube;
     //typedef struct gsCGridIteratorCube gsCGridIteratorCube;
 

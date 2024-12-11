@@ -13,6 +13,7 @@
 
 // gsNurbs
 #include <gsCInterface/gsCKnotVector.h>
+#include <gsCInterface/gsCNurbsCreator.h>
 
 // gsCore
 #include <gsCInterface/gsCFunctionSet.h>
@@ -27,6 +28,15 @@
 // gsPde
 #include <gsCInterface/gsCBoundaryConditions.h>
 
+// gsAssembler
+#include <gsCInterface/gsCQuadRule.h>
+
+// gsIO
+#include <gsCInterface/gsCOptionList.h>
+
+// gsModelling
+#include <gsCInterface/gsCFitting.h>
+
 @gsOptional_includes@
 
 //
@@ -36,6 +46,7 @@
                           gsCKnotVector *: gsKnotVector_print,   \
                           gsCFunctionSet *: gsFunctionSet_print, \
                           gsCBoundaryConditions *: gsBoundaryConditions_print, \
+                          gsCOptionList *: gsOptionList_print,   \
                           gsCMatrix *: gsMatrix_print)(X)
 
 #define rows(X) _Generic((X),                                  \
@@ -71,6 +82,7 @@
 #define destroy(X) _Generic((X),                                        \
                             gsCFunctionSet * : gsFunctionSet_delete,    \
                             gsCBoundaryConditions *  : gsBoundaryConditions_delete,     \
+                            gsCOptionList *  : gsOptionList_delete,    \
                             gsCKnotVector *  : gsKnotVector_delete,     \
                             gsCVector *      : gsVector_delete,         \
                             gsCVectorInt *   : gsVectorInt_delete,      \

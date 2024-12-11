@@ -17,10 +17,10 @@ GISMO_EXPORT void gsFunctionSet_delete(gsCFunctionSet * ptr)
 { delete RICAST_F(ptr); }
 
 GISMO_EXPORT int gsFunctionSet_domainDim(gsCFunctionSet * fs)
-{ return RICAST_G(fs)->domainDim(); }
+{ return RICAST_F(fs)->domainDim(); }
 
 GISMO_EXPORT int gsFunctionSet_targetDim(gsCFunctionSet * fs)
-{ return RICAST_G(fs)->targetDim(); }
+{ return RICAST_F(fs)->targetDim(); }
 
 GISMO_EXPORT gsCMatrix* gsFunctionSet_support(gsCFunctionSet * fs)
 { return RICAST_CM( new gismo::gsMatrix<double>(RICAST_F(fs)->support()) ); }
