@@ -195,7 +195,7 @@ subroutine f_gsvector_print(f_vec)
    type(t_gsvector) :: f_vec
 
    call gsVector_print(f_vec%c_vec)
-   write(*,*) ! flush stdout(?)
+!--   write(*,*) ! flush stdout(?)
 end subroutine f_gsvector_print
 
 !------------------------------------------------------------------------------------------------------------
@@ -331,7 +331,7 @@ subroutine f_gsvectorint_print(f_vec)
    type(t_gsvectorint) :: f_vec
 
    call gsVectorInt_print(f_vec%c_vec)
-   write(*,*) ! flush stdout(?)
+!--   write(*,*) ! flush stdout(?)
 end subroutine f_gsvectorint_print
 
 !------------------------------------------------------------------------------------------------------------
@@ -485,7 +485,7 @@ subroutine f_gsmatrix_print(f_mat)
    type(t_gsmatrix) :: f_mat
 
    call gsMatrix_print(f_mat%c_mat)
-   write(*,*) ! flush stdout(?)
+!--   write(*,*) ! flush stdout(?)
 end subroutine f_gsmatrix_print
 
 !------------------------------------------------------------------------------------------------------------
