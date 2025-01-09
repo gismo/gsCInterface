@@ -34,10 +34,10 @@ GISMO_EXPORT gsCGeometry * gsMultiPatch_patch(gsCMultiPatch * mp, int i)
     return RICAST_CG(&mp_ptr->patch(i));
 }
 
-GISMO_EXPORT void gsMultiPatch_delete(gsCMultiPatch * mp)
+GISMO_EXPORT void gsMultiPatch_computeTopology(gsCMultiPatch * mp)
 {
     auto * mp_ptr = RICAST_MP(mp);
-    mp_ptr->clear();
+    mp_ptr->computeTopology();
 }
 
 #ifdef __cplusplus

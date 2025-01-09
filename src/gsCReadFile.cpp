@@ -18,6 +18,16 @@ GISMO_EXPORT void* gsCReadFile(char* filename)
         gismo::gsBasis<>::uPtr ptr = data.getAnyFirst< gismo::gsBasis<>  >();
         result = ptr.release();
     }
+    else if ( data.hasAny< gismo::gsMultiPatch<>  >() )
+    {
+        gismo::gsMultiPatch<>::uPtr ptr = data.getAnyFirst< gismo::gsMultiPatch<>  >();
+        result = ptr.release();
+    }
+    else if ( data.hasAny< gismo::gsMultiBasis<>  >() )
+    {
+        gismo::gsMultiBasis<>::uPtr ptr = data.getAnyFirst< gismo::gsMultiBasis<>  >();
+        result = ptr.release();
+    }
     else
     {
         result = NULL;

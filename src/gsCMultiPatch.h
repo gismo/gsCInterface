@@ -3,19 +3,15 @@
 extern "C"
 {
 #endif
-    GISMO_EXPORT void gsFunctionSet_delete(gsCFunctionSet * ptr);
+    GISMO_EXPORT gsCMultiPatch* gsMultiPatch_create();
 
-    GISMO_EXPORT void gsFunctionSet_print(gsCFunctionSet * fs);
-    GISMO_EXPORT int gsFunctionSet_domainDim(gsCFunctionSet * fs);
-    GISMO_EXPORT int gsFunctionSet_targetDim(gsCFunctionSet * fs);
+    GISMO_EXPORT void gsMultiPatch_addPatch(gsCMultiPatch* mp, gsCGeometry* geo);
 
-    GISMO_EXPORT void gsFunctionSet_eval_into(gsCFunctionSet * fs,
-                                              gsCMatrix * u,
-                                              gsCMatrix * result);
+    GISMO_EXPORT gsCBasis * gsMultiPatch_basis(gsCMultiPatch * mp, int i);
 
-    GISMO_EXPORT void gsFunctionSet_deriv_into(gsCFunctionSet * fs,
-                                               gsCMatrix * u,
-                                               gsCMatrix * result);
+    GISMO_EXPORT gsCGeometry * gsMultiPatch_patch(gsCMultiPatch * mp, int i);
+
+    GISMO_EXPORT void gsMultiPatch_computeTopology(gsCMultiPatch * mp);
 
 #ifdef __cplusplus
 }

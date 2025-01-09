@@ -64,3 +64,22 @@ add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/geometry_cexample.c)
 if(CMAKE_Fortran_COMPILER AND NOT NOFORTRAN)
   add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/geometry_fexample.F90)
 endif()
+
+add_custom_target(C_plugins)
+
+# Add submodules to Cgismo.h
+set(gsOptional_includes "")
+foreach(gssm ${GISMO_OPTIONAL})
+  string(STRIP ${gssm} SUBMODULE)
+  if (EXISTS "${gismo_SOURCE_DIR}/optional/${SUBMODULE}/src/cinterface")
+    set(gsOptional_includes "${gsOptional_includes}#ifdef ${SUBMODULE}_ENABLED")
+    # Loop over the header files in the submodule
+    file( GLOB SUBMODULE_HEADERS ${gismo_SOURCE_DIR}/optional/${SUBMODULE}/src/cinterface/*.h)
+    foreach(HEADER ${SUBMODULE_HEADERS})
+      get_filename_component(HEADER_NAME ${HEADER} NAME)
+      set(gsOptional_includes "${gsOptional_includes}\n#include <${SUBMODULE}/cinterface/${HEADER_NAME}>")
+    endforeach()
+    set(gsOptional_includes "${gsOptional_includes}\n#endif\n")
+  endif()
+endforeach()
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/Cgismo.h.in" "${CMAKE_CURRENT_SOURCE_DIR}/Cgismo.h")
