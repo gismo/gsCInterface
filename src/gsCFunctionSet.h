@@ -9,6 +9,8 @@ extern "C"
     GISMO_EXPORT int gsFunctionSet_domainDim(gsCFunctionSet * fs);
     GISMO_EXPORT int gsFunctionSet_targetDim(gsCFunctionSet * fs);
 
+    GISMO_EXPORT int gsFunctionSet_nPieces(gsCFunctionSet * fs);
+
     GISMO_EXPORT gsCMatrix* gsFunctionSet_support(gsCFunctionSet * fs);
 
     GISMO_EXPORT void gsFunctionSet_eval_into(gsCFunctionSet * fs,
