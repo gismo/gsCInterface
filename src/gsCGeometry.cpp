@@ -152,6 +152,12 @@ GISMO_EXPORT void gsGeometry_refineElements(gsCGeometry * g, int * boxData, int 
     RICAST_G(g)->refineElements(boxes);
 }
 
+GISMO_EXPORT void gsGeometry_refine(gsCGeometry * g, gsCMatrix * boxes, int refExt)
+{
+    std::vector<int> boxData = RICAST_G(g)->basis().asElements(*RICAST_M(boxes),refExt);
+    RICAST_G(g)->refineElements(boxData);
+}
+
 GISMO_EXPORT void gsGeometry_degreeElevate(gsCGeometry * g, int i, int dir)
 { RICAST_G(g)->degreeElevate(i, dir); }
 

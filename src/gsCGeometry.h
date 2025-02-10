@@ -37,6 +37,7 @@ extern "C"
 
     GISMO_EXPORT void gsGeometry_uniformRefine(gsCGeometry * b, int numKnots, int mul, int dir);
     GISMO_EXPORT void gsGeometry_refineElements(gsCGeometry * b, int * boxData, int boxSize);
+    GISMO_EXPORT void gsGeometry_refine(gsCGeometry * b, gsCMatrix * boxes, int refExt);
 
     GISMO_EXPORT void gsGeometry_degreeElevate(gsCGeometry * b, int i, int dir);
 
