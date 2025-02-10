@@ -38,10 +38,13 @@ extern "C"
     GISMO_EXPORT int gsBasis_dim(gsCBasis * b);
     GISMO_EXPORT int gsBasis_size(gsCBasis * b);
     GISMO_EXPORT gsCMatrix* gsBasis_support(gsCBasis * b, int i);
-    
+
     GISMO_EXPORT void gsBasis_uniformRefine(gsCBasis * b, int numKnots, int mul, int dir);
     GISMO_EXPORT void gsBasis_refineElements(gsCBasis * b, int * boxData, int boxSize);
     GISMO_EXPORT void gsBasis_refine(gsCBasis * b, gsCMatrix * boxes, int refExt);
+
+    GISMO_EXPORT gsCMatrix* gsBasis_getElements(gsCBasis * b);
+    GISMO_EXPORT gsCMatrix* gsBasis_getElementsBdr(gsCBasis * b, int);
 
     // TODO:
     // - DegreeElevate

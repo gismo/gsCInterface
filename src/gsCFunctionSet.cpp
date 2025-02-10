@@ -11,7 +11,7 @@ extern "C"
 #endif
 
 GISMO_EXPORT void gsFunctionSet_print(gsCFunctionSet * fs)
-{ gsInfo<<RICAST_F(fs); }
+{ gsInfo<<*RICAST_F(fs)<<"\n"; }
 
 GISMO_EXPORT void gsFunctionSet_delete(gsCFunctionSet * ptr)
 { delete RICAST_F(ptr); }

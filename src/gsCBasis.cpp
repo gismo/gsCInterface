@@ -50,7 +50,7 @@ GISMO_EXPORT gsCBasis * gsNurbsBasis_create(gsCBasis * b, gsCMatrix * weights)
 }
 
 GISMO_EXPORT gsCBasis* gsTensorNurbsBasis2_create(gsCBasis* b, gsCMatrix * weights)
-{ 
+{
     auto * basis_ptr = reinterpret_cast< gismo::gsTensorBSplineBasis<2,double>* >(b);
     auto * w = RICAST_M(weights);
     return RICAST_CB(new  gismo::gsTensorNurbsBasis<2,double>(basis_ptr,*w));
@@ -78,7 +78,7 @@ GISMO_EXPORT gsCBasis* gsTHBSplineBasis1_create(gsCBasis* b)
 }
 
 GISMO_EXPORT gsCBasis* gsTHBSplineBasis2_create(gsCBasis* b)
-{ 
+{
     auto * basis_ptr = reinterpret_cast< gismo::gsTensorBSplineBasis<2,double>* >(b);
     return RICAST_CB(new  gismo::gsTHBSplineBasis<2,double>(*basis_ptr,false));
 }
@@ -178,6 +178,32 @@ GISMO_EXPORT void gsBasis_refineElements(gsCBasis * b, int * boxData, int boxSiz
 
 GISMO_EXPORT void gsBasis_refine(gsCBasis * b, gsCMatrix * boxes, int refExt)
 { RICAST_B(b)->refine(*RICAST_M(boxes),refExt); }
+
+GISMO_EXPORT gsCMatrix* gsBasis_getElements(gsCBasis * b)
+{
+    gsMatrix<double> elements(RICAST_B(b)->domainDim(),2*RICAST_B(b)->numElements());
+    auto domIt = RICAST_B(b)->makeDomainIterator();
+    int id=0;
+    for (; domIt->good(); domIt->next(), ++id)
+    {
+        elements.col(2*id) = domIt->lowerCorner();
+        elements.col(2*id+1) = domIt->upperCorner();
+    }
+    return RICAST_CM(new gsMatrix<double>(elements));
+}
+
+GISMO_EXPORT gsCMatrix* gsBasis_getElementsBdr(gsCBasis * b, int side)
+{
+    gsMatrix<double> elements(RICAST_B(b)->domainDim(),2*RICAST_B(b)->numElements(side));
+    auto domIt = RICAST_B(b)->makeDomainIterator(side);
+    int id=0;
+    for (; domIt->good(); domIt->next(), ++id)
+    {
+        elements.col(2*id) = domIt->lowerCorner();
+        elements.col(2*id+1) = domIt->upperCorner();
+    }
+    return RICAST_CM(new gsMatrix<double>(elements));
+}
 
 //
 // Methods, Other
