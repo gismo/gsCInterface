@@ -15,7 +15,7 @@ GISMO_EXPORT void gsSparseMatrix_print(gsCSparseMatrix * m)
 // GISMO_EXPORT double * gsSparseMatrix_data(gsCSparseMatrix * m)
 // { return RICAST_SM(m)->data(); }
 
-GISMO_EXPORT void gsSparseMatrix_setFromTriplets(gsCSparseMatrix * m, int * rows, int * cols, double * values, int nnz)
+GISMO_EXPORT void gsSparseMatrix_setFromTriplets(gsCSparseMatrix * m, int nrows, int ncols, int * rows, int * cols, double * values, int nnz)
 {
     std::vector<int> rows_vec(rows, rows + nnz);
     std::vector<int> cols_vec(cols, cols + nnz);
@@ -26,6 +26,7 @@ GISMO_EXPORT void gsSparseMatrix_setFromTriplets(gsCSparseMatrix * m, int * rows
     for (int i = 0; i < nnz; i++)
         entries.add(rows_vec[i], cols_vec[i], values_vec[i]);
 
+    RICAST_SM(m)->resize(nrows, ncols);
     RICAST_SM(m)->setFrom(entries);
 }
 
