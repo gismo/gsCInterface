@@ -179,30 +179,30 @@ GISMO_EXPORT void gsBasis_refineElements(gsCBasis * b, int * boxData, int boxSiz
 GISMO_EXPORT void gsBasis_refine(gsCBasis * b, gsCMatrix * boxes, int refExt)
 { RICAST_B(b)->refine(*RICAST_M(boxes),refExt); }
 
-GISMO_EXPORT gsCMatrix* gsBasis_getElements(gsCBasis * b)
+GISMO_EXPORT void gsBasis_elements_into(gsCBasis * b, gsCMatrix* elements)
 {
-    gsMatrix<double> elements(RICAST_B(b)->domainDim(),2*RICAST_B(b)->numElements());
+    auto * el = RICAST_M(elements);
+    el->resize(RICAST_B(b)->domainDim(),2*RICAST_B(b)->numElements());
     auto domIt = RICAST_B(b)->makeDomainIterator();
     int id=0;
     for (; domIt->good(); domIt->next(), ++id)
     {
-        elements.col(2*id) = domIt->lowerCorner();
-        elements.col(2*id+1) = domIt->upperCorner();
+        el->col(2*id) = domIt->lowerCorner();
+        el->col(2*id+1) = domIt->upperCorner();
     }
-    return RICAST_CM(new gsMatrix<double>(elements));
 }
 
-GISMO_EXPORT gsCMatrix* gsBasis_getElementsBdr(gsCBasis * b, int side)
+GISMO_EXPORT void gsBasis_elementsBdr_into(gsCBasis * b, int side, gsCMatrix* elements)
 {
-    gsMatrix<double> elements(RICAST_B(b)->domainDim(),2*RICAST_B(b)->numElements(side));
+    auto * el = RICAST_M(elements);
+    el->resize(RICAST_B(b)->domainDim(),2*RICAST_B(b)->numElements(side));
     auto domIt = RICAST_B(b)->makeDomainIterator(side);
     int id=0;
     for (; domIt->good(); domIt->next(), ++id)
     {
-        elements.col(2*id) = domIt->lowerCorner();
-        elements.col(2*id+1) = domIt->upperCorner();
+        el->col(2*id) = domIt->lowerCorner();
+        el->col(2*id+1) = domIt->upperCorner();
     }
-    return RICAST_CM(new gsMatrix<double>(elements));
 }
 
 //
