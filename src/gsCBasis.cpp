@@ -179,6 +179,12 @@ GISMO_EXPORT void gsBasis_refineElements(gsCBasis * b, int * boxData, int boxSiz
 GISMO_EXPORT void gsBasis_refine(gsCBasis * b, gsCMatrix * boxes, int refExt)
 { RICAST_B(b)->refine(*RICAST_M(boxes),refExt); }
 
+GISMO_EXPORT void gsBasis_boundary_into(gsCBasis * b, int side, gsCMatrixInt * result)
+{ *RICAST_Mi(result) = RICAST_B(b)->boundary(side); }
+
+GISMO_EXPORT void gsBasis_boundaryOffset_into(gsCBasis * b, int side, int offset, gsCMatrixInt * result)
+{ *RICAST_Mi(result) = RICAST_B(b)->boundaryOffset(side,offset); }
+
 GISMO_EXPORT void gsBasis_elements_into(gsCBasis * b, gsCMatrix* elements)
 {
     auto * el = RICAST_M(elements);
