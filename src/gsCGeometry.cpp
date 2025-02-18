@@ -136,7 +136,9 @@ GISMO_EXPORT gsCGeometry* gsTensorBSpline2_slice(gsCGeometry * g, int direction,
 
 
 GISMO_EXPORT gsCBasis* gsGeometry_basis(gsCGeometry * g)
-{ return RICAST_CB(&RICAST_G(g)->basis()); }
+{
+    return RICAST_CB(RICAST_G(g)->basis().clone().release());
+}
 
 GISMO_EXPORT void gsGeometry_coefs_into(gsCGeometry * g, gsCMatrix * coefs)
 {
