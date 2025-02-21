@@ -21,6 +21,10 @@ extern "C"
                                                gsCMatrix * u,
                                                gsCMatrix * result);
 
+    GISMO_EXPORT void gsFunctionSet_deriv2_into(gsCFunctionSet * fs,
+                                               gsCMatrix * u,
+                                               gsCMatrix * result);
+
 #ifdef __cplusplus
 }
 #endif

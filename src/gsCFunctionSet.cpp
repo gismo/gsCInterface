@@ -37,6 +37,11 @@ GISMO_EXPORT void gsFunctionSet_deriv_into(gsCFunctionSet * fs,
                              gsCMatrix * u,
                              gsCMatrix * result)
 { RICAST_F(fs)->deriv_into(*RICAST_M(u), *RICAST_M(result) ); }
+
+GISMO_EXPORT void gsFunctionSet_deriv2_into(gsCFunctionSet * fs,
+                             gsCMatrix * u,
+                             gsCMatrix * result)
+{ RICAST_F(fs)->deriv2_into(*RICAST_M(u), *RICAST_M(result) ); }
 #ifdef __cplusplus
 }
 #endif
