@@ -145,6 +145,11 @@ GISMO_EXPORT void gsGeometry_coefs_into(gsCGeometry * g, gsCMatrix * coefs)
     *RICAST_M(coefs) = RICAST_G(g)->coefs();
 }
 
+GISMO_EXPORT void gsGeometry_setCoefs(gsCGeometry * g, gsCMatrix * coefs)
+{
+    RICAST_G(g)->coefs() = *RICAST_M(coefs);
+}
+
 GISMO_EXPORT void gsGeometry_uniformRefine(gsCGeometry * g, int numKnots, int mul, int dir)
 { RICAST_G(g)->uniformRefine(numKnots, mul, dir); }
 

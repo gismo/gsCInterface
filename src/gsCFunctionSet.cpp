@@ -37,6 +37,36 @@ GISMO_EXPORT void gsFunctionSet_deriv_into(gsCFunctionSet * fs,
                              gsCMatrix * u,
                              gsCMatrix * result)
 { RICAST_F(fs)->deriv_into(*RICAST_M(u), *RICAST_M(result) ); }
+
+GISMO_EXPORT void gsFunctionSet_deriv2_into(gsCFunctionSet * fs,
+                                            gsCMatrix * u,
+                                            gsCMatrix * result)
+{ RICAST_F(fs)->deriv2_into(*RICAST_M(u), *RICAST_M(result) ); }
+
+GISMO_EXPORT void gsFunctionSet_evalAllDers1_into(gsCFunctionSet * fs,
+                                                  gsCMatrix * u,
+                                                  gsCMatrix * values,
+                                                  gsCMatrix * deriv)
+{
+    std::vector<gsMatrix<> > result(2);
+    RICAST_F(fs)->evalAllDers_into(*RICAST_M(u), 1, result, false);
+    *RICAST_M(values) = give(result[0]);
+    *RICAST_M(deriv) = give(result[1]);
+}
+
+GISMO_EXPORT void gsFunctionSet_evalAllDers2_into(gsCFunctionSet * fs,
+                                                  gsCMatrix * u,
+                                                  gsCMatrix * values,
+                                                  gsCMatrix * deriv,
+                                                  gsCMatrix * deriv2)
+{
+    std::vector<gsMatrix<> > result(3);
+    RICAST_F(fs)->evalAllDers_into(*RICAST_M(u), 2, result, false);
+    *RICAST_M(values) = give(result[0]);
+    *RICAST_M(deriv) = give(result[1]);
+    *RICAST_M(deriv2) = give(result[2]);
+}
+
 #ifdef __cplusplus
 }
 #endif

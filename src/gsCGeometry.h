@@ -33,6 +33,7 @@ extern "C"
     GISMO_EXPORT gsCBasis* gsGeometry_basis(gsCGeometry * g);
 
     GISMO_EXPORT void gsGeometry_coefs_into(gsCGeometry * g, gsCMatrix * coef);
+    GISMO_EXPORT void gsGeometry_setCoefs(gsCGeometry * g, gsCMatrix * coef);
 
 
     GISMO_EXPORT void gsGeometry_uniformRefine(gsCGeometry * b, int numKnots, int mul, int dir);
