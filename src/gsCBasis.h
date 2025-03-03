@@ -49,6 +49,13 @@ extern "C"
     GISMO_EXPORT void gsBasis_elements_into(gsCBasis * b, gsCMatrix*);
     GISMO_EXPORT void gsBasis_elementsBdr_into(gsCBasis * b, int, gsCMatrix*);
 
+    GISMO_EXPORT void gsHTensorBasis_elements_into(gsCBasis * b, bool getKnotBoxes,
+                                                                 bool getIndexBoxes,
+                                                                 bool getLevels,
+                                                                 gsCMatrix*    knotBoxes,
+                                                                 gsCMatrixInt* indexBoxes,
+                                                                 gsCVectorInt* levels);
+
     // TODO:
     // - DegreeElevate
 

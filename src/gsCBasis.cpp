@@ -5,6 +5,75 @@
 #include <gsCInterface/gsMacros.h>
 #include <gsCInterface/gsCBasis.h>
 
+template <int dim>
+void gsHTensorBasis_elements_into_impl(gsCBasis * b, bool getKnotBoxes,
+                                                     bool getIndexBoxes,
+                                                     bool getLevels,
+                                                     gsCMatrix*    knotBoxes,
+                                                     gsCMatrixInt* indexBoxes,
+                                                     gsCVectorInt* levels)
+{
+    int N   = RICAST_B(b)->numElements();
+
+    auto * el = RICAST_M(knotBoxes);
+    auto * bx = RICAST_Mi(indexBoxes);
+    auto * lv = RICAST_Vi(levels);
+
+    if (getKnotBoxes) el->resize(dim,2*N);
+    if (getIndexBoxes) bx->resize(2*dim+1,N);
+    if (getLevels) lv->resize(N);
+
+    auto domain = RICAST_B(b)->domain();
+    auto domIt  = domain->beginAll();
+    auto domEnd = domain->endAll();
+
+    GISMO_ENSURE((dynamic_cast<gsHDomainIterator<double,dim> *>(domIt.get())),"The domain iterator is not a hierarchical domain iterator");
+    gsHTensorBasis<dim,double> * basis = dynamic_cast<gsHTensorBasis<dim,double> *>(RICAST_B(b));
+
+    int id=0;
+    gsVector<double,dim> low, upp;
+    for (; domIt<domEnd; ++domIt, ++id)
+    {
+        gsHDomainIterator<double,dim> * domItH = dynamic_cast<gsHDomainIterator<double,dim> *>(domIt.get());
+        low = domIt.lowerCorner();
+        upp = domIt.upperCorner();
+        if (getKnotBoxes)
+        {
+            el->col(2*id) = low;
+            el->col(2*id+1) = upp;
+        }
+        if (getLevels)
+        {
+            lv->at(id) = domItH->getLevel();
+        }
+        if (getIndexBoxes)
+        {
+            for(int j = 0; j < dim;j++)
+            {
+                // Convert the parameter coordinates to (unique) knot indices
+                const gsKnotVector<real_t> & kv = basis->tensorLevel(domItH->getLevel()).knots(j);
+                int k1 = (std::upper_bound(kv.domainUBegin(), kv.domainUEnd(),
+                                        low[j] ) - 1).uIndex();
+                int k2 = (std::upper_bound(kv.domainUBegin(), kv.domainUEnd()+1,
+                                        upp[j] ) - 1).uIndex();
+
+                // Trivial cells trigger some refinement
+                if ( k1 == k2)
+                {
+                    if (0!=k1) {--k1;}
+                    ++k2;
+                }
+
+                // Store the data...
+                (*bx)(0,id) = domItH->getLevel();
+                (*bx)(1+j,id) = k1;
+                (*bx)(1+j+dim,id) = k2;
+            }
+        }
+    }
+}
+
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -215,6 +284,32 @@ GISMO_EXPORT void gsBasis_elementsBdr_into(gsCBasis * b, int side, gsCMatrix* el
     }
 }
 
+GISMO_EXPORT void gsHTensorBasis_elements_into(gsCBasis * b, bool getKnotBoxes,
+                                                             bool getIndexBoxes,
+                                                             bool getLevels,
+                                                             gsCMatrix*    knotBoxes,
+                                                             gsCMatrixInt* indexBoxes,
+                                                             gsCVectorInt* levels)
+{
+    switch (RICAST_B(b)->domainDim())
+    {
+        case 1:
+            gsHTensorBasis_elements_into_impl<1>(b,getKnotBoxes,getIndexBoxes,getLevels,knotBoxes,indexBoxes,levels);
+            break;
+        case 2:
+            gsHTensorBasis_elements_into_impl<2>(b,getKnotBoxes,getIndexBoxes,getLevels,knotBoxes,indexBoxes,levels);
+            break;
+        case 3:
+            gsHTensorBasis_elements_into_impl<3>(b,getKnotBoxes,getIndexBoxes,getLevels,knotBoxes,indexBoxes,levels);
+            break;
+        case 4:
+            gsHTensorBasis_elements_into_impl<4>(b,getKnotBoxes,getIndexBoxes,getLevels,knotBoxes,indexBoxes,levels);
+            break;
+        default:
+            GISMO_ERROR("gsHTensorBasis_elements_into: Dimension not supported");
+    }
+}
+
 //
 // Methods, Other
 //
@@ -361,6 +456,8 @@ GISMO_EXPORT void gsHTensorBasis_treePrintLeaves(gsCBasis * b)
             GISMO_ERROR("gsHTensorBasis_treePrintLeaves: domainDim not supported");
     }
 }
+
+
 
 #ifdef __cplusplus
 }
