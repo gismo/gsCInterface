@@ -10,11 +10,12 @@ extern "C"
     GISMO_EXPORT void gsSparseMatrix_print(gsCSparseMatrix * m);
     // GISMO_EXPORT double* gsSparseMatrix_data(gsCSparseMatrix * m);   // get pointer to matrix data
 
-    GISMO_EXPORT void gsSparseMatrix_setFromTriplets(gsCSparseMatrix * m, int nrows, int ncols, int * rows, int * cols, double * values, int nnz);
-    GISMO_EXPORT void gsSparseMatrix_intoTriplets(gsCSparseMatrix * m, int * rows, int * cols, double * values);
+    GISMO_EXPORT void gsSparseMatrix_setFromTriplets(gsCSparseMatrix * m, gsCVectorInt * rows, gsCVectorInt * cols, gsCVector * values);
+    GISMO_EXPORT void gsSparseMatrix_intoTriplets(gsCSparseMatrix * m, gsCVectorInt * rows, gsCVectorInt * cols, gsCVector * vals);
 
     GISMO_EXPORT int gsSparseMatrix_rows(gsCSparseMatrix * m);
     GISMO_EXPORT int gsSparseMatrix_cols(gsCSparseMatrix * m);
+    GISMO_EXPORT int gsSparseMatrix_nnz(gsCSparseMatrix * m);
 
 #ifdef __cplusplus
 }

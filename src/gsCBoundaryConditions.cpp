@@ -29,8 +29,8 @@ GISMO_EXPORT void gsBoundaryConditions_addCondition(gsCBoundaryConditions * bc,
                                 (gismo::condition_type::type)ctype,
                                 f_ptr,
                                 unknown,
-                                component,
-                                parametric);
+                                parametric,
+                                component);
 }
 
 GISMO_EXPORT void gsBoundaryConditions_addCornerValue(gsCBoundaryConditions * bc,
