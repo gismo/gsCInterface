@@ -192,6 +192,11 @@ GISMO_EXPORT gsCBasis* gsHBSplineBasis4_create(gsCBasis* b)
 // Methods, gsBasis
 //
 
+GISMO_EXPORT gsCBasis* gsBasis_clone(gsCBasis * b)
+{
+    return RICAST_CB(RICAST_B(b)->clone().release());
+}
+
 GISMO_EXPORT void gsBasis_active_into(gsCBasis * b,
                               gsCMatrix * u,
                               gsCMatrixInt * result)

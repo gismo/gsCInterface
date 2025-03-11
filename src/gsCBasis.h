@@ -26,6 +26,8 @@ extern "C"
     //
     // Methods, gsBasis
     //
+    GISMO_EXPORT gsCBasis* gsBasis_clone(gsCBasis * b);
+
     GISMO_EXPORT void gsBasis_active_into(gsCBasis * b, gsCMatrix * u, gsCMatrixInt * result);
 
     GISMO_EXPORT void gsBasis_evalSingle_into(gsCBasis * b, int i, gsCMatrix * u, gsCMatrix * result);

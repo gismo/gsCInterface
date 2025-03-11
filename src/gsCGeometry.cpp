@@ -134,6 +134,10 @@ GISMO_EXPORT gsCGeometry* gsTensorBSpline2_slice(gsCGeometry * g, int direction,
     return RICAST_CG(bdr);
 }
 
+GISMO_EXPORT gsCGeometry* gsGeometry_clone(gsCGeometry * g)
+{
+    return RICAST_CG(RICAST_G(g)->clone().release());
+}
 
 GISMO_EXPORT gsCBasis* gsGeometry_basis(gsCGeometry * g)
 {
