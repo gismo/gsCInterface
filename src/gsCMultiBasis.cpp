@@ -5,6 +5,8 @@
 #include <gsCInterface/gsCMemory.h>
 #include <gsCInterface/gsMacros.h>
 
+using namespace gismo;
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -13,7 +15,7 @@ extern "C"
 GISMO_EXPORT gsCMultiBasis * gsMultiBasis_create(gsCMultiPatch * mp)
 {
     auto * mp_ptr = RICAST_MP(mp);
-    return RICAST_CMP(new gismo::gsMultiBasis<double>(*mp_ptr));
+    return RICAST_CMP(new gsMultiBasis<double>(*mp_ptr));
 }
 
 GISMO_EXPORT void gsMultiBasis_addBasis(gsCMultiBasis* mb, gsCBasis* basis)

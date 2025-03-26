@@ -3,14 +3,21 @@
 #include <gsCInterface/gsMacros.h>
 #include <gsCInterface/gsCVector.h>
 
+using namespace gismo;
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 GISMO_EXPORT gsCVector * gsVector_create(void)
-{ return reinterpret_cast<gsCVector*>(new gismo::gsVector<double>()); }
+{ return reinterpret_cast<gsCVector*>(new gsVector<double>()); }
 
 GISMO_EXPORT gsCVector * gsVector_create_r(int rows)
-{ return reinterpret_cast<gsCVector*>(new gismo::gsVector<double>(rows)); }
+{ return reinterpret_cast<gsCVector*>(new gsVector<double>(rows)); }
 
 GISMO_EXPORT gsCVector * gsVector_create_rd(int rows, double * data)
-{ return reinterpret_cast<gsCVector*>(new gismo::gsVector<double>(gismo::gsAsVector<double>(data,rows))); }
+{ return reinterpret_cast<gsCVector*>(new gsVector<double>(gsAsVector<double>(data,rows))); }
 
 GISMO_EXPORT void gsVector_delete(gsCVector * m)
 { delete RICAST_V(m); }
@@ -32,3 +39,7 @@ GISMO_EXPORT int gsVector_cols(gsCVector * m)
 
 GISMO_EXPORT void gsVector_setZero(gsCVector * m)
 { RICAST_V(m)->setZero(); }
+
+#ifdef __cplusplus
+}
+#endif

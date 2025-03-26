@@ -5,6 +5,8 @@
 #include <gsCInterface/gsCMemory.h>
 #include <gsCInterface/gsMacros.h>
 
+using namespace gismo;
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -12,7 +14,7 @@ extern "C"
 
 GISMO_EXPORT gsCMultiPatch* gsMultiPatch_create()
 {
-    return RICAST_CMP(new gismo::gsMultiPatch<double>());
+    return RICAST_CMP(new gsMultiPatch<double>());
 }
 
 GISMO_EXPORT void gsMultiPatch_addPatch(gsCMultiPatch* mp, gsCGeometry* geo)

@@ -5,6 +5,8 @@
 #include <gsCInterface/gsCMemory.h>
 #include <gsCInterface/gsMacros.h>
 
+using namespace gismo;
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -26,7 +28,7 @@ GISMO_EXPORT int gsFunctionSet_nPieces(gsCFunctionSet * fs)
 { return RICAST_F(fs)->nPieces(); }
 
 GISMO_EXPORT gsCMatrix* gsFunctionSet_support(gsCFunctionSet * fs)
-{ return RICAST_CM( new gismo::gsMatrix<double>(RICAST_F(fs)->support()) ); }
+{ return RICAST_CM( new gsMatrix<double>(RICAST_F(fs)->support()) ); }
 
 GISMO_EXPORT void gsFunctionSet_eval_into(gsCFunctionSet * fs,
                             gsCMatrix * u,
