@@ -31,6 +31,29 @@ GISMO_EXPORT gsCBasis * gsMultiBasis_basis(gsCMultiBasis * mb, int i)
     return RICAST_CB(&mb_ptr->basis(i));
 }
 
+GISMO_EXPORT gsCMultiBasis * gsMultiBasis_read(char* filename)
+{
+    gsFileData<> data(filename);
+    if (data.hasAny< gsMultiBasis<> >())
+    {
+        gsMultiBasis<>::uPtr ptr = data.getAnyFirst< gsMultiBasis<> >();
+        return RICAST_CMB(ptr.release());
+    }
+    else
+    {
+        gsWarn<<"[G+Smo] No gsMultiBasis found in file "<<filename<<"\n";
+        return NULL;
+    }
+}
+
+GISMO_EXPORT void gsMultiBasis_write(gsCMultiBasis * obj, char* filename)
+{
+    gsFileData<> data;
+    data.add(*RICAST_MB(obj));
+    data.save(filename);
+}
+
+
 #ifdef __cplusplus
 }
 #endif

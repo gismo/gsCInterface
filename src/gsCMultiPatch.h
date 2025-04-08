@@ -13,6 +13,9 @@ extern "C"
 
     GISMO_EXPORT void gsMultiPatch_computeTopology(gsCMultiPatch * mp);
 
+    GISMO_EXPORT gsCMultiPatch * gsMultiPatch_read(char* filename);
+    GISMO_EXPORT void            gsMultiPatch_write(gsCMultiPatch * obj, char* filename);
+
 #ifdef __cplusplus
 }
 #endif

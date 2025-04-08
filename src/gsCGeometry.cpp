@@ -14,6 +14,28 @@ extern "C"
 
 using namespace gismo;
 
+GISMO_EXPORT gsCGeometry * gsGeometry_read(char* filename)
+{
+    gsFileData<> data(filename);
+    if (data.hasAny< gsGeometry<> >())
+    {
+        gsGeometry<>::uPtr ptr = data.getAnyFirst< gsGeometry<> >();
+        return RICAST_CG(ptr.release());
+    }
+    else
+    {
+        gsWarn<<"[G+Smo] No gsGeometry found in file "<<filename<<"\n";
+        return NULL;
+    }
+}
+
+GISMO_EXPORT void gsGeometry_write(gsCGeometry * obj, char* filename)
+{
+    gsFileData<> data;
+    data.add(*RICAST_G(obj));
+    data.save(filename);
+}
+
 GISMO_EXPORT gsCGeometry* gsBSpline_create(gsCBasis* b, gsCMatrix * coefs)
 {
     auto * basis_ptr = reinterpret_cast< gsBSplineBasis<double>* >(b);

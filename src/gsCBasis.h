@@ -4,6 +4,9 @@ extern "C"
 {
 #endif
 
+    GISMO_EXPORT gsCBasis * gsBasis_read(char* filename);
+    GISMO_EXPORT void       gsBasis_write(gsCBasis * obj, char* filename);
+
 #   define gsBasis_print gsFunctionSet_print
 #   define gsBasis_delete gsFunctionSet_delete
 

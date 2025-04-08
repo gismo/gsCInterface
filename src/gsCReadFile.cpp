@@ -1,5 +1,7 @@
 #include <gismo.h>
 #include <gsCInterface/gsCReadFile.h>
+#include <gsCInterface/gsCTypes.h>
+#include <gsCInterface/gsMacros.h>
 
 using namespace gismo;
 
@@ -9,7 +11,7 @@ extern "C"
 #endif
 GISMO_EXPORT void* gsCReadFile(char* filename)
 {
-    gsInfo << "Loading file: " << filename << std::endl;
+    gsInfo << "[G+Smo] Loading file: " << filename << std::endl;
 
     void* result = NULL;
 

@@ -81,6 +81,28 @@ extern "C"
 {
 #endif
 
+GISMO_EXPORT gsCBasis * gsBasis_read(char* filename)
+{
+    gsFileData<> data(filename);
+    if (data.hasAny< gsBasis<> >())
+    {
+        gsBasis<>::uPtr ptr = data.getAnyFirst< gsBasis<> >();
+        return RICAST_CB(ptr.release());
+    }
+    else
+    {
+        gsWarn<<"[G+Smo] No gsBasis found in file "<<filename<<"\n";
+        return NULL;
+    }
+}
+
+GISMO_EXPORT void gsBasis_write(gsCBasis * obj, char* filename)
+{
+    gsFileData<> data;
+    data.add(*RICAST_B(obj));
+    data.save(filename);
+}
+
 GISMO_EXPORT gsCBasis * gsBSplineBasis_create(gsCKnotVector * KV)
 {
     auto * KV_ptr = RICAST_KV (KV);

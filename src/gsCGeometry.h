@@ -4,6 +4,9 @@ extern "C"
 {
 #endif
 
+    GISMO_EXPORT gsCGeometry * gsGeometry_read(char* filename);
+    GISMO_EXPORT void          gsGeometry_write(gsCGeometry * obj, char* filename);
+
 #   define gsGeometry_print gsFunctionSet_print
 #   define gsGeometry_delete gsFunctionSet_delete
 #   define gsBSpline_delete gsFunctionSet_delete

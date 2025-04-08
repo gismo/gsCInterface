@@ -42,6 +42,28 @@ GISMO_EXPORT void gsMultiPatch_computeTopology(gsCMultiPatch * mp)
     mp_ptr->computeTopology();
 }
 
+GISMO_EXPORT gsCMultiPatch * gsMultiPatch_read(char* filename)
+{
+    gsFileData<> data(filename);
+    if (data.hasAny< gsMultiPatch<> >())
+    {
+        gsMultiPatch<>::uPtr ptr = data.getAnyFirst< gsMultiPatch<> >();
+        return RICAST_CMP(ptr.release());
+    }
+    else
+    {
+        gsWarn<<"[G+Smo] No gsMultiPatch found in file "<<filename<<"\n";
+        return NULL;
+    }
+}
+
+GISMO_EXPORT void gsMultiPatch_write(gsCMultiPatch * obj, char* filename)
+{
+    gsFileData<> data;
+    data.add(*RICAST_MP(obj));
+    data.save(filename);
+}
+
 #ifdef __cplusplus
 }
 #endif
