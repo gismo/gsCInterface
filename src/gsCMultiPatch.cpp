@@ -17,6 +17,12 @@ GISMO_EXPORT gsCMultiPatch* gsMultiPatch_create()
     return RICAST_CMP(new gsMultiPatch<double>());
 }
 
+GISMO_EXPORT gsCMultiPatch* gsMultiPatch_create_geometry(gsCGeometry * geo)
+{
+    auto * geo_ptr = RICAST_G(geo);
+    return RICAST_CMP(new gsMultiPatch<double>(*geo_ptr));
+}
+
 GISMO_EXPORT void gsMultiPatch_addPatch(gsCMultiPatch* mp, gsCGeometry* geo)
 {
     auto * mp_ptr = RICAST_MP(mp);
@@ -40,6 +46,24 @@ GISMO_EXPORT void gsMultiPatch_computeTopology(gsCMultiPatch * mp)
 {
     auto * mp_ptr = RICAST_MP(mp);
     mp_ptr->computeTopology();
+}
+
+GISMO_EXPORT void gsMultiPatch_embed(gsCMultiPatch * mp, int dim)
+{
+    auto * mp_ptr = RICAST_MP(mp);
+    mp_ptr->embed(dim);
+}
+
+GISMO_EXPORT void gsMultiPatch_uniformRefine(gsCMultiPatch * mp, int numKnots, int mul, int dir)
+{
+    auto * mp_ptr = RICAST_MP(mp);
+    mp_ptr->uniformRefine(numKnots, mul, dir);
+}
+
+GISMO_EXPORT void gsMultiPatch_degreeElevate(gsCMultiPatch * mp, int i, int dir)
+{
+    auto * mp_ptr = RICAST_MP(mp);
+    mp_ptr->degreeElevate(i, dir);
 }
 
 GISMO_EXPORT gsCMultiPatch * gsMultiPatch_read(char* filename)

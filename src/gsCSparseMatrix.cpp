@@ -22,6 +22,22 @@ GISMO_EXPORT void gsSparseMatrix_print(gsCSparseMatrix * m)
 // GISMO_EXPORT double * gsSparseMatrix_data(gsCSparseMatrix * m)
 // { return RICAST_SM(m)->data(); }
 
+GISMO_EXPORT double* gsSparseMatrix_valuePtr(gsCSparseMatrix * m)
+{ return RICAST_SM(m)->valuePtr(); } // get pointer to matrix values
+GISMO_EXPORT int*    gsSparseMatrix_innerIndexPtr(gsCSparseMatrix * m)
+{ return RICAST_SM(m)->innerIndexPtr(); } // get pointer to matrix rows
+GISMO_EXPORT int*    gsSparseMatrix_outerIndexPtr(gsCSparseMatrix * m)
+{ return RICAST_SM(m)->outerIndexPtr(); } // get pointer to matrix columns
+
+GISMO_EXPORT int gsSparseMatrix_rows(gsCSparseMatrix * m)
+{ return RICAST_SM(m)->rows(); }
+
+GISMO_EXPORT int gsSparseMatrix_cols(gsCSparseMatrix * m)
+{ return RICAST_SM(m)->cols(); }
+
+GISMO_EXPORT int gsSparseMatrix_nnz(gsCSparseMatrix * m)
+{ return RICAST_SM(m)->nonZeros(); }
+
 GISMO_EXPORT void gsSparseMatrix_setFromTriplets(gsCSparseMatrix * m, gsCVectorInt * rows, gsCVectorInt * cols, gsCVector * values)
 {
     auto * R = RICAST_Vi(rows);
@@ -64,15 +80,6 @@ GISMO_EXPORT void gsSparseMatrix_intoTriplets(gsCSparseMatrix * m, gsCVectorInt 
         }
     }
 }
-
-GISMO_EXPORT int gsSparseMatrix_rows(gsCSparseMatrix * m)
-{ return RICAST_SM(m)->rows(); }
-
-GISMO_EXPORT int gsSparseMatrix_cols(gsCSparseMatrix * m)
-{ return RICAST_SM(m)->cols(); }
-
-GISMO_EXPORT int gsSparseMatrix_nnz(gsCSparseMatrix * m)
-{ return RICAST_SM(m)->nonZeros(); }
 
 #ifdef __cplusplus
 }

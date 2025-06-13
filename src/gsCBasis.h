@@ -48,6 +48,8 @@ extern "C"
     GISMO_EXPORT void gsBasis_refineElements(gsCBasis * b, int * boxData, int boxSize);
     GISMO_EXPORT void gsBasis_refine(gsCBasis * b, gsCMatrix * boxes, int refExt);
 
+    GISMO_EXPORT void gsBasis_degreeElevate(gsCBasis * b, int i, int dir);
+
     GISMO_EXPORT void gsBasis_boundary_into(gsCBasis * b, int side, gsCMatrixInt * result);
     GISMO_EXPORT void gsBasis_boundaryOffset_into(gsCBasis * b, int side, int offset, gsCMatrixInt * result);
 

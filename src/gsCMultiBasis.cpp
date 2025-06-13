@@ -12,7 +12,18 @@ extern "C"
 {
 #endif
 
-GISMO_EXPORT gsCMultiBasis * gsMultiBasis_create(gsCMultiPatch * mp)
+GISMO_EXPORT gsCMultiBasis * gsMultiBasis_create()
+{
+    return RICAST_CMP(new gsMultiBasis<double>());
+}
+
+GISMO_EXPORT gsCMultiBasis * gsMultiBasis_create_basis(gsCBasis * basis)
+{
+    auto * basis_ptr = RICAST_B(basis);
+    return RICAST_CMP(new gsMultiBasis<double>(*basis_ptr));
+}
+
+GISMO_EXPORT gsCMultiBasis * gsMultiBasis_create_patches(gsCMultiPatch * mp)
 {
     auto * mp_ptr = RICAST_MP(mp);
     return RICAST_CMP(new gsMultiBasis<double>(*mp_ptr));

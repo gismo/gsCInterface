@@ -37,6 +37,10 @@
 // gsModelling
 #include <gsCInterface/gsCFitting.h>
 
+// gsUtils
+#include <gsCInterface/gsCQuasiInterpolate.h>
+#include <gsCInterface/gsCL2Projection.h>
+
 @gsOptional_includes@
 
 //

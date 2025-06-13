@@ -277,6 +277,9 @@ GISMO_EXPORT void gsBasis_refineElements(gsCBasis * b, int * boxData, int boxSiz
 GISMO_EXPORT void gsBasis_refine(gsCBasis * b, gsCMatrix * boxes, int refExt)
 { RICAST_B(b)->refine(*RICAST_M(boxes),refExt); }
 
+GISMO_EXPORT void gsBasis_degreeElevate(gsCBasis * b, int i, int dir)
+{ RICAST_B(b)->degreeElevate(i,dir); }
+
 GISMO_EXPORT void gsBasis_boundary_into(gsCBasis * b, int side, gsCMatrixInt * result)
 { *RICAST_Mi(result) = RICAST_B(b)->boundary(side); }
 
