@@ -128,7 +128,7 @@ GISMO_EXPORT gsCGeometry* gsHBSpline4_create(gsCBasis* b, gsCMatrix * coefs)
 GISMO_EXPORT gsCGeometry* gsTensorBSpline2_slice(gsCGeometry * g, int direction, double parameter)
 {
     auto * g_ptr = reinterpret_cast< gismo::gsTensorBSpline<2,double>* >(g);
-    typedef typename gsTensorBSpline<2,double>::BoundaryGeometryType GeometryBdr;
+    typedef typename gismo::gsTensorBSpline<2,double>::BoundaryGeometryType GeometryBdr;
     GeometryBdr * bdr = new GeometryBdr();
     g_ptr->slice(direction, parameter, *bdr);
     return RICAST_CG(bdr);
@@ -163,7 +163,7 @@ GISMO_EXPORT void gsGeometry_recoverPointGrid(gsCGeometry * g, gsCVector * a, gs
                                                gsCVectorInt * sz,  gsCMatrix * xyz,
                                                gsCMatrix * uv,int c, double accuracy)
 {
-    gsGridIterator<real_t,CUBE> git(*RICAST_V(a),*RICAST_V(b), *RICAST_Vi(sz));
+    gismo::gsGridIterator<real_t,gismo::CUBE> git(*RICAST_V(a),*RICAST_V(b), *RICAST_Vi(sz));
     RICAST_G(g)->recoverPointGrid(git,*RICAST_M(xyz), *RICAST_M(uv), c, accuracy);
 }
 
@@ -175,7 +175,7 @@ GISMO_EXPORT void gsGeometry_invertPointGrid(gsCGeometry * g, gsCVector * a, gsC
                                    gsCVectorInt * sz, gsCMatrix * result,
                                    double accuracy)
 {
-    gsGridIterator<real_t,CUBE> git(*RICAST_V(a),*RICAST_V(b), *RICAST_Vi(sz));
+    gismo::gsGridIterator<real_t,gismo::CUBE> git(*RICAST_V(a),*RICAST_V(b), *RICAST_Vi(sz));
     RICAST_G(g)->invertPointGrid(git, *RICAST_M(result), accuracy,false);
 }
 
@@ -183,8 +183,8 @@ GISMO_EXPORT void gsGeometry_normal_into(gsCGeometry * fs,
                              gsCMatrix * u,
                              gsCMatrix * result)
 {
-    gsMapData<> mapData;
-    mapData.flags = NEED_NORMAL ;
+    gismo::gsMapData<> mapData;
+    mapData.flags = gismo::NEED_NORMAL ;
     mapData.points = *RICAST_M(u);
     RICAST_G(fs)->computeMap(mapData);
     *RICAST_M(result) = mapData.normals;
@@ -195,7 +195,7 @@ GISMO_EXPORT double gsGeometry_closestPointTo(gsCGeometry * fs,
                                  gsCMatrix * result,
                                  double accuracy)
 {
-    gsVector<> tmp;
+    gismo::gsVector<> tmp;
     double dist = RICAST_G(fs)->closestPointTo(*RICAST_V(pt),tmp,accuracy,false);
     *RICAST_M(result) = tmp;
     // gsDebugVar(*RICAST_M(result));
