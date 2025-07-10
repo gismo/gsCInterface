@@ -19,13 +19,13 @@ GISMO_EXPORT gsCQuadRule* gsQuadrature_get(gsCBasis * basis, gsCOptionList* opti
 GISMO_EXPORT gsCQuadRule* gsGaussRule_create(int d, int* numNodes, int digits)
 {
     std::vector<int> nodes(numNodes, numNodes + d);
-    return reinterpret_cast<gsCQuadRule*>(new gismo::gsGaussRule<double>(gsAsVector<int>(nodes), digits));
+    return reinterpret_cast<gsCQuadRule*>(new gismo::gsGaussRule<double>(gismo::gsAsVector<int>(nodes), digits));
 }
 
 GISMO_EXPORT gsCQuadRule* gsLobattoRule_create(int d, int* numNodes, int digits)
 {
     std::vector<int> nodes(numNodes, numNodes + d);
-    return reinterpret_cast<gsCQuadRule*>(new gismo::gsLobattoRule<double>(gsAsVector<int>(nodes), digits));
+    return reinterpret_cast<gsCQuadRule*>(new gismo::gsLobattoRule<double>(gismo::gsAsVector<int>(nodes), digits));
 }
 
 GISMO_EXPORT void gsQuadRule_delete(gsCQuadRule * qr)

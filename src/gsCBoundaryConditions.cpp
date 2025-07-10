@@ -23,7 +23,7 @@ GISMO_EXPORT void gsBoundaryConditions_addCondition(gsCBoundaryConditions * bc,
                                                     bool parametric)
 {
     gismo::boxSide bside(side);
-    gsFunctionSet<double> * f_ptr = RICAST_F(fun);
+    gismo::gsFunctionSet<double> * f_ptr = RICAST_F(fun);
     RICAST_BC(bc)->addCondition(patch,
                                 bside,
                                 (gismo::condition_type::type)ctype,
