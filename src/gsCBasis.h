@@ -4,6 +4,8 @@ extern "C"
 {
 #endif
 
+    #include<stdbool.h>
+
     GISMO_EXPORT gsCBasis * gsBasis_read(char* filename);
     GISMO_EXPORT void       gsBasis_write(gsCBasis * obj, char* filename);
 
