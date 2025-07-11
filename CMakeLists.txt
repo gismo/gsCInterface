@@ -6,24 +6,8 @@
 
 project(gsCInterface LANGUAGES CXX)
 
-include(CheckLanguage)
-check_language(Fortran)
-if(CMAKE_Fortran_COMPILER AND NOT NOFORTRAN)
-  enable_language(Fortran)
-  include(FortranCInterface)
-  FortranCInterface_VERIFY(CXX)
-else()
-  message(STATUS "No Fortran support")
-endif()
-
 # Apply G+Smo config
 include(gsConfig)
-
-if ( CMAKE_SYSTEM_NAME MATCHES "Linux" )
-#   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -names lowercase")
-elseif ( CMAKE_SYSTEM_NAME MATCHES "Windows" )
-   set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} /names:lowercase")
-endif()
 
 ## Collect files
 aux_header_directory(${CMAKE_CURRENT_SOURCE_DIR}/src ${PROJECT_NAME}_H)
@@ -39,8 +23,7 @@ endif()
 # Compile statically the extension
 add_library(${PROJECT_NAME} OBJECT
   ${${PROJECT_NAME}_H}
-  ${${PROJECT_NAME}_CPP}
-  src/Fgismo.F90 )
+  ${${PROJECT_NAME}_CPP})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
   COMPILE_DEFINITIONS gismo_EXPORTS
@@ -60,10 +43,6 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/"
 
 add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/basis_cexample.c)
 add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/geometry_cexample.c)
-
-if(CMAKE_Fortran_COMPILER AND NOT NOFORTRAN)
-  add_gismo_executable(${CMAKE_CURRENT_SOURCE_DIR}/examples/geometry_fexample.F90)
-endif()
 
 add_custom_target(C_plugins)
 
