@@ -151,13 +151,8 @@ GISMO_EXPORT gsCGeometry* gsHBSpline4_create(gsCBasis* b, gsCMatrix * coefs)
 
 GISMO_EXPORT gsCGeometry* gsTensorBSpline2_slice(gsCGeometry * g, int direction, double parameter)
 {
-<<<<<<< HEAD
     auto * g_ptr = reinterpret_cast< gsTensorBSpline<2,double>* >(g);
     typedef typename gsTensorBSpline<2,double>::BoundaryGeometryType GeometryBdr;
-=======
-    auto * g_ptr = reinterpret_cast< gismo::gsTensorBSpline<2,double>* >(g);
-    typedef typename gismo::gsTensorBSpline<2,double>::BoundaryGeometryType GeometryBdr;
->>>>>>> main
     GeometryBdr * bdr = new GeometryBdr();
     g_ptr->slice(direction, parameter, *bdr);
     return RICAST_CG(bdr);

@@ -21,8 +21,8 @@ GISMO_EXPORT void gsBoundaryConditions_addCondition(gsCBoundaryConditions * bc,
                                                     int ctype,
                                                     gsCFunctionSet * fun,
                                                     int unknown,
-                                                    int component,
-                                                    bool parametric)
+                                                    bool parametric,
+                                                    int component)
 {
     boxSide bside(side);
     gsFunctionSet<double> * f_ptr = RICAST_F(fun);
