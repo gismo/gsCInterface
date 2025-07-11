@@ -8,6 +8,8 @@
 #include <gsCInterface/gsCBasis.h>
 #include <gsCInterface/gsMacros.h>
 
+using namespace gismo;
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -18,11 +20,11 @@ extern "C"
     {
         auto * g_ptr = RICAST_G(g);
         auto * mm = RICAST_M(m);
-        auto * vv = RICAST_V(v);  
-        return RICAST_CG(new gismo::gsGeometryTransform<double>(g_ptr,*mm, *vv));
+        auto * vv = RICAST_V(v);
+        return RICAST_CG(new gsGeometryTransform<double>(g_ptr,*mm, *vv));
     }
 
-    
+
 #ifdef __cplusplus
 }
 #endif

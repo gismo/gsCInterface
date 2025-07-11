@@ -8,9 +8,11 @@ extern "C"
 {
 #endif
 
+using namespace gismo;
+
 GISMO_EXPORT gsCBoundaryConditions * gsBoundaryConditions_create()
 {
-    return RICAST_CBC(new gismo::gsBoundaryConditions<double>());
+    return RICAST_CBC(new gsBoundaryConditions<double>());
 }
 
 GISMO_EXPORT void gsBoundaryConditions_addCondition(gsCBoundaryConditions * bc,
@@ -19,18 +21,18 @@ GISMO_EXPORT void gsBoundaryConditions_addCondition(gsCBoundaryConditions * bc,
                                                     int ctype,
                                                     gsCFunctionSet * fun,
                                                     int unknown,
-                                                    int component,
-                                                    bool parametric)
+                                                    bool parametric,
+                                                    int component)
 {
-    gismo::boxSide bside(side);
-    gismo::gsFunctionSet<double> * f_ptr = RICAST_F(fun);
+    boxSide bside(side);
+    gsFunctionSet<double> * f_ptr = RICAST_F(fun);
     RICAST_BC(bc)->addCondition(patch,
                                 bside,
-                                (gismo::condition_type::type)ctype,
+                                (condition_type::type)ctype,
                                 f_ptr,
                                 unknown,
-                                component,
-                                parametric);
+                                parametric,
+                                component);
 }
 
 GISMO_EXPORT void gsBoundaryConditions_addCornerValue(gsCBoundaryConditions * bc,
@@ -40,7 +42,7 @@ GISMO_EXPORT void gsBoundaryConditions_addCornerValue(gsCBoundaryConditions * bc
                                                       int unknown,
                                                       int component)
 {
-    gismo::boxCorner bcorner(corner);
+    boxCorner bcorner(corner);
     RICAST_BC(bc)->addCornerValue(bcorner, value, patch, unknown, component);
 }
 

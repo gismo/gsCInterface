@@ -3,8 +3,15 @@
 #include <gsCInterface/gsMacros.h>
 #include <gsCInterface/gsCSparseMatrix.h>
 
+using namespace gismo;
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 GISMO_EXPORT gsCSparseMatrix * gsSparseMatrix_create(void)
-{ return RICAST_CSM(new gismo::gsMatrix<double>()); }
+{ return RICAST_CSM(new gsSparseMatrix<double>()); }
 
 GISMO_EXPORT void gsSparseMatrix_delete(gsCSparseMatrix * m)
 { delete RICAST_SM(m); }
@@ -15,37 +22,65 @@ GISMO_EXPORT void gsSparseMatrix_print(gsCSparseMatrix * m)
 // GISMO_EXPORT double * gsSparseMatrix_data(gsCSparseMatrix * m)
 // { return RICAST_SM(m)->data(); }
 
-GISMO_EXPORT void gsSparseMatrix_setFromTriplets(gsCSparseMatrix * m, int * rows, int * cols, double * values, int nnz)
-{
-    std::vector<int> rows_vec(rows, rows + nnz);
-    std::vector<int> cols_vec(cols, cols + nnz);
-    std::vector<double> values_vec(values, values + nnz);
-
-    gismo::gsSparseEntries<double> entries;
-    entries.reserve(nnz);
-    for (int i = 0; i < nnz; i++)
-        entries.add(rows_vec[i], cols_vec[i], values_vec[i]);
-
-    RICAST_SM(m)->setFrom(entries);
-}
-
-GISMO_EXPORT void gsSparseMatrix_intoTriplets(gsCSparseMatrix * m, int * rows, int * cols, double * values)
-{
-    auto * sm = RICAST_SM(m);
-    for (int i = 0; i!=sm->outerSize(); i++)
-    {
-        for (typename gismo::gsSparseMatrix<double>::InnerIterator it(*sm,i); it; ++it)
-        {
-            *rows = it.row();
-            *cols = it.col();
-            *values = it.value();
-            ++rows; ++cols; ++values;
-        }
-    }
-}
+GISMO_EXPORT double* gsSparseMatrix_valuePtr(gsCSparseMatrix * m)
+{ return RICAST_SM(m)->valuePtr(); } // get pointer to matrix values
+GISMO_EXPORT int*    gsSparseMatrix_innerIndexPtr(gsCSparseMatrix * m)
+{ return RICAST_SM(m)->innerIndexPtr(); } // get pointer to matrix rows
+GISMO_EXPORT int*    gsSparseMatrix_outerIndexPtr(gsCSparseMatrix * m)
+{ return RICAST_SM(m)->outerIndexPtr(); } // get pointer to matrix columns
 
 GISMO_EXPORT int gsSparseMatrix_rows(gsCSparseMatrix * m)
 { return RICAST_SM(m)->rows(); }
 
 GISMO_EXPORT int gsSparseMatrix_cols(gsCSparseMatrix * m)
 { return RICAST_SM(m)->cols(); }
+
+GISMO_EXPORT int gsSparseMatrix_nnz(gsCSparseMatrix * m)
+{ return RICAST_SM(m)->nonZeros(); }
+
+GISMO_EXPORT void gsSparseMatrix_setFromTriplets(gsCSparseMatrix * m, gsCVectorInt * rows, gsCVectorInt * cols, gsCVector * values)
+{
+    auto * R = RICAST_Vi(rows);
+    auto * C = RICAST_Vi(cols);
+    auto * V = RICAST_V(values);
+
+    GISMO_ENSURE(R->size() == C->size() && R->size() == V->size(), "Input vectors must have the same size.");
+
+    gsSparseEntries<double> entries;
+    entries.reserve(R->size());
+    for (int i = 0; i < R->size(); i++)
+        entries.add((*R)[i], (*C)[i], (*V)[i]);
+
+    RICAST_SM(m)->resize(R->size(), C->size());
+    RICAST_SM(m)->setFrom(entries);
+}
+
+GISMO_EXPORT void gsSparseMatrix_intoTriplets(gsCSparseMatrix * m, gsCVectorInt * rows, gsCVectorInt * cols, gsCVector * vals)
+{
+    auto * sm = RICAST_SM(m);
+    auto * R = RICAST_Vi(rows);
+    auto * C = RICAST_Vi(cols);
+    auto * V = RICAST_V(vals);
+
+    R->resize(sm->nonZeros());
+    C->resize(sm->nonZeros());
+    V->resize(sm->nonZeros());
+    auto R_it = R->begin();
+    auto C_it = C->begin();
+    auto V_it = V->begin();
+
+    for (int i = 0; i!=sm->outerSize(); i++)
+    {
+        for (typename gsSparseMatrix<double>::InnerIterator it(*sm,i); it;
+                    ++it, ++R_it, ++C_it, ++V_it)
+        {
+            *R_it = it.row();
+            *C_it = it.col();
+            *V_it = it.value();
+        }
+    }
+}
+
+#ifdef __cplusplus
+}
+#endif

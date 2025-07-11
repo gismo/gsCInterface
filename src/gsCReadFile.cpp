@@ -1,31 +1,39 @@
 #include <gismo.h>
 #include <gsCInterface/gsCReadFile.h>
+#include <gsCInterface/gsCTypes.h>
+#include <gsCInterface/gsMacros.h>
 
+using namespace gismo;
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 GISMO_EXPORT void* gsCReadFile(char* filename)
 {
-    gsInfo << "Loading file: " << filename << std::endl;
+    gsInfo << "[G+Smo] Loading file: " << filename << std::endl;
 
     void* result = NULL;
 
-    gismo::gsFileData<> data(filename);
-    if      ( data.hasAny< gismo::gsGeometry<>  >() )
+    gsFileData<> data(filename);
+    if      ( data.hasAny< gsGeometry<>  >() )
     {
-        gismo::gsGeometry<>::uPtr ptr = data.getAnyFirst< gismo::gsGeometry<>  >();
+        gsGeometry<>::uPtr ptr = data.getAnyFirst< gsGeometry<>  >();
         result = ptr.release();
     }
-    else if ( data.hasAny< gismo::gsBasis<>  >() )
+    else if ( data.hasAny< gsBasis<>  >() )
     {
-        gismo::gsBasis<>::uPtr ptr = data.getAnyFirst< gismo::gsBasis<>  >();
+        gsBasis<>::uPtr ptr = data.getAnyFirst< gsBasis<>  >();
         result = ptr.release();
     }
-    else if ( data.hasAny< gismo::gsMultiPatch<>  >() )
+    else if ( data.hasAny< gsMultiPatch<>  >() )
     {
-        gismo::gsMultiPatch<>::uPtr ptr = data.getAnyFirst< gismo::gsMultiPatch<>  >();
+        gsMultiPatch<>::uPtr ptr = data.getAnyFirst< gsMultiPatch<>  >();
         result = ptr.release();
     }
-    else if ( data.hasAny< gismo::gsMultiBasis<>  >() )
+    else if ( data.hasAny< gsMultiBasis<>  >() )
     {
-        gismo::gsMultiBasis<>::uPtr ptr = data.getAnyFirst< gismo::gsMultiBasis<>  >();
+        gsMultiBasis<>::uPtr ptr = data.getAnyFirst< gsMultiBasis<>  >();
         result = ptr.release();
     }
     else
@@ -35,3 +43,7 @@ GISMO_EXPORT void* gsCReadFile(char* filename)
     }
     return result;
 }
+
+#ifdef __cplusplus
+}
+#endif

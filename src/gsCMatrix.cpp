@@ -3,14 +3,21 @@
 #include <gsCInterface/gsMacros.h>
 #include <gsCInterface/gsCMatrix.h>
 
+using namespace gismo;
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 GISMO_EXPORT gsCMatrix * gsMatrix_create(void)
-{ return RICAST_CM(new gismo::gsMatrix<double>()); }
+{ return RICAST_CM(new gsMatrix<double>()); }
 
 GISMO_EXPORT gsCMatrix * gsMatrix_create_rc(int rows, int cols)
-{ return RICAST_CM(new gismo::gsMatrix<double>(rows,cols)); }
+{ return RICAST_CM(new gsMatrix<double>(rows,cols)); }
 
 GISMO_EXPORT gsCMatrix * gsMatrix_create_rcd(int rows, int cols, double * data)
-{ return RICAST_CM(new gismo::gsMatrix<double>(gismo::gsAsMatrix<double>(data,rows,cols))); }
+{ return RICAST_CM(new gsMatrix<double>(gsAsMatrix<double>(data,rows,cols))); }
 
 GISMO_EXPORT void gsMatrix_delete(gsCMatrix * m)
 { delete RICAST_M(m); }
@@ -32,3 +39,7 @@ GISMO_EXPORT int gsMatrix_cols(gsCMatrix * m)
 
 GISMO_EXPORT void gsMatrix_setZero(gsCMatrix * m)
 { RICAST_M(m)->setZero(); }
+
+#ifdef __cplusplus
+}
+#endif
