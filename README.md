@@ -10,6 +10,7 @@ Provides an interface to [gismo](https://github.com/gismo/gismo) for the C progr
 |CMake flags|```-DGISMO_OPTIONAL="<other submodules>;gsCInterface"```|
 |--:|---|
 |License|![GitHub License](https://img.shields.io/github/license/gismo/gismo?color=008A00)|
+|DOI|[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15875030.svg)](https://doi.org/10.5281/zenodo.15875030)|
 |OS support|Linux, Windows, macOS|
 |Build status|[![ci](https://github.com/gismo/gsCInterface/actions/workflows/ci.yml/badge.svg)](https://github.com/gismo/gsCInterface/actions/workflows/ci.yml)|
 |Developers/maintainers| [![Static Badge](https://img.shields.io/badge/@hverhelst-008A00)](https://github.com/hverhelst)|
