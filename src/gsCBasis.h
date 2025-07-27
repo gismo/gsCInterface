@@ -18,15 +18,15 @@ extern "C"
     GISMO_EXPORT gsCBasis* gsTensorBSplineBasis3_create(gsCKnotVector* KV1, gsCKnotVector* KV2, gsCKnotVector* KV3);
     GISMO_EXPORT gsCBasis* gsTensorBSplineBasis4_create(gsCKnotVector* KV1, gsCKnotVector* KV2, gsCKnotVector* KV3, gsCKnotVector* KV4);
 
-    GISMO_EXPORT gsCBasis* gsTHBSplineBasis1_create(gsCBasis* basis);
-    GISMO_EXPORT gsCBasis* gsTHBSplineBasis2_create(gsCBasis* basis);
-    GISMO_EXPORT gsCBasis* gsTHBSplineBasis3_create(gsCBasis* basis);
-    GISMO_EXPORT gsCBasis* gsTHBSplineBasis4_create(gsCBasis* basis);
+    GISMO_EXPORT gsCBasis* gsTHBSplineBasis1_create(gsCBasis* basis, int manualLevels);
+    GISMO_EXPORT gsCBasis* gsTHBSplineBasis2_create(gsCBasis* basis, int manualLevels);
+    GISMO_EXPORT gsCBasis* gsTHBSplineBasis3_create(gsCBasis* basis, int manualLevels);
+    GISMO_EXPORT gsCBasis* gsTHBSplineBasis4_create(gsCBasis* basis, int manualLevels);
 
-    GISMO_EXPORT gsCBasis* gsHBSplineBasis1_create(gsCBasis* basis);
-    GISMO_EXPORT gsCBasis* gsHBSplineBasis2_create(gsCBasis* basis);
-    GISMO_EXPORT gsCBasis* gsHBSplineBasis3_create(gsCBasis* basis);
-    GISMO_EXPORT gsCBasis* gsHBSplineBasis4_create(gsCBasis* basis);
+    GISMO_EXPORT gsCBasis* gsHBSplineBasis1_create(gsCBasis* basis, int manualLevels);
+    GISMO_EXPORT gsCBasis* gsHBSplineBasis2_create(gsCBasis* basis, int manualLevels);
+    GISMO_EXPORT gsCBasis* gsHBSplineBasis3_create(gsCBasis* basis, int manualLevels);
+    GISMO_EXPORT gsCBasis* gsHBSplineBasis4_create(gsCBasis* basis, int manualLevels);
 
     //
     // Methods, gsBasis
@@ -51,6 +51,12 @@ extern "C"
     GISMO_EXPORT void gsBasis_refine(gsCBasis * b, gsCMatrix * boxes, int refExt);
 
     GISMO_EXPORT void gsBasis_degreeElevate(gsCBasis * b, int i, int dir);
+    GISMO_EXPORT void gsBasis_degreeReduce(gsCBasis * b, int i, int dir);
+    GISMO_EXPORT void gsBasis_degreeIncrease(gsCBasis * b, int i, int dir);
+    GISMO_EXPORT void gsBasis_degreeDecrease(gsCBasis * b, int i, int dir);
+
+    GISMO_EXPORT void gsBasis_elevateContinuity(gsCBasis * b, int i);
+    GISMO_EXPORT void gsBasis_reduceContinuity(gsCBasis * b, int i);
 
     GISMO_EXPORT void gsBasis_boundary_into(gsCBasis * b, int side, gsCMatrixInt * result);
     GISMO_EXPORT void gsBasis_boundaryOffset_into(gsCBasis * b, int side, int offset, gsCMatrixInt * result);
@@ -58,31 +64,28 @@ extern "C"
     GISMO_EXPORT void gsBasis_elements_into(gsCBasis * b, gsCMatrix*);
     GISMO_EXPORT void gsBasis_elementsBdr_into(gsCBasis * b, int, gsCMatrix*);
 
-    GISMO_EXPORT void gsHTensorBasis_elements_into(gsCBasis * b, bool getKnotBoxes,
-                                                                 bool getIndexBoxes,
-                                                                 bool getLevels,
-                                                                 gsCMatrix*    knotBoxes,
-                                                                 gsCMatrixInt* indexBoxes,
-                                                                 gsCVectorInt* levels);
-
-    // TODO:
-    // - DegreeElevate
-
-    //
-    // Methods, Other
-    //
+    // Methods, gsBSplineBasis
     GISMO_EXPORT gsCKnotVector * gsBSplineBasis_knots(gsCBasis * b);
+
+    // Methods, gsTensorBSplineBasis
     GISMO_EXPORT gsCKnotVector * gsTensorBSplineBasis_knots(gsCBasis * b, int dir);
 
+    // Methods, gsHTensorBasis
+    GISMO_EXPORT void gsHTensorBasis_elements_into(gsCBasis * b, bool getKnotBoxes,
+                                                                bool getIndexBoxes,
+                                                                bool getLevels,
+                                                                gsCMatrix*    knotBoxes,
+                                                                gsCMatrixInt* indexBoxes,
+                                                                gsCVectorInt* levels);
 
     GISMO_EXPORT int gsHTensorBasis_numLevels(gsCBasis * b);
     GISMO_EXPORT int gsHTensorBasis_maxLevel(gsCBasis * b);
     GISMO_EXPORT int gsHTensorBasis_levelOf(gsCBasis * b, int i);
     GISMO_EXPORT int gsHTensorBasis_getLevelAtPoint(gsCBasis * b, gsCMatrix * Pt);
     GISMO_EXPORT gsCBasis * gsHTensorBasis_tensorLevel(gsCBasis * b, int l);
-    GISMO_EXPORT void gsHTensorBasis_treeLeafSize(gsCBasis * b);
+    GISMO_EXPORT int gsHTensorBasis_treeLeafSize(gsCBasis * b);
     GISMO_EXPORT void gsHTensorBasis_treePrintLeaves(gsCBasis * b);
-
+    GISMO_EXPORT void gsHTensorBasis_addLevel(gsCBasis * b, gsCBasis * lvl);
 
 #ifdef __cplusplus
 }
