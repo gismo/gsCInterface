@@ -17,15 +17,19 @@
 
 int main(void)
 {
-    /* A read of a non-existing file must fail without crashing the
-       process, returning NULL and setting the per-thread error. */
-    void * obj = gsCReadFile((char*)"does_not_exist_qq.xml");
-    if (obj != NULL)
+    /* Setting an option that was never added throws a GISMO error
+       inside the library; the firewall must convert that into a plain
+       return plus a per-thread message - not a crash. */
+    gsCOptionList * ol = gsOptionList_create();
+    gsOptionList_setInt(ol, "DoesNotExist", 1);
+    if (strlen(gsCLastError()) == 0)
     {
-        printf("FAIL: expected NULL for missing file\n");
+        printf("FAIL: expected a non-empty gsCLastError()\n");
+        gsOptionList_delete(ol);
         return 1;
     }
-    printf("error message: '%s'\n", gsCLastError());
+    printf("caught: '%.60s...'\n", gsCLastError());
+    gsOptionList_delete(ol);
 
     /* A successful call clears the error state. */
     gsCKnotVector * kv;
