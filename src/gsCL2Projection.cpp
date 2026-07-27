@@ -27,7 +27,7 @@ GISMO_EXPORT double gsL2Projection_into( gsCFunctionSet * projectionBasis,
     auto * sourceFunc_ptr = RICAST_F(sourceFunction);
     auto * coefs_ptr = RICAST_M(coefs);
     auto * options_ptr = reinterpret_cast<gsOptionList*>(options);
-    double error= gsL2Projection<double>::project(*projBasis_ptr, *intBasis_ptr, *geomMap_ptr, *sourceFunc_ptr, *coefs_ptr, *options_ptr);
+    double error= gsL2Projection<double>::project(*projBasis_ptr, *intBasis_ptr, *geomMap_ptr, *sourceFunc_ptr, *coefs_ptr, gsBoundaryConditions<double>(), *options_ptr);
     return error;
     GISMO_CAPI_END(std::numeric_limits<double>::quiet_NaN())
 }
