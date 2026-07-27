@@ -8,6 +8,9 @@ extern "C"
 
     GISMO_EXPORT void gsSparseMatrix_delete(gsCSparseMatrix * m);
     GISMO_EXPORT void gsSparseMatrix_print(gsCSparseMatrix * m);
+    /* LIFETIME: the returned pointer aliases internal storage of the
+       object; it is invalidated by any modifying call on the same object
+       and by its *_delete. Do not free it. */
     // GISMO_EXPORT double* gsSparseMatrix_data(gsCSparseMatrix * m);   // get pointer to matrix data
 
     GISMO_EXPORT double* gsSparseMatrix_valuePtr(gsCSparseMatrix * m); // get pointer to matrix values

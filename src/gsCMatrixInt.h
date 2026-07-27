@@ -17,6 +17,9 @@ extern "C"
 //#define FIRST(A, ...) A
     GISMO_EXPORT void gsMatrixInt_delete(gsCMatrixInt * m);
     GISMO_EXPORT void gsMatrixInt_print(gsCMatrixInt * m);
+    /* LIFETIME: the returned pointer aliases internal storage of the
+       object; it is invalidated by any modifying call on the same object
+       and by its *_delete. Do not free it. */
     GISMO_EXPORT int* gsMatrixInt_data(gsCMatrixInt * m);
 
     GISMO_EXPORT void gsMatrixInt_transposeInPlace(gsCMatrixInt * m);

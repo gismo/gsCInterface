@@ -17,6 +17,9 @@ extern "C"
 //#define FIRST(A, ...) A
     GISMO_EXPORT void gsMatrix_delete(gsCMatrix * m);
     GISMO_EXPORT void gsMatrix_print(gsCMatrix * m);
+    /* LIFETIME: the returned pointer aliases internal storage of the
+       object; it is invalidated by any modifying call on the same object
+       and by its *_delete. Do not free it. */
     GISMO_EXPORT double* gsMatrix_data(gsCMatrix * m);   // get pointer to matrix data
 
     GISMO_EXPORT void gsMatrix_transposeInPlace(gsCMatrix * m);
