@@ -61,4 +61,9 @@ foreach(gssm ${GISMO_OPTIONAL})
     set(gsOptional_includes "${gsOptional_includes}\n#endif\n")
   endif()
 endforeach()
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/Cgismo.h.in" "${CMAKE_CURRENT_SOURCE_DIR}/Cgismo.h")
+# Generated into the build tree (never the source tree): resolves as
+# <gsCInterface/Cgismo.h> because ${gismo_BINARY_DIR} is an include dir
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/Cgismo.h.in"
+               "${gismo_BINARY_DIR}/gsCInterface/Cgismo.h")
+install(FILES "${gismo_BINARY_DIR}/gsCInterface/Cgismo.h"
+        DESTINATION include/gismo/gsCInterface)
