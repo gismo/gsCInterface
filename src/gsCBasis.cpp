@@ -4,6 +4,7 @@
 #include <gsCInterface/gsCKnotVector.h>
 #include <gsCInterface/gsMacros.h>
 #include <gsCInterface/gsCBasis.h>
+#include <gsCInterface/gsCError.h>
 
 using namespace gismo;
 
@@ -83,6 +84,7 @@ extern "C"
 
 GISMO_EXPORT gsCBasis * gsBasis_read(char* filename)
 {
+    GISMO_CAPI_BEGIN
     gsFileData<> data(filename);
     if (data.hasAny< gsBasis<> >())
     {
@@ -94,122 +96,157 @@ GISMO_EXPORT gsCBasis * gsBasis_read(char* filename)
         gsWarn<<"[G+Smo] No gsBasis found in file "<<filename<<"\n";
         return NULL;
     }
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT void gsBasis_write(gsCBasis * obj, char* filename)
 {
+    GISMO_CAPI_BEGIN
     gsFileData<> data;
     data.add(*RICAST_B(obj));
     data.save(filename);
+    GISMO_CAPI_END_VOID
 }
 
 GISMO_EXPORT gsCBasis * gsBSplineBasis_create(gsCKnotVector * KV)
 {
+    GISMO_CAPI_BEGIN
     auto * KV_ptr = RICAST_KV (KV);
     return RICAST_CB (new gsBSplineBasis<double>(*KV_ptr) );
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis* gsTensorBSplineBasis2_create(gsCKnotVector* KV1, gsCKnotVector* KV2)
 {
+    GISMO_CAPI_BEGIN
     auto * KV1_ptr = RICAST_KV (KV1);
     auto * KV2_ptr = RICAST_KV (KV2);
     return RICAST_CB(new gsTensorBSplineBasis<2,double>(*KV1_ptr,*KV2_ptr) );
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis* gsTensorBSplineBasis3_create(gsCKnotVector* KV1, gsCKnotVector* KV2,
                                                     gsCKnotVector* KV3)
 {
+    GISMO_CAPI_BEGIN
     auto * KV1_ptr = RICAST_KV (KV1);
     auto * KV2_ptr = RICAST_KV (KV2);
     auto * KV3_ptr = RICAST_KV (KV3);
     return RICAST_CB(new gsTensorBSplineBasis<3,double>(*KV1_ptr,*KV2_ptr,*KV3_ptr));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis* gsTensorBSplineBasis4_create(gsCKnotVector* KV1, gsCKnotVector* KV2,
                                                     gsCKnotVector* KV3, gsCKnotVector* KV4)
 {
+    GISMO_CAPI_BEGIN
     auto * KV1_ptr = RICAST_KV (KV1);
     auto * KV2_ptr = RICAST_KV (KV2);
     auto * KV3_ptr = RICAST_KV (KV3);
     auto * KV4_ptr = RICAST_KV (KV4);
     return RICAST_CB(new gsTensorBSplineBasis<4,double>(*KV1_ptr,*KV2_ptr,*KV3_ptr,*KV4_ptr));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis * gsNurbsBasis_create(gsCBasis * b, gsCMatrix * weights)
 {
+    GISMO_CAPI_BEGIN
     auto * basis_ptr = reinterpret_cast< gsBSplineBasis<double>* >(b);
     auto * w = RICAST_M(weights);
     return RICAST_CB(new gsNurbsBasis<double>(basis_ptr,*w));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis* gsTensorNurbsBasis2_create(gsCBasis* b, gsCMatrix * weights)
 {
+    GISMO_CAPI_BEGIN
     auto * basis_ptr = reinterpret_cast< gsTensorBSplineBasis<2,double>* >(b);
     auto * w = RICAST_M(weights);
     return RICAST_CB(new  gsTensorNurbsBasis<2,double>(basis_ptr,*w));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis* gsTensorNurbsBasis3_create(gsCBasis* b, gsCMatrix * weights)
 {
+    GISMO_CAPI_BEGIN
     auto * basis_ptr = reinterpret_cast< gsTensorBSplineBasis<3,double>* >(b);
     auto * w = RICAST_M(weights);
     return RICAST_CB(new  gsTensorNurbsBasis<3,double>(basis_ptr,*w));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis* gsTensorNurbsBasis4_create(gsCBasis* b, gsCMatrix * weights)
 {
+    GISMO_CAPI_BEGIN
     auto * basis_ptr = reinterpret_cast< gsTensorBSplineBasis<4,double>* >(b);
     auto * w = RICAST_M(weights);
     return RICAST_CB(new  gsTensorNurbsBasis<4,double>(basis_ptr,*w));
+    GISMO_CAPI_END(NULL)
 }
 
 
 GISMO_EXPORT gsCBasis* gsTHBSplineBasis1_create(gsCBasis* b)
 {
+    GISMO_CAPI_BEGIN
     auto * basis_ptr = reinterpret_cast< gsTensorBSplineBasis<1,double>* >(b);
     return RICAST_CB(new gsTHBSplineBasis<1,double>(*basis_ptr,false));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis* gsTHBSplineBasis2_create(gsCBasis* b)
 {
+    GISMO_CAPI_BEGIN
     auto * basis_ptr = reinterpret_cast< gsTensorBSplineBasis<2,double>* >(b);
     return RICAST_CB(new  gsTHBSplineBasis<2,double>(*basis_ptr,false));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis* gsTHBSplineBasis3_create(gsCBasis* b)
 {
+    GISMO_CAPI_BEGIN
     auto * basis_ptr = reinterpret_cast< gsTensorBSplineBasis<3,double>* >(b);
     return RICAST_CB(new  gsTHBSplineBasis<3,double>(*basis_ptr,false));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis* gsTHBSplineBasis4_create(gsCBasis* b)
 {
+    GISMO_CAPI_BEGIN
     auto * basis_ptr = reinterpret_cast< gsTensorBSplineBasis<4,double>* >(b);
     return RICAST_CB(new  gsTHBSplineBasis<4,double>(*basis_ptr,false));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis* gsHBSplineBasis1_create(gsCBasis* b)
 {
+    GISMO_CAPI_BEGIN
     auto * basis_ptr = reinterpret_cast< gsTensorBSplineBasis<1,double>* >(b);
     return RICAST_CB(new gsHBSplineBasis<1,double>(*basis_ptr,false));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis* gsHBSplineBasis2_create(gsCBasis* b)
 {
+    GISMO_CAPI_BEGIN
     auto * basis_ptr = reinterpret_cast< gsTensorBSplineBasis<2,double>* >(b);
     return RICAST_CB(new  gsHBSplineBasis<2,double>(*basis_ptr,false));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis* gsHBSplineBasis3_create(gsCBasis* b)
 {
+    GISMO_CAPI_BEGIN
     auto * basis_ptr = reinterpret_cast< gsTensorBSplineBasis<3,double>* >(b);
     return RICAST_CB(new  gsHBSplineBasis<3,double>(*basis_ptr,false));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCBasis* gsHBSplineBasis4_create(gsCBasis* b)
 {
+    GISMO_CAPI_BEGIN
     auto * basis_ptr = reinterpret_cast< gsTensorBSplineBasis<4,double>* >(b);
     return RICAST_CB(new  gsHBSplineBasis<4,double>(*basis_ptr,false));
+    GISMO_CAPI_END(NULL)
 }
 
 //
@@ -218,76 +255,111 @@ GISMO_EXPORT gsCBasis* gsHBSplineBasis4_create(gsCBasis* b)
 
 GISMO_EXPORT gsCBasis* gsBasis_clone(gsCBasis * b)
 {
+    GISMO_CAPI_BEGIN
     return RICAST_CB(RICAST_B(b)->clone().release());
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT void gsBasis_active_into(gsCBasis * b,
                               gsCMatrix * u,
                               gsCMatrixInt * result)
-{ RICAST_B(b)->active_into(*RICAST_M(u), *RICAST_Mi(result) ); }
+{
+    GISMO_CAPI_BEGIN RICAST_B(b)->active_into(*RICAST_M(u), *RICAST_Mi(result) );     GISMO_CAPI_END_VOID
+}
 
 GISMO_EXPORT void gsBasis_evalSingle_into(gsCBasis * b,
                                           int i,
                                           gsCMatrix * u,
                                           gsCMatrix * result)
-{ RICAST_B(b)->evalSingle_into(i,*RICAST_M(u), *RICAST_M(result) ); }
+{
+    GISMO_CAPI_BEGIN RICAST_B(b)->evalSingle_into(i,*RICAST_M(u), *RICAST_M(result) );     GISMO_CAPI_END_VOID
+}
 
 GISMO_EXPORT void gsBasis_derivSingle_into(gsCBasis * b,
                                            int i,
                                            gsCMatrix * u,
                                            gsCMatrix * result)
-{ RICAST_B(b)->derivSingle_into(i,*RICAST_M(u), *RICAST_M(result) ); }
+{
+    GISMO_CAPI_BEGIN RICAST_B(b)->derivSingle_into(i,*RICAST_M(u), *RICAST_M(result) );     GISMO_CAPI_END_VOID
+}
 
 GISMO_EXPORT void gsBasis_deriv2Single_into(gsCBasis * b,
                                             int i,
                                             gsCMatrix * u,
                                             gsCMatrix * result)
-{ RICAST_B(b)->deriv2Single_into(i,*RICAST_M(u), *RICAST_M(result) ); }
+{
+    GISMO_CAPI_BEGIN RICAST_B(b)->deriv2Single_into(i,*RICAST_M(u), *RICAST_M(result) );     GISMO_CAPI_END_VOID
+}
 
 GISMO_EXPORT gsCBasis * gsBasis_component(gsCBasis * b, int dir)
 {
+    GISMO_CAPI_BEGIN
     gsBasis<double> * c = & RICAST_B(b)->component(dir);
     return reinterpret_cast<gsCBasis*>(c);
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT int gsBasis_degree(gsCBasis * b, int dir)
-{ return RICAST_B(b)->component(dir).degree(dir); }
+{
+    GISMO_CAPI_BEGIN return RICAST_B(b)->component(dir).degree(dir);     GISMO_CAPI_END(-1)
+}
 
 GISMO_EXPORT int gsBasis_numElements(gsCBasis * b)
-{ return RICAST_B(b)->numElements(); }
+{
+    GISMO_CAPI_BEGIN return RICAST_B(b)->numElements();     GISMO_CAPI_END(-1)
+}
 
 GISMO_EXPORT int gsBasis_dim(gsCBasis * b)
-{ return RICAST_B(b)->dim(); }
+{
+    GISMO_CAPI_BEGIN return RICAST_B(b)->dim();     GISMO_CAPI_END(-1)
+}
 
 GISMO_EXPORT int gsBasis_size(gsCBasis * b)
-{ return RICAST_B(b)->size(); }
+{
+    GISMO_CAPI_BEGIN return RICAST_B(b)->size();     GISMO_CAPI_END(-1)
+}
 
 GISMO_EXPORT gsCMatrix* gsBasis_support(gsCBasis * b, int i)
-{ return reinterpret_cast<gsCMatrix*>( new gsMatrix<double>(RICAST_B(b)->support(i)) ); }
+{
+    GISMO_CAPI_BEGIN return reinterpret_cast<gsCMatrix*>( new gsMatrix<double>(RICAST_B(b)->support(i)) );     GISMO_CAPI_END(NULL)
+}
 
 GISMO_EXPORT void gsBasis_uniformRefine(gsCBasis * b, int numKnots, int mul, int dir)
-{ RICAST_B(b)->uniformRefine(numKnots, mul, dir); }
+{
+    GISMO_CAPI_BEGIN RICAST_B(b)->uniformRefine(numKnots, mul, dir);     GISMO_CAPI_END_VOID
+}
 
 GISMO_EXPORT void gsBasis_refineElements(gsCBasis * b, int * boxData, int boxSize)
 {
+    GISMO_CAPI_BEGIN
     std::vector<int> boxes(boxData,boxData+boxSize);
     RICAST_B(b)->refineElements(boxes);
+    GISMO_CAPI_END_VOID
 }
 
 GISMO_EXPORT void gsBasis_refine(gsCBasis * b, gsCMatrix * boxes, int refExt)
-{ RICAST_B(b)->refine(*RICAST_M(boxes),refExt); }
+{
+    GISMO_CAPI_BEGIN RICAST_B(b)->refine(*RICAST_M(boxes),refExt);     GISMO_CAPI_END_VOID
+}
 
 GISMO_EXPORT void gsBasis_degreeElevate(gsCBasis * b, int i, int dir)
-{ RICAST_B(b)->degreeElevate(i,dir); }
+{
+    GISMO_CAPI_BEGIN RICAST_B(b)->degreeElevate(i,dir);     GISMO_CAPI_END_VOID
+}
 
 GISMO_EXPORT void gsBasis_boundary_into(gsCBasis * b, int side, gsCMatrixInt * result)
-{ *RICAST_Mi(result) = RICAST_B(b)->boundary(side); }
+{
+    GISMO_CAPI_BEGIN *RICAST_Mi(result) = RICAST_B(b)->boundary(side);     GISMO_CAPI_END_VOID
+}
 
 GISMO_EXPORT void gsBasis_boundaryOffset_into(gsCBasis * b, int side, int offset, gsCMatrixInt * result)
-{ *RICAST_Mi(result) = RICAST_B(b)->boundaryOffset(side,offset); }
+{
+    GISMO_CAPI_BEGIN *RICAST_Mi(result) = RICAST_B(b)->boundaryOffset(side,offset);     GISMO_CAPI_END_VOID
+}
 
 GISMO_EXPORT void gsBasis_elements_into(gsCBasis * b, gsCMatrix* elements)
 {
+    GISMO_CAPI_BEGIN
     auto * el = RICAST_M(elements);
     el->resize(RICAST_B(b)->domainDim(),2*RICAST_B(b)->numElements());
     auto domain = RICAST_B(b)->domain();
@@ -299,10 +371,12 @@ GISMO_EXPORT void gsBasis_elements_into(gsCBasis * b, gsCMatrix* elements)
         el->col(2*id) = domIt.lowerCorner();
         el->col(2*id+1) = domIt.upperCorner();
     }
+    GISMO_CAPI_END_VOID
 }
 
 GISMO_EXPORT void gsBasis_elementsBdr_into(gsCBasis * b, int side, gsCMatrix* elements)
 {
+    GISMO_CAPI_BEGIN
     auto * el = RICAST_M(elements);
     el->resize(RICAST_B(b)->domainDim(),2*RICAST_B(b)->numElements());
     auto domain = RICAST_B(b)->domain();
@@ -314,6 +388,7 @@ GISMO_EXPORT void gsBasis_elementsBdr_into(gsCBasis * b, int side, gsCMatrix* el
         el->col(2*id) = domIt.lowerCorner();
         el->col(2*id+1) = domIt.upperCorner();
     }
+    GISMO_CAPI_END_VOID
 }
 
 GISMO_EXPORT void gsHTensorBasis_elements_into(gsCBasis * b, bool getKnotBoxes,
@@ -323,6 +398,7 @@ GISMO_EXPORT void gsHTensorBasis_elements_into(gsCBasis * b, bool getKnotBoxes,
                                                              gsCMatrixInt* indexBoxes,
                                                              gsCVectorInt* levels)
 {
+    GISMO_CAPI_BEGIN
     switch (RICAST_B(b)->domainDim())
     {
         case 1:
@@ -340,6 +416,7 @@ GISMO_EXPORT void gsHTensorBasis_elements_into(gsCBasis * b, bool getKnotBoxes,
         default:
             GISMO_ERROR("gsHTensorBasis_elements_into: Dimension not supported");
     }
+    GISMO_CAPI_END_VOID
 }
 
 //
@@ -348,12 +425,15 @@ GISMO_EXPORT void gsHTensorBasis_elements_into(gsCBasis * b, bool getKnotBoxes,
 
 GISMO_EXPORT gsCKnotVector * gsBSplineBasis_knots(gsCBasis * b)
 {
+    GISMO_CAPI_BEGIN
     gsKnotVector<double> * KV= &reinterpret_cast< gsBSplineBasis<double>* >(b)->knots();
     return reinterpret_cast<gsCKnotVector*>(KV);
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCKnotVector * gsTensorBSplineBasis_knots(gsCBasis * b, int dir)
 {
+    GISMO_CAPI_BEGIN
     gsKnotVector<double> * KV=NULL;
     GISMO_ASSERT(RICAST_B(b)->domainDim()>=dir,"gsTensorBSplineBasis_knots: dir out of range");
     switch (RICAST_B(b)->domainDim())
@@ -367,10 +447,12 @@ GISMO_EXPORT gsCKnotVector * gsTensorBSplineBasis_knots(gsCBasis * b, int dir)
     }
 
     return reinterpret_cast<gsCKnotVector*>(KV);
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT int gsHTensorBasis_numLevels(gsCBasis * b)
 {
+    GISMO_CAPI_BEGIN
     switch (RICAST_B(b)->domainDim())
     {
         case 1:
@@ -384,10 +466,12 @@ GISMO_EXPORT int gsHTensorBasis_numLevels(gsCBasis * b)
         default:
             GISMO_ERROR("gsHTensorBasis_numLevels: domainDim not supported");
     }
+    GISMO_CAPI_END(-1)
 }
 
 GISMO_EXPORT int gsHTensorBasis_maxLevel(gsCBasis * b)
 {
+    GISMO_CAPI_BEGIN
     switch (RICAST_B(b)->domainDim())
     {
         case 1:
@@ -401,10 +485,12 @@ GISMO_EXPORT int gsHTensorBasis_maxLevel(gsCBasis * b)
         default:
             GISMO_ERROR("gsHTensorBasis_maxLevel: domainDim not supported");
     }
+    GISMO_CAPI_END(-1)
 }
 
 GISMO_EXPORT int gsHTensorBasis_levelOf(gsCBasis * b, int i)
 {
+    GISMO_CAPI_BEGIN
     switch (RICAST_B(b)->domainDim())
     {
         case 1:
@@ -418,10 +504,12 @@ GISMO_EXPORT int gsHTensorBasis_levelOf(gsCBasis * b, int i)
         default:
             GISMO_ERROR("gsHTensorBasis_levelOf: domainDim not supported");
     }
+    GISMO_CAPI_END(-1)
 }
 
 GISMO_EXPORT int gsHTensorBasis_getLevelAtPoint(gsCBasis * b, gsCMatrix * Pt)
 {
+    GISMO_CAPI_BEGIN
     auto * m = RICAST_M(Pt);
     switch (RICAST_B(b)->domainDim())
     {
@@ -436,10 +524,12 @@ GISMO_EXPORT int gsHTensorBasis_getLevelAtPoint(gsCBasis * b, gsCMatrix * Pt)
         default:
             GISMO_ERROR("gsHTensorBasis_getLevelAtPoint: domainDim not supported");
     }
+    GISMO_CAPI_END(-1)
 }
 
 GISMO_EXPORT gsCBasis * gsHTensorBasis_tensorLevel(gsCBasis * b, int l)
 {
+    GISMO_CAPI_BEGIN
     switch (RICAST_B(b)->domainDim())
     {
         case 1:
@@ -453,10 +543,12 @@ GISMO_EXPORT gsCBasis * gsHTensorBasis_tensorLevel(gsCBasis * b, int l)
         default:
             GISMO_ERROR("gsHTensorBasis_tensorLevel: domainDim not supported");
     }
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT void gsHTensorBasis_treeLeafSize(gsCBasis * b)
 {
+    GISMO_CAPI_BEGIN
     switch (RICAST_B(b)->domainDim())
     {
         case 1:
@@ -470,10 +562,12 @@ GISMO_EXPORT void gsHTensorBasis_treeLeafSize(gsCBasis * b)
         default:
             GISMO_ERROR("gsHTensorBasis_treeLeaveSize: domainDim not supported");
     }
+    GISMO_CAPI_END_VOID
 }
 
 GISMO_EXPORT void gsHTensorBasis_treePrintLeaves(gsCBasis * b)
 {
+    GISMO_CAPI_BEGIN
     switch (RICAST_B(b)->domainDim())
     {
         case 1:
@@ -487,6 +581,7 @@ GISMO_EXPORT void gsHTensorBasis_treePrintLeaves(gsCBasis * b)
         default:
             GISMO_ERROR("gsHTensorBasis_treePrintLeaves: domainDim not supported");
     }
+    GISMO_CAPI_END_VOID
 }
 
 

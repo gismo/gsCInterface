@@ -3,6 +3,8 @@
 #include <gsCInterface/gsCTypes.h>
 #include <gsCInterface/gsMacros.h>
 #include <gsCInterface/gsCQuadRule.h>
+#include <gsCInterface/gsCError.h>
+#include <limits>
 
 using namespace gismo;
 
@@ -18,6 +20,7 @@ GISMO_EXPORT double gsL2Projection_into( gsCFunctionSet * projectionBasis,
                                          gsCMatrix * coefs,
                                          gsCOptionList * options)
 {
+    GISMO_CAPI_BEGIN
     auto * projBasis_ptr = RICAST_F(projectionBasis);
     auto * intBasis_ptr = RICAST_MB(integrationBasis);
     auto * geomMap_ptr = RICAST_MP(geometryMap);
@@ -26,6 +29,7 @@ GISMO_EXPORT double gsL2Projection_into( gsCFunctionSet * projectionBasis,
     auto * options_ptr = reinterpret_cast<gsOptionList*>(options);
     double error= gsL2Projection<double>::project(*projBasis_ptr, *intBasis_ptr, *geomMap_ptr, *sourceFunc_ptr, *coefs_ptr, *options_ptr);
     return error;
+    GISMO_CAPI_END(std::numeric_limits<double>::quiet_NaN())
 }
 
 #ifdef __cplusplus

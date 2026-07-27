@@ -7,6 +7,7 @@
 #include <gsCInterface/gsCKnotVector.h>
 #include <gsCInterface/gsCBasis.h>
 #include <gsCInterface/gsMacros.h>
+#include <gsCInterface/gsCError.h>
 
 using namespace gismo;
 
@@ -18,10 +19,12 @@ extern "C"
     GISMO_EXPORT gsCGeometryTransform * gsGeometryTransform_create(gsCGeometry* g, gsCMatrix * m,
                                                                    gsCVector * v)
     {
+        GISMO_CAPI_BEGIN
         auto * g_ptr = RICAST_G(g);
         auto * mm = RICAST_M(m);
         auto * vv = RICAST_V(v);
         return RICAST_CG(new gsGeometryTransform<double>(g_ptr,*mm, *vv));
+            GISMO_CAPI_END(NULL)
     }
 
 

@@ -2,6 +2,7 @@
 #include <gsCInterface/gsCReadFile.h>
 #include <gsCInterface/gsCTypes.h>
 #include <gsCInterface/gsMacros.h>
+#include <gsCInterface/gsCError.h>
 
 using namespace gismo;
 
@@ -11,6 +12,7 @@ extern "C"
 #endif
 GISMO_EXPORT void* gsCReadFile(char* filename)
 {
+    GISMO_CAPI_BEGIN
     gsInfo << "[G+Smo] Loading file: " << filename << std::endl;
 
     void* result = NULL;
@@ -42,6 +44,7 @@ GISMO_EXPORT void* gsCReadFile(char* filename)
         std::cout << "File doesn't contain a geometry or a basis." << std::endl;
     }
     return result;
+    GISMO_CAPI_END(NULL)
 }
 
 #ifdef __cplusplus

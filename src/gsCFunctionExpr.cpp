@@ -2,6 +2,7 @@
 #include <gsCInterface/gsCTypes.h>
 #include <gsCInterface/gsCMemory.h>
 #include <gsCInterface/gsMacros.h>
+#include <gsCInterface/gsCError.h>
 
 using namespace gismo;
 
@@ -13,16 +14,20 @@ extern "C"
 GISMO_EXPORT gsCFunctionExpr * gsFunctionExpr1_create(const char * expression_string,
                                                       short_t ddim)
 {
+    GISMO_CAPI_BEGIN
     return RICAST_CF(new gsFunctionExpr<double>(expression_string,
                                                        ddim));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCFunctionExpr * gsFunctionExpr2_create(const char * expression_string1,
                                                       const char * expression_string2,
                                                       short_t ddim)
 {
+    GISMO_CAPI_BEGIN
     return RICAST_CF(new gsFunctionExpr<double>(expression_string1,
                                                        expression_string2, ddim));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCFunctionExpr * gsFunctionExpr3_create(const char * expression_string1,
@@ -30,10 +35,12 @@ GISMO_EXPORT gsCFunctionExpr * gsFunctionExpr3_create(const char * expression_st
                                                       const char * expression_string3,
                                                       short_t ddim)
 {
+    GISMO_CAPI_BEGIN
     return RICAST_CF(new gsFunctionExpr<double>(expression_string1,
                                                        expression_string2,
                                                        expression_string3,
                                                        ddim));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCFunctionExpr * gsFunctionExpr4_create(const char * expression_string1,
@@ -42,11 +49,13 @@ GISMO_EXPORT gsCFunctionExpr * gsFunctionExpr4_create(const char * expression_st
                                                       const char * expression_string4,
                                                       short_t ddim)
 {
+    GISMO_CAPI_BEGIN
     return RICAST_CF(new gsFunctionExpr<double>(expression_string1,
                                                        expression_string2,
                                                        expression_string3,
                                                        expression_string4,
                                                        ddim));
+    GISMO_CAPI_END(NULL)
 }
 
 GISMO_EXPORT gsCFunctionExpr * gsFunctionExpr9_create(const char * expression_string1,
@@ -60,6 +69,7 @@ GISMO_EXPORT gsCFunctionExpr * gsFunctionExpr9_create(const char * expression_st
                                                       const char * expression_string9,
                                                       short_t ddim)
 {
+    GISMO_CAPI_BEGIN
     return RICAST_CF(new gsFunctionExpr<double>(expression_string1,
                                                        expression_string2,
                                                        expression_string3,
@@ -70,6 +80,7 @@ GISMO_EXPORT gsCFunctionExpr * gsFunctionExpr9_create(const char * expression_st
                                                        expression_string8,
                                                        expression_string9,
                                                        ddim));
+    GISMO_CAPI_END(NULL)
 }
 
 
