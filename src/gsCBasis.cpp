@@ -75,6 +75,29 @@ void gsHTensorBasis_elements_into_impl(gsCBasis * b, bool getKnotBoxes,
     }
 }
 
+/// Adds \a lvl as a new level of the hierarchical basis \a b, both of dimension \a dim.
+/// Both operands are checked with dynamic_cast first: the reinterpret_casts below go
+/// through the opaque gsCBasis*, so an argument of the wrong type would not be detected
+/// and would call a member function on an unrelated object.
+template <int dim>
+void gsHTensorBasis_addLevel_impl(gsCBasis * b, gsCBasis * lvl)
+{
+    if (dynamic_cast<gsHTensorBasis<dim,double>*>(RICAST_B(b)) == nullptr)
+    {
+        gsWarn<<"gsHTensorBasis_addLevel: b is not a gsHTensorBasis, nothing to do.\n";
+        return;
+    }
+    if (dynamic_cast<gsTensorBSplineBasis<dim,double>*>(RICAST_B(lvl)) == nullptr)
+    {
+        gsWarn<<"gsHTensorBasis_addLevel: lvl is not a gsTensorBSplineBasis, nothing to do.\n";
+        return;
+    }
+
+    reinterpret_cast< gsHTensorBasis<dim,double>* >(b)->addLevel(
+        *reinterpret_cast< gsTensorBSplineBasis<dim,double>* >(lvl)
+    );
+}
+
 
 #ifdef __cplusplus
 extern "C"
@@ -760,10 +783,6 @@ GISMO_EXPORT int gsHTensorBasis_treeLeafSize(gsCBasis * b)
         gsWarn << "gsHTensorBasis_treeLeafSize: b is NULL, nothing to do.\n";
         return -1;
     }
-    gsInfo<<"domainDim==1? "<<(RICAST_B(b)->domainDim()==1)<<"\n";
-    gsInfo<<"domainDim==2? "<<(RICAST_B(b)->domainDim()==2)<<"\n";
-    gsInfo<<"domainDim==3? "<<(RICAST_B(b)->domainDim()==3)<<"\n";
-    gsInfo<<"domainDim==4? "<<(RICAST_B(b)->domainDim()==4)<<"\n";
 
     index_t domainDim = RICAST_B(b)->domainDim();
     if (domainDim==1)
@@ -806,15 +825,6 @@ GISMO_EXPORT void gsHTensorBasis_addLevel(gsCBasis * b, gsCBasis * lvl)
         return;
     }
 
-    if (dynamic_cast<gsTensorBSplineBasis<1,double>*>(RICAST_B(lvl)) == nullptr &&
-        dynamic_cast<gsTensorBSplineBasis<2,double>*>(RICAST_B(lvl)) == nullptr &&
-        dynamic_cast<gsTensorBSplineBasis<3,double>*>(RICAST_B(lvl)) == nullptr &&
-        dynamic_cast<gsTensorBSplineBasis<4,double>*>(RICAST_B(lvl)) == nullptr)
-    {
-        gsWarn<<"gsHTensorBasis_addLevel: cannot add a level that is not a gsTensorBSplineBasis\n";
-        return;
-    }
-
     index_t domainDim = RICAST_B(b)->domainDim();
     if (domainDim != RICAST_B(lvl)->domainDim())
     {
@@ -822,33 +832,14 @@ GISMO_EXPORT void gsHTensorBasis_addLevel(gsCBasis * b, gsCBasis * lvl)
         return;
     }
 
-    if (domainDim==1)
+    switch (domainDim)
     {
-        reinterpret_cast< gsHTensorBasis<1,double>* >(b)->addLevel(
-            *reinterpret_cast< gsTensorBSplineBasis<1,double>* >(lvl)
-        );
-    }
-    else if (domainDim==2)
-    {
-        reinterpret_cast< gsHTensorBasis<2,double>* >(b)->addLevel(
-            *reinterpret_cast< gsTensorBSplineBasis<2,double>* >(lvl)
-        );
-    }
-    else if (domainDim==3)
-    {
-        reinterpret_cast< gsHTensorBasis<3,double>* >(b)->addLevel(
-            *reinterpret_cast< gsTensorBSplineBasis<3,double>* >(lvl)
-        );
-    }
-    else if (domainDim==4)
-    {
-        reinterpret_cast< gsHTensorBasis<4,double>* >(b)->addLevel(
-            *reinterpret_cast< gsTensorBSplineBasis<4,double>* >(lvl)
-        );
-    }
-    else
-    {
-        GISMO_ERROR("gsHTensorBasis_addLevel: domainDim not supported");
+        case 1: gsHTensorBasis_addLevel_impl<1>(b,lvl); break;
+        case 2: gsHTensorBasis_addLevel_impl<2>(b,lvl); break;
+        case 3: gsHTensorBasis_addLevel_impl<3>(b,lvl); break;
+        case 4: gsHTensorBasis_addLevel_impl<4>(b,lvl); break;
+        default:
+            GISMO_ERROR("gsHTensorBasis_addLevel: domainDim not supported");
     }
 }
 
