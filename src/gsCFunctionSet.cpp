@@ -16,7 +16,12 @@ GISMO_EXPORT void gsFunctionSet_print(gsCFunctionSet * fs)
 { gsInfo<<*RICAST_F(fs)<<"\n"; }
 
 GISMO_EXPORT void gsFunctionSet_delete(gsCFunctionSet * ptr)
-{ delete RICAST_F(ptr); }
+{ 
+    if (ptr != nullptr)
+    {
+        delete RICAST_F(ptr);
+    }
+}
 
 GISMO_EXPORT int gsFunctionSet_domainDim(gsCFunctionSet * fs)
 { return RICAST_F(fs)->domainDim(); }
